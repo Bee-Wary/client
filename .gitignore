@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# PWA-Generated (These files are auto-generated during dev server)
+/public/workbox-*
+/public/sw.js*
+/public/fallback-*.js
