@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import styles from '@/styles/Home.module.scss';
 import { Button } from '@mantine/core';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,7 +28,7 @@ export default function Home() {
           <h1 className={styles.title}>Homepage</h1>
           <h2>Welcome, {user.name}!</h2>
           <Button>
-            <a href="/api/auth/logout">Logout</a>
+            <Link href="/api/auth/logout">Logout</Link>
           </Button>
           <p className={styles.description}>Footer voor Bee-Wary</p>
         </main>
@@ -46,9 +47,9 @@ export default function Home() {
 
       <main className={`${styles.main} ${inter.className}`}>
         <h1 className={styles.title}>Welcome to Bee-Wary</h1>
-        <Button>
-          <a href="/api/auth/login">Login/Sign Up</a>
-        </Button>
+        <Link href="/api/auth/login">
+          <Button>Login/Sign Up</Button>
+        </Link>
         <p className={styles.description}>Footer voor Bee-Wary</p>
       </main>
     </>
