@@ -1,9 +1,13 @@
 import styles from '@/styles/Inspections.module.scss';
 
-export default function Inspections() {
-    return (
-      <>
-          <h1 className={styles.title}>Inspections</h1>
-      </>
-    );
-  }
+const InsepctionsPage = ({ ...props }) => {
+  console.log('[Debug InsepctionsPage] rendered:', { props })
+
+   return (
+     <>
+      {props.children}
+     </>
+   );
+}
+
+export default InsepctionsPage;

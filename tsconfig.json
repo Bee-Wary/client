@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "components/navigation"  ],
   "exclude": [
     "node_modules"
   ]
