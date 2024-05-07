@@ -1,24 +1,17 @@
 import styles from '@/styles/BottomNavigationBar/BottomNavigationBar.module.scss';
 import NavigationbarButton from './NavigationbarButton';
 
-import { IconContext, Archive  } from "@phosphor-icons/react";
+// NextJs server side rendered omponents cannot inherit styles from an ancestor (like IconContext) and must import from .../dist/ssr.
+// https://github.com/phosphor-icons/react/blob/master/README.md#react-server-components-and-ssr 
+import { Archive, FilePlus, ChartBar   } from "@phosphor-icons/react/dist/ssr";
 
 export default function BottomNavigationBar() {
   return (
     <>
       <div className={styles.navigationBar}>
-        {/* IconContext tag encapsulation styles all icons within it and all its children. */}
-        <IconContext.Provider
-          value={{
-            size: 40,
-            weight: "fill",
-            mirrored: false,
-          }}
-        >
-          <NavigationbarButton >Hives</NavigationbarButton>
-          <NavigationbarButton route="/inspections">Notes</NavigationbarButton>
-          <NavigationbarButton route="/statistics">Stats</NavigationbarButton>
-        </IconContext.Provider>
+          <NavigationbarButton icon={<Archive weight="fill"/>} >Hives</NavigationbarButton>
+          <NavigationbarButton icon={<FilePlus weight="fill"/>} route="/inspections">Notes</NavigationbarButton>
+          <NavigationbarButton icon={<ChartBar weight="fill"/>} route="/statistics">Stats</NavigationbarButton>
       </div>
     </>
   );

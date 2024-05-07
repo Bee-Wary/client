@@ -1,11 +1,11 @@
 import styles from '@/styles/Inspections.module.scss';
 import InspectionDetailButton from '@/components/inspection/inspectionDetailButton';
 import Link from 'next/link';
-
+import { getAllInspections } from '@/services/inspections/queries';
 
 const getInspections = async () => {
-  // TODO: Return real data fetched from an API. 
-  // const response = await fetch('');
+  // TODO: Return real data fetched from an API, preffered via a service in the folder services. 
+  // const response = await getAllInspections('');
   // return response.json();
   // -- mock data --
   return [

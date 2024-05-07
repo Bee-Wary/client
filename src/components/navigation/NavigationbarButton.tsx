@@ -1,14 +1,13 @@
-"use client";
-
 import styles from '@/styles/BottomNavigationBar/NavigationbarButton.module.scss';
 import Link from 'next/link';
 
-// TODO: Move the icon to the parent to pass as props.
-import { Image, Archive } from "@phosphor-icons/react";
-
+import { Image } from "@phosphor-icons/react/dist/ssr";
 
 const NavigationbarButton = ({ ...props }) => {
+  console.log({...props});
+  
   //   Set defaults for the needed props in case of empty passed values.
+  const icon = props.icon ? props.icon : <Image weight="fill" alt='fallback icon'/>;
   const route = props.route ? props.route : '/';
   const labelText = props.children ? props.children : 'Label';
 
@@ -16,8 +15,8 @@ const NavigationbarButton = ({ ...props }) => {
      <>
      <Link href={{pathname: route}} className={styles.outerBox}>
           <div className={styles.icon}>
-            <Archive weight="fill" size={40}/>
-            {/* <Image /> */}
+            {/* Define a dynamic Icon component with sizing. */}
+            {icon}
           </div>
           <p className={styles.content}>
               {labelText}
