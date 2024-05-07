@@ -1,7 +1,7 @@
 .outerBox {
     display: flex;
-    width: 100%;
-    height: 88px;
+    flex-direction: column;
+    flex-grow: 1;
     justify-content: center;
     align-items: center;
 
@@ -17,34 +17,22 @@
 
 }
 
-.iconAndTextBox {
-    display: flex;
-    flex-direction: column;
+.icon {
+    display: inline-flex;
     width: 100%;
-    // padding: 12px 0px 4px 0px;
     justify-content: center;
     align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-    align-self: stretch;
-}
-
-.icon {
-    width: 40px;
-    height: 40px;
-}
-.svgIcon {
-    width: 100%;
-    height: 100%;
 }
 
 .content {
     display: flex;
-    width: 36px;
-    height: 24px;
+    width: 100%;
+    margin: 0;
+
+    text-align: center;
 
     flex-direction: column;
-    justify-content: center;
+    font-size: 16px;
     font-family: var(--font-archivo);
     font-weight: 400;
 }

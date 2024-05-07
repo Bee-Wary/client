@@ -1,16 +1,25 @@
 import styles from '@/styles/BottomNavigationBar/BottomNavigationBar.module.scss';
 import NavigationbarButton from './NavigationbarButton';
 
-import { Archive } from "@phosphor-icons/react";
+import { IconContext, Archive  } from "@phosphor-icons/react";
 
 export default function BottomNavigationBar() {
   return (
     <>
-      <footer className={styles.footer}>
+      <div className={styles.navigationBar}>
+        {/* IconContext tag encapsulation styles all icons within it and all its children. */}
+        <IconContext.Provider
+          value={{
+            size: 40,
+            weight: "fill",
+            mirrored: false,
+          }}
+        >
           <NavigationbarButton >Hives</NavigationbarButton>
           <NavigationbarButton route="/inspections">Notes</NavigationbarButton>
           <NavigationbarButton route="/statistics">Stats</NavigationbarButton>
-      </footer>
+        </IconContext.Provider>
+      </div>
     </>
   );
 }
