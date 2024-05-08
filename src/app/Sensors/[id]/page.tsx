@@ -1,4 +1,4 @@
-function SensorDetailPage({ ...props }) {
+const SensorDetailPage = ({ ...props }) => {
 
     return (
         <>
