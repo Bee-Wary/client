@@ -1,24 +1,20 @@
 import { ReactNode } from 'react';
+import { useRouter } from 'next/router';
 
-// Children can be any node type (less type safe)
 type Props = {
-    id: number,
-    // Optional properties:
-    text?: string,
-    // Children defenition:
     children?: ReactNode,
 }
 
 const SensorDetailPage = ( {
-        id,
-        text = 'default value SensorDetailPage',
         children
     } : Props ) => {
+    const router = useRouter();
+    const { id } = router.query; // get id from the route
+
 
     return (
         <>
         {id}
-        {text}
         {children}
         </>
     );
