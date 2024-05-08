@@ -3,19 +3,12 @@
 import { ReactNode } from 'react';
 import { useParams } from 'next/navigation'
 
-type Props = {
-    children?: ReactNode,
-}
-
-const SensorDetailPage = ( {
-        children
-    } : Props ) => {
+const SensorDetailPage = () => {
     const { id } = useParams<{ id : string }>();
 
     return (
         <>
-        {id}
-        {children}
+        sensor {id}
         </>
     );
 }
