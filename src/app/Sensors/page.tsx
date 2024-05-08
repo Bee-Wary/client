@@ -9,4 +9,4 @@ const SensorsPage = ({ ...props }) => {
     );
 }
 
-export default SensorsPage
+export default SensorsPage;
