@@ -2,8 +2,8 @@ import { ReactNode } from 'react';
 
 // Page function:
 const SensorsPage = ( 
-    {children} :
-    {children : ReactNode}
+    { children } :
+    { children? : ReactNode }
     ) => {
 
     return (

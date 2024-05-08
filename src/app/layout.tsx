@@ -1,5 +1,5 @@
 import '@mantine/core/styles.css';
-import React from 'react';
+import { ReactNode } from 'react';
 import { Archivo } from 'next/font/google';
 // TODO: See if manitne is the right UI library, because it is client side rendered.
 import { MantineProvider, ColorSchemeScript  } from '@mantine/core';
@@ -35,7 +35,7 @@ const RootLayout = (
     // page parameters.
     {children,}: 
     // Parameters types.
-    {children: React.ReactNode}
+    {children?: ReactNode}
     ) => {
       return (
         <html lang="en">

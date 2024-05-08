@@ -1,11 +1,12 @@
 import styles from '@/styles/BottomNavigationBar/NavigationbarButton.module.scss';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
 import { Image } from "@phosphor-icons/react/dist/ssr";
 
 const NavigationbarButton = (
   { children, labelText = "label", route = "/", icon = <Image weight="fill" alt='fallback icon'/>} : 
-  { children? : React.ReactNode, labelText? : string, route? : string, icon? : React.ReactNode}
+  { children? : ReactNode, labelText? : string, route? : string, icon? : ReactNode}
   ) => {
 
    return (

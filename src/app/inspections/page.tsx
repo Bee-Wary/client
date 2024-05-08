@@ -8,7 +8,7 @@ const InsepctionsPage = async (
   // Defenition of properties and default values.
   { title = "InspectionsPage", children} : 
   // Types of properties.
-  { title? : string ,children: ReactNode} ) => {
+  { title? : string , children?: ReactNode} ) => {
 
   const inspections = await getInspections();
 

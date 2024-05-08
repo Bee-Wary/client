@@ -1,9 +1,9 @@
 // import styles from '@/styles/Statistics.module.scss';
-import React from 'react';
+import { ReactNode } from 'react';
 
 const Statisticspage = (
-    {children} : 
-    {children: React.ReactNode}
+    { children } : 
+    { children? : ReactNode }
     ) => {
 
     return (

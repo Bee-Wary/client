@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 
 const ColoniesPage = (
-    {children} :
-    {children : ReactNode}
+    { children } :
+    { children? : ReactNode }
     ) => {
 
     return (

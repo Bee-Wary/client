@@ -1,9 +1,9 @@
 // import styles from '@/styles/InspectionDetailButton.module.scss';
-import React from "react";
+import { ReactNode } from "react";
 
 const InspectionDetailButton = (
    { children, inspectionTitle = "no title", inspectionID } : 
-   { children? : React.ReactNode, inspectionTitle : string, inspectionID : string}
+   { children? : ReactNode, inspectionTitle : string, inspectionID : string}
    ) => {
    return (
      <>

@@ -1,8 +1,11 @@
 // import styles from '@/styles/AdvicePage.module.scss';
-import React from 'react';
+import { ReactNode } from 'react';
 
 
-const AdvicePage = ({ children } : {children : React.ReactNode}) => {
+const AdvicePage = (
+  { children } : 
+  { children? : ReactNode}
+  ) => {
 
     return (
     <>

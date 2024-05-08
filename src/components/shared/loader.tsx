@@ -1,10 +1,10 @@
 import styles from '@/styles/loader/loading.module.scss';
-import React from "react";
+import { ReactNode } from "react";
 
 // General loader used in all page loading
 const PageLoader = (
-   {loadingPageName = "page", children} :
-   {loadingPageName? : string, children? : React.ReactNode}
+   { loadingPageName = "page", children } :
+   { loadingPageName? : string, children? : ReactNode }
    ) => {
 
    return (
