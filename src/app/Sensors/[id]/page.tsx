@@ -1,5 +1,7 @@
+'use client'
+ 
 import { ReactNode } from 'react';
-import { useRouter } from 'next/router';
+import { useParams } from 'next/navigation'
 
 type Props = {
     children?: ReactNode,
@@ -8,9 +10,7 @@ type Props = {
 const SensorDetailPage = ( {
         children
     } : Props ) => {
-    const router = useRouter();
-    const { id } = router.query; // get id from the route
-
+    const { id } = useParams<{ id : string }>();
 
     return (
         <>
