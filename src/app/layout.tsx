@@ -31,11 +31,12 @@ export const viewport: Viewport = {
 }
 
 // Layout that wraps all pages under it (hierachialy), becomes overwritten if a folder has anoter layout.tsx file.
-export default function RootLayout(
-  // page parameters.
-  {children,}: 
-  // Parameters types.
-    {children: React.ReactNode}) {
+const RootLayout = (
+    // page parameters.
+    {children,}: 
+    // Parameters types.
+    {children: React.ReactNode}
+    ) => {
       return (
         <html lang="en">
           <head>
@@ -53,3 +54,5 @@ export default function RootLayout(
         </html>
       );
   }
+
+  export default RootLayout;

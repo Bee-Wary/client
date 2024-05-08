@@ -1,8 +1,13 @@
-function BeehiveDetailPage({ ...props }) {
+import { ReactNode } from 'react';
+
+const BeehiveDetailPage = (
+    {children} :
+    {children : ReactNode}
+    ) => {
 
     return (
         <>
-        {props.children}
+        {children}
         </>
     );
 }

@@ -5,7 +5,7 @@ import NavigationbarButton from './NavigationbarButton';
 // https://github.com/phosphor-icons/react/blob/master/README.md#react-server-components-and-ssr 
 import { Archive, FilePlus, ChartBar   } from "@phosphor-icons/react/dist/ssr";
 
-export default function BottomNavigationBar() {
+ const BottomNavigationBar = () => {
   return (
     <>
       <div className={styles.navigationBar}>
@@ -16,3 +16,5 @@ export default function BottomNavigationBar() {
     </>
   );
 }
+
+export default BottomNavigationBar;

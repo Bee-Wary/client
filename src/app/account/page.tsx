@@ -1,8 +1,13 @@
-const AccountPage = ({ ...props }) => {
+import { ReactNode } from "react";
+
+const AccountPage = (
+  {children} :
+  {children : ReactNode}
+  ) => {
 
    return (
      <>
-      {props.children}
+      {children}
      </>
    );
 }

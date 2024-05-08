@@ -4,15 +4,12 @@ import InspectionDetailButton from '@/components/inspection/inspectionDetailButt
 import Link from 'next/link';
 import { getAllInspections } from '@/services/inspections/queries';
 
-type Props = {
-  text?: string,
-  children?: ReactNode,
-}
+const InsepctionsPage = async (
+  // Defenition of properties and default values.
+  { title = "InspectionsPage", children} : 
+  // Types of properties.
+  { title? : string ,children: ReactNode} ) => {
 
-const InsepctionsPage = async ({
-    text = 'InsepctionsPage',
-    children,
-  } : Props ) => {
   const inspections = await getInspections();
 
   return (
@@ -27,7 +24,7 @@ const InsepctionsPage = async ({
           </Link>
         ))}
       </p>
-      {text}
+      {title}
       {children}
     </>
   );

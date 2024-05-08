@@ -1,8 +1,14 @@
-const NotificationPage = ({ ...props }) => {
+import { ReactNode } from 'react';
+
+const NotificationPage = (
+    {children} :
+    {children : ReactNode}
+    ) => {
+
     return (
         <>
         <p>NotificationPage</p>
-        {props.children}
+        {children}
         </>
     );
 }

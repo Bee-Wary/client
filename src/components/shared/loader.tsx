@@ -1,8 +1,11 @@
 import styles from '@/styles/loader/loading.module.scss';
+import React from "react";
 
 // General loader used in all page loading
-const PageLoader = ({ ...props }) => {
-    const loadingPageName = props.pageName ? props.pageName : 'page';
+const PageLoader = (
+   {loadingPageName = "page", children} :
+   {loadingPageName? : string, children? : React.ReactNode}
+   ) => {
 
    return (
      <>

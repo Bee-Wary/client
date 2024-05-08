@@ -1,9 +1,14 @@
-function ColoniesPage({ ...props }) {
+import { ReactNode } from 'react';
+
+const ColoniesPage = (
+    {children} :
+    {children : ReactNode}
+    ) => {
 
     return (
         <>
         <p>ColoniesPage</p>
-        {props.children}
+        {children}
         </>
     );
 }

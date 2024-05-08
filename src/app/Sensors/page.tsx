@@ -1,10 +1,15 @@
+import { ReactNode } from 'react';
+
 // Page function:
-const SensorsPage = ({ ...props }) => {
+const SensorsPage = ( 
+    {children} :
+    {children : ReactNode}
+    ) => {
 
     return (
         <>
         <p>SensorsPage</p>
-        {props.children}
+        {children}
         </>
     );
 }

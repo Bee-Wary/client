@@ -3,13 +3,10 @@ import Link from 'next/link';
 
 import { Image } from "@phosphor-icons/react/dist/ssr";
 
-const NavigationbarButton = ({ ...props }) => {
-  console.log({...props});
-  
-  //   Set defaults for the needed props in case of empty passed values.
-  const icon = props.icon ? props.icon : <Image weight="fill" alt='fallback icon'/>;
-  const route = props.route ? props.route : '/';
-  const labelText = props.children ? props.children : 'Label';
+const NavigationbarButton = (
+  { children, labelText = "label", route = "/", icon = <Image weight="fill" alt='fallback icon'/>} : 
+  { children? : React.ReactNode, labelText? : string, route? : string, icon? : React.ReactNode}
+  ) => {
 
    return (
      <>

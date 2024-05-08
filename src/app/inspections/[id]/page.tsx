@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 
-const InspectionDetailPage = ({ ...props }) => {
+const InspectionDetailPage = () => {
    return (
      <>
         <p>InspectionDetailPage</p>

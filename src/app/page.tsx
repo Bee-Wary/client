@@ -2,8 +2,7 @@ import styles from '@/styles/Beehives.module.scss';
 import { ColorSchemeToggle } from '@/components/shared/colorSchemeToggle';
 
 // Arrow functions work best with hooks.
-// Spread operator (...) "unpacks" all props form passed parameters.
-const Beehivespage = ({...props}) => {
+const Beehivespage = () => {
   
   return (
     <>

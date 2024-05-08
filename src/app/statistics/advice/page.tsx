@@ -1,11 +1,13 @@
 // import styles from '@/styles/AdvicePage.module.scss';
+import React from 'react';
 
-const AdvicePage = ({ ...props }) => {
+
+const AdvicePage = ({ children } : {children : React.ReactNode}) => {
 
     return (
     <>
       <p>AdvicePage</p>
-      {props.children}
+      {children}
     </>
     );
 }

@@ -1,12 +1,15 @@
 // import styles from '@/styles/Statistics.module.scss';
+import React from 'react';
 
-
-const Statisticspage = ({ ...props }) => {
+const Statisticspage = (
+    {children} : 
+    {children: React.ReactNode}
+    ) => {
 
     return (
     <>
       <p>Statisticspage</p>
-      {props.children}
+      {children}
     </>
     );
 }
