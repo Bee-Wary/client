@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 const AccountPage = (
   { children } :
-  { children? : ReactNode }
+  { children? : ReactNode | undefined }
   ) => {
 
    return (
