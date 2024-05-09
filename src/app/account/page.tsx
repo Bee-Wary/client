@@ -1,13 +1,8 @@
-import { ReactNode } from "react";
-
-const AccountPage = (
-  { children } :
-  { children? : ReactNode | undefined }
-  ) => {
+const AccountPage = () => {
 
    return (
      <>
-      {children}
+        <p>AccountPage</p>
      </>
    );
 }

@@ -1,15 +1,10 @@
 // import styles from '@/styles/Statistics.module.scss';
-import { ReactNode } from 'react';
 
-const Statisticspage = (
-    { children } : 
-    { children? : ReactNode }
-    ) => {
+const Statisticspage = () => {
 
     return (
     <>
       <p>Statisticspage</p>
-      {children}
     </>
     );
 }

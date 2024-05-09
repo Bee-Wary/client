@@ -1,11 +1,14 @@
 // import styles from '@/styles/InspectionDetail.module.scss';
+'use client'
 
-import { ReactNode } from "react";
+import { useParams } from 'next/navigation'
 
 const InspectionDetailPage = () => {
+   const { id } = useParams<{ id : string }>();
+
    return (
      <>
-        <p>InspectionDetailPage</p>
+        <p>InspectionDetailPage {id}</p>
      </>
    );
 }

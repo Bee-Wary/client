@@ -1,14 +1,8 @@
-import { ReactNode } from 'react';
-
-const ColoniesPage = (
-    { children } :
-    { children? : ReactNode }
-    ) => {
+const ColoniesPage = () => {
 
     return (
         <>
         <p>ColoniesPage</p>
-        {children}
         </>
     );
 }

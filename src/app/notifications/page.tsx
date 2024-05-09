@@ -1,14 +1,8 @@
-import { ReactNode } from 'react';
-
-const NotificationPage = (
-    { children } :
-    { children? : ReactNode }
-    ) => {
+const NotificationPage = () => {
 
     return (
         <>
         <p>NotificationPage</p>
-        {children}
         </>
     );
 }

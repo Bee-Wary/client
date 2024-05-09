@@ -1,13 +1,8 @@
-import { ReactNode } from 'react';
-
-const BeehiveDetailPage = (
-    { children } :
-    { children? : ReactNode }
-    ) => {
+const BeehiveDetailPage = () => {
 
     return (
         <>
-        {children}
+        <p>BeehiveDetailPage</p>
         </>
     );
 }
