@@ -1,20 +1,17 @@
-import { FC, ReactNode } from 'react';
+// import { ReactNode } from 'react';
 
-interface Props {
-    children? : ReactNode;
-}
+// // Page function:
+// const SensorsPage = ( 
+//     { children } :
+//     { children? : ReactNode }
+//     ) => {
 
-// Page function:
-const SensorsPage :FC<Props> = ( 
-    { children }
-    ) => {
+//     return (
+//         <>
+//         <p>SensorsPage</p>
+//         {children}
+//         </>
+//     );
+// }
 
-    return (
-        <>
-        <p>SensorsPage</p>
-        {children}
-        </>
-    );
-}
-
-export default SensorsPage;
+// export default SensorsPage;
