@@ -1,17 +1,16 @@
-// import { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-// // Page function:
-// const SensorsPage = ( 
-//     { children } :
-//     { children? : ReactNode }
-//     ) => {
+// Page function:
+const SensorsPage = ( 
+    // { children } :
+    // { children? : ReactNode }
+    ) => {
 
-//     return (
-//         <>
-//         <p>SensorsPage</p>
-//         {children}
-//         </>
-//     );
-// }
+    return (
+        <>
+        <p>SensorsPage</p>
+        </>
+    );
+}
 
-// export default SensorsPage;
+export default SensorsPage;
