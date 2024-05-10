@@ -1,9 +1,27 @@
-:root {
+:root {--petal-white: #F3F4F0;
+  --petal-white-bright: #FBFCFB;
+  --petal-white-shade: #E7E9E2;
+  --pineapple-yellow: #FBD100;
+  --pineapple-yellow-bright: #FFDD37;
+  --pineapple-yellow-shade: #C9A700;
+  --dusty-green: #CFD720;
+  --dusty-green-bright: #8F8548;
+  --dusty-green-shade: #6B6125;
+  --tiki-torch-grey: #494F37;
+  --tiki-torch-grey-bright: #5B614B;
+  --tiki-torch-grey-shade: #3A3F2C;
+  --off-black: #121301;
+
+  --positive-green: #639A23;
+  --negative-red: #D72A41;
+
+
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  --font-archivo: "Archivo", sans-serif;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

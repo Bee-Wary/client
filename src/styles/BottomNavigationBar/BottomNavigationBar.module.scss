@@ -1,0 +1,11 @@
+.navigationBar {
+    display: flex;
+    height: 88px;
+    background: linear-gradient(180deg, #494F37 0%, #3A3F2C 97.06%);
+    // TODO: Fix global styles variabe imports.
+    // background: linear-gradient(180deg, var(--tiki-torch-grey) 0%, var(--tiki-torch-grey-shade) 97.06%);
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
