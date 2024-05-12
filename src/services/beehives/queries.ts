@@ -1,4 +1,10 @@
 import { generateDataApiUrl, generateDataSource, generateRequestHeaders } from "@/utils/dataApi";
+
+/**
+ * Returns a summerized overview of the beehives, preformatted for the home page
+ * TODO: Added sensor connectivity (But how will we represent this in the data model?)
+ * @returns Summerized overview of hives
+ */
 export async function getAllBeehives(): Promise<{ documents: SummerizedBeehives[] }> {
   try {
     const response = await fetch(generateDataApiUrl("aggregate"), {
