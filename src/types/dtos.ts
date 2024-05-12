@@ -6,10 +6,19 @@
 /**
  * The beehive data model, summerized and stripped down for the homepage to only the needed info
  */
-interface SummerizedBeehives{
+interface SummerizedBeehive{
     _id: string;
     name: string;
     location: GeoPoint;
-    illness: boolean;
-    last_updated: string | null;
+    inspections?: {
+        illness: string | null;
+        last_updated: string;
+    };
+    sensors?: {
+        timestamp: string;
+        metadata: {
+            sensorId: string;
+        }
+    }
+    creation_date: string;
 }
