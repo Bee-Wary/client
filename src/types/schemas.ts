@@ -8,10 +8,7 @@
 interface Beehive {
     _id: string,
     name: string,
-    location: {
-        type: "Point",
-        coordinates: [number, number]
-    },
+    location: GeoPoint,
     material: string,
     frames: Frame[]
 }
@@ -22,4 +19,12 @@ interface Beehive {
 interface Frame {
     "id": string,
     "title": string
+}
+
+/**
+ * A standerdized way of saving Location coordinates, you can read more [here](https://datatracker.ietf.org/doc/html/rfc7946)
+ */
+interface GeoPoint {
+    type: "Point",
+    coordinates: [number, number]
 }
