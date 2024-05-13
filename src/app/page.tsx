@@ -1,3 +1,4 @@
+import Header from '@/components/shared/header';
 import { getSummerizedBeehives } from '@/services/beehives/queries';
 import styles from '@/styles/Beehives.module.scss';
 
@@ -6,6 +7,7 @@ export default async function Beehivespage() {
 
   return (
     <>
+      <Header/>
         {/* Define both a style from module and use tailwind classes. */}
         <h1 className={`${styles.title} m-3 text-3xl`}>Beehives</h1>
         {/* Use tailwind classes alone. */}

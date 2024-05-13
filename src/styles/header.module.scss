@@ -1,0 +1,22 @@
+.header {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100vw;
+    background-color: #86792E;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.header > * {
+    color:#F3F4F0;
+}
+
+.header > h1 {
+    flex-grow: 1;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.header > svg {
+    font-size: 2rem;
+}
