@@ -10,15 +10,21 @@ interface SummerizedBeehive{
     _id: string;
     name: string;
     location: GeoPoint;
-    inspections?: {
+    last_inspection?: {
         illness: string | null;
         last_updated: string;
     };
-    sensors?: {
+    last_sensor_entry?: {
         timestamp: string;
         metadata: {
             sensorId: string;
         }
-    }
+    },
+    draft_inspections?: {
+        _id: string;
+        title: string;
+        last_updated: string;
+        draft: boolean;
+    }[]
     creation_date: string;
 }
