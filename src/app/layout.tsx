@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { Archivo } from 'next/font/google';
 import type { Metadata, Viewport } from 'next'
+import{ Providers } from '@/utils/config/providers'
+import '../styles/globals.scss';
 
 import BottomNavigationBar from "@/components/navigation/BottomNavigationBar";
 
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
 
 // Viewport settings for all pages.
 export const viewport: Viewport = {
-  colorScheme: 'dark',
+  colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -26,22 +28,22 @@ export const viewport: Viewport = {
 }
 
 // Layout that wraps all pages under it (hierachialy), becomes overwritten if a folder has anoter layout.tsx file.
-const RootLayout = (
+export default function RootLayout(
     // page parameters.
-    {children,}: 
+    { children }: 
     // Parameters types.
-    {children?: ReactNode}
-    ) => {
+    { children: ReactNode }
+    ) {
       return (
-        <html lang="en" className='dark'>
+        <html lang="en" className='light'>
           <body className={`${archivo.className}`}>
+            <Providers>
               {/* Providers include UI component library provider. */}
                 {/* Children is the current route active page.tsx.  */}
                 {children}
                 <BottomNavigationBar />
-            </body>
+            </Providers>
+          </body>
         </html>
       );
   }
-
-  export default RootLayout;
