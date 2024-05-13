@@ -1,0 +1,30 @@
+@use "@/styles/partials/variables" as var;
+
+.main {
+  margin-top: 2rem;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  .beehives {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    article {
+      background-color: #E7E9E2;
+    }
+  }
+}
+
+.sectionTitle{
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+}
+
+.sectionTitle > h2 {
+  flex-grow: 1;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
