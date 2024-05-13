@@ -14,8 +14,12 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/server": "^11.11.0",
+    "@nextui-org/react": "^2.3.6",
+    "@nextui-org/system": "^2.1.2",
+    "@nextui-org/theme": "^2.2.3",
     "@phosphor-icons/react": "^2.1.5",
     "dotenv": "^16.4.5",
+    "framer-motion": "^11.1.9",
     "next": "14.1.0",
     "next-pwa": "^5.6.0",
     "react": "^18",
@@ -30,6 +34,7 @@
     "eslint-config-next": "14.1.0",
     "postcss": "^8.4.38",
     "sass": "^1.71.0",
+    "tailwindcss": "^3.4.3",
     "typescript": "^5"
   }
 }

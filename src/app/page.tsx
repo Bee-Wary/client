@@ -6,10 +6,17 @@ export default async function Beehivespage() {
 
   return (
     <>
-      <h1 className={styles.title}>Beehives</h1>
-      <h2>Welcome, User!</h2>
-      <p className={styles.description}>Footer voor Bee-Wary</p>
-      {data.map(doc => <p key={doc._id}>{doc.name}</p>)}
+        {/* Define both a style from module and use tailwind classes. */}
+        <h1 className={`${styles.title} m-3 text-3xl`}>Beehives</h1>
+        {/* Use tailwind classes alone. */}
+        <h2 className='text-dusty-green font-bold'>Welcome, User!</h2>
+        {/* Use only next.module scss. */}
+        <p className={styles.description}>Bee-Wary</p>
+        {data.map(doc => 
+          <p key={doc._id}>
+            {doc.name}
+          </p>
+        )}
     </>
   );
 }
