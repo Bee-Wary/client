@@ -11,13 +11,63 @@
     display: flex;
     flex-flow: column nowrap;
     gap: 1rem;
-    article {
-      background-color: #E7E9E2;
+  }
+}
+
+.hive {
+  background-color: #e7e9e2;
+  display: flex;
+  flex-flow: row nowrap;
+  border-radius: 8px 8px 32px 8px;
+  align-items: center;
+  gap: 0.5rem;
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px 8px 32px 8px;
+    padding-left: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .hiveHeader{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      flex-grow: 1;
+    }
+    svg {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      font-size: 2.5rem;
+    }
+  }
+  .positiveIndicator{
+    background-color: #639A23;
+    color: #F3F4F0;
+    border-radius: 0 0 50% 50%;
+  }
+  .badIndicator{}
+  .hiveInfo {
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
+    p {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      gap: 0.25rem;
+      .label {
+        font-weight: 600;
+      }
     }
   }
 }
 
-.sectionTitle{
+.sectionTitle {
   display: flex;
   flex-flow: row nowrap;
   gap: 1rem;
