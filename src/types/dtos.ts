@@ -28,3 +28,15 @@ interface SummerizedBeehive{
     }[]
     creation_date: string;
 }
+
+/**
+ * The inspection data model, summerized and stripped down for the homepage to only the needed info
+ */
+interface SummerizedInspection{
+    _id: string;
+    title: string;
+    description: string;
+    ref_beehive: string;
+    last_updated: string;
+    draft: boolean;
+}
