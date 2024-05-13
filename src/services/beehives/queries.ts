@@ -14,7 +14,7 @@ export async function getSummerizedBeehives(): Promise<{ documents: SummerizedBe
         "pipeline": [
           {
             "$lookup": {
-              "as": "inspections", 
+              "as": "last_inspection", 
               "from": "inspections", 
               "foreignField": "ref_beehive", 
               "localField": "_id", 
@@ -36,10 +36,37 @@ export async function getSummerizedBeehives(): Promise<{ documents: SummerizedBe
             }
           }, {
             "$lookup": {
+              "as": "draft_inspections", 
+              "from": "inspections", 
+              "foreignField": "ref_beehive", 
+              "localField": "_id", 
+              "pipeline": [
+                {
+                  "$match": {
+                    "draft": true
+                  }
+                }, {
+                  "$sort": {
+                    "last_updated": -1
+                  }
+                }, {
+                  "$limit": 1
+                }, {
+                  "$project": {
+                    "_id": 1, 
+                    "title": 1, 
+                    "last_updated": 1, 
+                    "draft": 1
+                  }
+                }
+              ]
+            }
+          }, {
+            "$lookup": {
               "from": "sensors", 
               "localField": "sensor_ref", 
               "foreignField": "metadata.sensorId", 
-              "as": "sensors", 
+              "as": "last_sensor_entry", 
               "pipeline": [
                 {
                   "$sort": {
@@ -58,20 +85,31 @@ export async function getSummerizedBeehives(): Promise<{ documents: SummerizedBe
             }
           }, {
             "$unwind": {
-              "path": "$inspections", 
+              "path": "$last_inspection", 
               "preserveNullAndEmptyArrays": true
             }
           }, {
             "$unwind": {
-              "path": "$sensors", 
+              "path": "$last_sensor_entry", 
               "preserveNullAndEmptyArrays": true
             }
           }, {
             "$project": {
               "name": 1, 
               "location": 1, 
-              "inspections": 1, 
-              "sensors": 1, 
+              "last_inspection": 1, 
+              "last_sensor_entry": 1, 
+              "draft_inspections": {
+                "$cond": {
+                  "if": {
+                    "$ne": [
+                      "$draft_inspections", []
+                    ]
+                  }, 
+                  "then": "$draft_inspections", 
+                  "else": "$$REMOVE"
+                }
+              }, 
               "creation_date": 1
             }
           }
