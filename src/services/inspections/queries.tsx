@@ -6,7 +6,7 @@ import { generateDataApiUrl, generateDataSource, generateRequestHeaders } from "
  */
 export async function getSummerizedInspections(): Promise<{ documents: SummerizedInspection[] }> {
   try {
-    const response = await fetch(generateDataApiUrl("aggregate"), {
+    const response = await fetch(generateDataApiUrl("find"), {
       method: "POST",
       headers: generateRequestHeaders(),
       body: JSON.stringify({
