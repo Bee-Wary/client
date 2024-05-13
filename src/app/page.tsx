@@ -1,8 +1,9 @@
+import { getSummerizedBeehives } from '@/services/beehives/queries';
 import styles from '@/styles/Beehives.module.scss';
 
-// Arrow functions work best with hooks.
-const Beehivespage = () => {
-  
+export default async function Beehivespage() {
+  const data = (await getSummerizedBeehives()).documents;
+
   return (
     <>
         {/* Define both a style from module and use tailwind classes. */}
@@ -11,8 +12,11 @@ const Beehivespage = () => {
         <h2 className='text-dusty-green font-bold'>Welcome, User!</h2>
         {/* Use only next.module scss. */}
         <p className={styles.description}>Bee-Wary</p>
+        {data.map(doc => 
+          <p key={doc._id}>
+            {doc.name}
+          </p>
+        )}
     </>
   );
 }
-
-export default Beehivespage;
