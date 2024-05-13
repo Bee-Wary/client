@@ -1,6 +1,6 @@
-import styles from '@/styles/Inspections.module.scss';
+
 import InspectionDetailButton from '@/components/inspection/inspectionDetailButton';
-import Link from 'next/link';import { getAllInspections } from '@/services/inspections/queries';
+import Link from 'next/link';
 
 const InsepctionsPage = async () => {
 
