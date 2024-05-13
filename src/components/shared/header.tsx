@@ -1,5 +1,5 @@
 import { Bell, DotsThree} from "@phosphor-icons/react/dist/ssr"
-import styles from '@/styles/header.module.scss';
+import styles from '@/styles/header/header.module.scss';
 
 export default function Header() {
     return (

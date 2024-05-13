@@ -5,6 +5,10 @@
     background-color: #86792E;
     padding: 1rem;
     gap: 1rem;
+    background-image: url(./flower-header.svg);
+    background-repeat: no-repeat;
+    background-size: 100vw auto;
+    align-items: center;
 }
 
 .header > * {
@@ -18,5 +22,5 @@
 }
 
 .header > svg {
-    font-size: 2rem;
+    font-size: 2.5rem;
 }
