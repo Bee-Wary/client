@@ -23,8 +23,6 @@ const InspectionDetailPage = (
 
          <BwInput props={{ labelTitle: inspectionTitle }}></BwInput>
          <BwDatePicker></BwDatePicker>
-
-
      </>
    );
 }
