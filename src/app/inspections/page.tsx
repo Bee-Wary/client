@@ -1,19 +1,18 @@
+
 import InspectionDetailButton from '@/components/inspection/inspectionDetailButton';
 import Link from 'next/link';
 
 const InsepctionsPage = async () => {
+
   const inspections = await getInspections();
 
   return (
     <>
       <p>
         {inspections.map((inspection: any) => (
-          <Link key={inspection.id} href={{
-            pathname: `inspections/${inspection.id}`,
-            query: { inspectionTitle: inspection.inspectionTitle }
-            }}>
+          <Link key={inspection.id} href={`inspections/${inspection.id}`}>
             <InspectionDetailButton
-              inspectionTitle={inspection.inspectionTitle}
+              inspectionTitle={inspection.title}
               inspectionID={inspection.id}>
             </InspectionDetailButton>
           </Link>
@@ -30,8 +29,8 @@ const getInspections = async () => {
   // return response.json();
   // -- mock data --
   return [
-    {id: "1", inspectionTitle: "first title"},
-    {id: "2", inspectionTitle: "second title"}
+    {id: "1", title: "title"},
+    {id: "2", title: "name"}
   ]
 }
 
