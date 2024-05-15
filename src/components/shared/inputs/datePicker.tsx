@@ -14,7 +14,6 @@ interface props {
  * Custom styled date input field for Bee-Wary.
  * 
  * @param { string } labelTitle - optinal title of the input field.
- *
  */
 export const BwDatePicker = (
     // props are the items passed.
