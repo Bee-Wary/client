@@ -11,6 +11,7 @@ module.exports = {
     extend: {
       colors: {
         "petal-white": "var(--petal-white)",
+        "petal-white-bright": "var(--petal-white-bright)",
         "pineapple-yellow": "var(--pineapple-yellow)",
         "dusty-green": "var(--dusty-green)",
         "tiki-torch-grey": "var(--tiki-torch-grey)",

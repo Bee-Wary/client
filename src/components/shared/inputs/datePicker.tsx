@@ -6,7 +6,7 @@ import { CalendarDots  } from '@phosphor-icons/react/dist/ssr';
 // A hook makes this component stateful and must be client-side, Server Side Rendering (SSR) is not supported.
 import { useState } from 'react';
 
-interface props {
+interface Props {
     labelTitle?: string;
 }
 
@@ -18,7 +18,7 @@ interface props {
 export const BwDatePicker = (
     // props are the items passed.
     { props } : 
-    { props?: props}
+    { props?: Props}
 ) => {
     const labelTitle = props?.labelTitle || 'Date' ;
     
@@ -43,7 +43,7 @@ export const BwDatePicker = (
             labelPlacement='outside'
             classNames={{
                 label: ['text-off-black', 'font-bold', 'text-lg', 'ml-2'],
-                inputWrapper: ['rounded','shadow', 'border-r-5', isInvalid ? 'border-negative-red' : 'border-dusty-green'],
+                inputWrapper: ['rounded','shadow', 'border-r-5', 'bg-petal-white-bright', isInvalid ? 'border-negative-red' : 'border-dusty-green'],
             }}     
         >
         </DateInput>

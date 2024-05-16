@@ -1,6 +1,7 @@
 import React from "react";
 import { BwInput } from "@/components/shared/inputs/input";
 import { BwDatePicker } from "@/components/shared/inputs/datePicker";
+import { BwDropdown } from "@/components/shared/inputs/dropdown";
 
 /**
  * Show the details page of the inspection with the given id.
@@ -23,6 +24,12 @@ const InspectionDetailPage = (
 
          <BwInput props={{ labelTitle: inspectionTitle }}></BwInput>
          <BwDatePicker></BwDatePicker>
+         <BwDropdown props={{
+            dropdownItems : [{ key: "1", label: "Dummy 1"}, { key: "2", label: "Dummy 2"}], 
+            selectedValue: "heeloz",
+            labelTitle: 'dropdown'
+         }}>  
+         </BwDropdown>
      </>
    );
 }
