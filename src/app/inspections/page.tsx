@@ -1,37 +1,36 @@
+import { getSummerizedInspections, getInspectionsOfBeehiveByBeehiveRefID } from '@/services/inspections/queries';
 
 import InspectionDetailButton from '@/components/inspection/inspectionDetailButton';
 import Link from 'next/link';
 
-const InsepctionsPage = async () => {
-
-  const inspections = await getInspections();
+const InsepctionsPage = async (
+  { searchParams } :
+  { searchParams?: { beehiveRefID?: string }}
+) => {
+  const hardcodedBeehiveID = "662f5e43f49b7c7d7a3adc54";
+  const allInspections = searchParams?.beehiveRefID ?
+    (await getInspectionsOfBeehiveByBeehiveRefID(hardcodedBeehiveID)).documents :
+    (await getSummerizedInspections()).documents
 
   return (
     <>
       <p>
-        {inspections.map((inspection: any) => (
-          <Link key={inspection.id} href={`inspections/${inspection.id}`}>
+        {allInspections ? 
+        allInspections.map((mongoDocument =>  
+          <Link key={mongoDocument._id} href={`inspections/${mongoDocument._id}`}>
             <InspectionDetailButton
-              inspectionTitle={inspection.title}
-              inspectionID={inspection.id}>
+              inspectionTitle={mongoDocument.title}
+              inspectionID={mongoDocument._id}>
             </InspectionDetailButton>
           </Link>
-        ))}
+        ))
+        : 
+          "No Inspections found with this beehive!"
+        }
       </p>
       <p>InspectionsPage</p>
     </>
   );
-}
-
-const getInspections = async () => {
-  // TODO: Return real data fetched from an API, preffered via a service in the folder services. 
-  // const response = await getAllInspections('');
-  // return response.json();
-  // -- mock data --
-  return [
-    {id: "1", title: "title"},
-    {id: "2", title: "name"}
-  ]
 }
 
 export default InsepctionsPage;
