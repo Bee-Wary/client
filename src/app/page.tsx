@@ -17,8 +17,10 @@ export default async function Beehivespage() {
           <Link href="#">View all</Link>
         </div>
         {beehives.map(doc =>
+        <Link key={doc._id} href={{
+          pathname: `beehives/${doc._id}`,
+        }}>
           <HiveCard
-            key={doc._id}
             img="https://placehold.co/400x400/png"
             name={doc.name}
             lastInspection={doc.last_inspection ? new Date(doc.last_inspection.last_updated) : undefined}
@@ -26,6 +28,7 @@ export default async function Beehivespage() {
             location={doc.location.coordinates}
             sensor={doc.last_sensor_entry ? true : false}
             />
+        </Link>
         )}
       </section>
       <section className={styles.itemList}>

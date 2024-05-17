@@ -4,11 +4,11 @@
 import { useParams } from 'next/navigation'
 
 const InspectionDetailPage = () => {
-   const { id } = useParams<{ id : string }>();
+   const { inspectionID } = useParams<{ inspectionID : string }>();
 
    return (
      <>
-        <p>InspectionDetailPage {id}</p>
+        <p>InspectionDetailPage {inspectionID}</p>
      </>
    );
 }
