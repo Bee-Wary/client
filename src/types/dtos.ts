@@ -30,6 +30,18 @@ interface SummerizedBeehive{
 }
 
 /**
+ * The beehive frame data model, beehive frames with inspection data.
+ */
+interface BeehiveFrameForInspection{
+    ref_frame: string
+    queen_present: boolean;
+    brood_percentage: number;
+    pollen_percentage: number;
+    honey_percentage: number;
+
+}
+
+/**
  * The inspection data model, summerized and stripped down for the homepage to only the needed info
  */
 interface SummerizedInspection{
@@ -37,6 +49,23 @@ interface SummerizedInspection{
     title: string;
     description: string;
     ref_beehive: string;
+    last_updated: string;
+    draft: boolean;
+}
+
+
+/**
+ * The inspection data model, Detailed data needed to display card info.
+ */
+interface FullInspection{
+    _id: string;
+    title: string;
+    description: string;
+    frames: BeehiveFrameForInspection[];
+    illness: string;
+    medication: string;
+    ref_beehive: string;
+    creation_date: string;
     last_updated: string;
     draft: boolean;
 }
