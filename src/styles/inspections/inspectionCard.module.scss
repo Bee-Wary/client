@@ -1,0 +1,84 @@
+@use "@/styles/partials/variables" as var;
+
+.inspectionCard{
+    display: flex;
+    flex-grow: 1;
+    flex-flow: row nowrap;
+    background-color: var.$petal-white-shade;
+    position: relative;
+    border-radius: var.$rounding-small var.$rounding-small var.$rounding-big var.$rounding-small;
+    overflow: hidden;
+
+
+    > div:nth-child(1) {
+        display: flex;
+        flex-direction: column;
+
+        > img {
+            min-width: 50px;
+            width: 100px;
+            aspect-ratio: 1 / 1;
+            border-radius: var.$rounding-small var.$rounding-small var.$rounding-big var.$rounding-small;
+            padding: 0.5rem;
+
+        }
+    }
+    > div:not(:first-child) {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 0 0.5rem 0.5rem;
+
+
+        .infoRow {
+            display: flex;
+            flex-flow: row nowrap;
+            overflow: hidden;
+            gap: var.$card-spacing;
+            align-items: center;
+
+            svg {
+                min-width: 1rem;
+            }
+            h4 {
+                font-weight: 600;
+            }
+
+            p {
+                display: flex;
+                flex-wrap: wrap;
+                height: 1.5rem;
+            }
+        }
+
+        .headingContainer {
+            display: flex;
+            flex-flow: row nowrap;
+            width: auto;
+            gap: var.$card-spacing;
+            align-items: flex-start;
+
+            h3 {
+                width: auto;
+                font-size: 1.25rem;
+                font-weight: 700;
+                flex-grow: 1;
+            }
+        }
+        @media screen and (max-width: 640px) {
+            .headingContainer {
+                display: flex;
+                flex-flow: column wrap;
+                h3 {
+                    flex-grow: 2;
+                    order: 2;
+                }
+                > div {
+                    order: 1;
+                    flex-grow: 0;
+                    align-self: end;
+                }
+            }
+        }
+    }
+}

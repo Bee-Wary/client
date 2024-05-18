@@ -1,36 +1,42 @@
-import { getSummerizedInspections, getInspectionsOfBeehiveByBeehiveRefID } from '@/services/inspections/queries';
-
-import InspectionDetailButton from '@/components/inspection/inspectionDetailButton';
+import { getAllDetailedInspections, getAllDetailedInspectionsOfBeehiveByBeehiveRefID } from '@/services/inspections/queries';
+import { InspectionCard } from '@/components/inspection/InspectionCard';
 import Link from 'next/link';
+import style from '@/styles/inspections/inspectionsPage.module.scss';
 
-const InsepctionsPage = async (
+const InspectionsPage = async (
   { searchParams } :
   { searchParams?: { beehiveRefID?: string }}
 ) => {
   // Conditional if beeHiveRefID is provided.
-  const allInspections = searchParams?.beehiveRefID ?
-    (await getInspectionsOfBeehiveByBeehiveRefID( searchParams.beehiveRefID )).documents :
-    (await getSummerizedInspections()).documents
-
+  const allInspections: FullInspection[] = searchParams?.beehiveRefID ?
+    (await getAllDetailedInspectionsOfBeehiveByBeehiveRefID( searchParams.beehiveRefID )).documents :
+    (await getAllDetailedInspections()).documents
+    
   return (
     <>
-      <p>
+      <section className={style.ListingContainer}>
         {allInspections ? 
         allInspections.map((mongoDocument =>  
           <Link key={mongoDocument._id} href={`inspections/${mongoDocument._id}`}>
-            <InspectionDetailButton
-              inspectionTitle={mongoDocument.title}
-              inspectionID={mongoDocument._id}>
-            </InspectionDetailButton>
+            <InspectionCard
+              inspectionID={ mongoDocument._id }
+              img="https://placehold.co/400x400/png"
+              title={ mongoDocument.title }
+              description={ mongoDocument.description}
+              illness={ mongoDocument.illness }
+              medication={ mongoDocument.medication }
+              draft={ mongoDocument.draft }
+              creation_date={ mongoDocument.creation_date }
+              last_updated={ mongoDocument.last_updated }
+            />
           </Link>
         ))
         : 
           "No Inspections found with this beehive!"
         }
-      </p>
-      <p>InspectionsPage</p>
+      </section>
     </>
   );
 }
 
-export default InsepctionsPage;
+export default InspectionsPage;

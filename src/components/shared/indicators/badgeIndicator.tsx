@@ -1,9 +1,7 @@
 import { Children, ReactNode } from 'react';
 import { IconProps } from "@phosphor-icons/react";
-
-
-import style from '@/styles/indicators/badgeIndicator.module.scss';
 import Link from 'next/link';
+import style from '@/styles/indicators/badgeIndicator.module.scss';
 
 interface Props{
     isNegative?: boolean;
@@ -38,4 +36,4 @@ const BadgeIndicator = (
     );
 }
 
-export default BadgeIndicator
+export default BadgeIndicator;
