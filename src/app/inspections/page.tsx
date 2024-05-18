@@ -7,9 +7,9 @@ const InsepctionsPage = async (
   { searchParams } :
   { searchParams?: { beehiveRefID?: string }}
 ) => {
-  const hardcodedBeehiveID = "662f5e43f49b7c7d7a3adc54";
+  // Conditional if beeHiveRefID is provided.
   const allInspections = searchParams?.beehiveRefID ?
-    (await getInspectionsOfBeehiveByBeehiveRefID(hardcodedBeehiveID)).documents :
+    (await getInspectionsOfBeehiveByBeehiveRefID( searchParams.beehiveRefID )).documents :
     (await getSummerizedInspections()).documents
 
   return (

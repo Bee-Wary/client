@@ -29,3 +29,37 @@ export async function getSummerizedInspections(): Promise<{ documents: Summerize
     throw new Error(`Realm Data API returned an error: ${e}`)
   }
 }
+
+/**
+ * 
+ */
+export async function getInspectionsOfBeehiveByBeehiveRefID(beehiveID: string): Promise<{ documents: SummerizedInspection[] }> {
+  try {
+    const response = await fetch(generateDataApiUrl("find"), {
+      method: "POST",
+      headers: generateRequestHeaders(),
+      body: JSON.stringify({
+        ...generateDataSource("inspections"),
+        "filter": {
+          "ref_beehive": {
+            "$oid": beehiveID
+          },
+        },
+        "sort": {
+          "draft": -1,
+          "last_updated": -1
+        },
+        "projection": {
+          "_id": 1,
+          "frames": 0,
+          "medication": 0,
+          "creation_date": 0,
+          "illness": 0
+        },
+      })
+    })
+    return response.json();
+  } catch ( error ) {
+    throw new Error(`Realm Data API returned an error on getAllInspections: ${ error }`) 
+  }
+}
