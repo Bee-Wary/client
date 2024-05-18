@@ -1,0 +1,23 @@
+@use "@/styles/partials/variables" as var;
+
+
+.indicator{
+    display: inline-flex;
+    overflow: hidden;
+    position: relative;
+    top: 0%;
+    color: #f3f4f0;
+    border-radius: 0 0 50% 50%;
+    justify-content: center;
+    align-items: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    font-size: 2rem;
+}
+
+.positive {
+    background-color: var.$positive-green;
+}
+.negative {
+    background-color: var.$negative-red;
+}
