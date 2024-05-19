@@ -48,8 +48,14 @@ html {
 body {
   height: 100vh;
   height: 100dvh;
+  display: flex;
+  flex-flow: column nowrap;
   background-color: var.$petal-white;
   color: var.$off-black;
+}
+body .mainWrapper {
+  flex-grow: 1;
+  overflow: auto;
 }
 
 h1 {

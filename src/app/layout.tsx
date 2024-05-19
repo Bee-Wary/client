@@ -38,12 +38,14 @@ export default function RootLayout(
   return (
     <html lang="en" className='light'>
       <body className={`${archivo.className}`}>
+        {/* Providers include UI component library provider. */}
         <Providers>
           {/* TODO: Use a context provider to pass a fitting header text per page. */}
           <Header text='Welcome user' />
-          {/* Providers include UI component library provider. */}
-          {/* Children is the current route active page.tsx.  */}
-          {children}
+            {/* Children is the current route active page.tsx.  */}
+            <div className='mainWrapper'>
+              {children}
+            </div>
           <BottomNavigationBar />
         </Providers>
       </body>
