@@ -40,14 +40,14 @@ export function InspectionCard(
                         <BadgeIndicator 
                             isNegative={medication ? true : undefined}
                             // Define a route with pathname and routeSectionID to scroll to a specific section of the page.
-                            route={{ pathname: `inspections/${inspectionID}`, routeSectionID: 'medication' }}
+                            // route={{ pathname: `inspections/${inspectionID}`, routeSectionID: 'medication' }}
                         >
                             <Pill weight="fill" />
                         </BadgeIndicator>
                         <BadgeIndicator 
                             isNegative={draft ? true : undefined}
                             // Define a route with a pathname only, to make it a link.
-                            route={{ pathname: `inspections/${inspectionID}`}}
+                            // route={{ pathname: `inspections/${inspectionID}`}}
                         >
                             <PencilSimple weight="fill"/>
                         </BadgeIndicator>

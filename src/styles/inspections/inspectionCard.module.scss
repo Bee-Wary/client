@@ -15,7 +15,7 @@
         flex-direction: column;
 
         > img {
-            min-width: 50px;
+            min-width: 100px;
             width: 100px;
             aspect-ratio: 1 / 1;
             border-radius: var.$rounding-small var.$rounding-small var.$rounding-big var.$rounding-small;
@@ -60,6 +60,9 @@
 
             h3 {
                 width: auto;
+                flex-flow: row nowrap;
+                overflow: hidden;
+                max-height: 2rem;
                 font-size: 1.25rem;
                 font-weight: 700;
                 flex-grow: 1;
@@ -69,6 +72,8 @@
             .headingContainer {
                 display: flex;
                 flex-flow: column wrap;
+                gap: 0;
+
                 h3 {
                     flex-grow: 2;
                     order: 2;
