@@ -15,6 +15,35 @@ const InspectionsPage = async (
   return (
     <>
       <section className={style.ListingContainer}>
+        <h2>Inspections with problems:</h2>
+        {allInspections ? 
+        allInspections.map((mongoDocument => 
+          mongoDocument.illness || mongoDocument.medication || mongoDocument.draft ? 
+            <Link key={mongoDocument._id} href={`inspections/${mongoDocument._id}`}>
+              <InspectionCard
+                inspectionID={ mongoDocument._id }
+                img="https://placehold.co/400x400/png"
+                title={ mongoDocument.title }
+                description={ mongoDocument.description}
+                illness={ mongoDocument.illness }
+                medication={ mongoDocument.medication }
+                draft={ mongoDocument.draft }
+                creation_date={ mongoDocument.creation_date }
+                last_updated={ mongoDocument.last_updated }
+              />
+            </Link>
+            :
+            // Do not render anything if illness, medication and draft are all null.
+            null
+        ))
+        : 
+        // Do not render anything if no inspections are found.
+          null
+        }
+      </section>
+
+      <section className={style.ListingContainer}>
+        <h2>All inspections:</h2>
         {allInspections ? 
         allInspections.map((mongoDocument =>  
           <Link key={mongoDocument._id} href={`inspections/${mongoDocument._id}`}>
