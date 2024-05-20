@@ -18,13 +18,11 @@ const CreateInspectionPage = async (
    
 
    return (
-     <InspectionForm 
-      beehiveNames={allBeehivesNames}
-      connectedBeehive={currentBeehiveInfo}
-      currentinspection={undefined}
-      >
-      
-     </InspectionForm>
+        <InspectionForm
+         beehiveNames={allBeehivesNames}
+         connectedBeehive={currentBeehiveInfo}
+         currentinspection={undefined}
+         />
    );
 }
 

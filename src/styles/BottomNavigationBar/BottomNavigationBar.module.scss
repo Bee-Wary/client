@@ -3,7 +3,7 @@
 .navigationBar {
     display: flex;
     flex-shrink: 0;
-    height: 88px;
+    height: var.$BottomNavigationBar-height;
     width: 100%;
     background: linear-gradient(180deg, var.$tiki-torch-grey 0%, var.$tiki-torch-grey-shade 97.06%);
 }

@@ -3,8 +3,9 @@
 import { ReactNode, useState } from 'react';
 import { Select, SelectItem, Input, Button, DatePicker } from "@nextui-org/react";
 import { DateValue, parseDate } from "@internationalized/date";
-import { Pencil, PencilSlash    } from '@phosphor-icons/react/dist/ssr';
+import { Pencil, PencilSlash, CheckCircle    } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
+import { getFullInspectionByID } from "@/services/inspections/queries";
 import style from '@/styles/inspections/inspectionsPage.module.scss';
 import inputStyles from '@/styles/inputs/inputs.module.scss'
 
@@ -21,18 +22,19 @@ type Props = {
 export const InspectionForm = ( props : Props) => {
     const [readmode, setReadmode] = useState<boolean>(false);
     const [beehive , setBeehive] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
-    const [title, setTitle] = useState<string>(props.currentinspection?.title || "");
+    const [inspectionTitle, setInspectionTitle] = useState<string>(props.currentinspection?.title || "");
     const [inspectionDate, setInspectionDate] = useState<DateValue>(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));    
     const [description, setDescription] = useState<string>(props.currentinspection?.description || "");
+    const [inspectionFrames, setInspectionFrames] = useState<BeehiveInspectionFrame[]>(props.currentinspection?.frames || []);
     const [illness, setIllness] = useState<string>(props.currentinspection?.illness || "");
     const [medication, setMedication] = useState<string>(props.currentinspection?.medication || "");
 
 
     return (
-        <>
+    <form className='h-100%'>
         <section className={style.searchAndCrud}>
             <div className={style.searchField}>
-            {/* Insert search field */}
+                {/* Keep field for default flex spacing. */}
             </div>
             {readmode ?
                 <Button 
@@ -48,7 +50,7 @@ export const InspectionForm = ( props : Props) => {
                     className={`${style.actionButton} p-3`}
                     size="lg"
                     endContent={<PencilSlash  weight='fill' size={64}/>}
-                    onPress={() => cancelEdit()}
+                    onPress={() => showWarningModal()}
                 >
                     {readmode ? "Edit" : "Cancel"}
                 </Button>
@@ -77,8 +79,7 @@ export const InspectionForm = ( props : Props) => {
                 ))}
             </Select>
         </section>
-        // Do not render dropdown if no beehive names are passed.
-        : null
+        : null // Do not render dropdown if no beehive names are passed.
         }
 
         <section className={style.ListingContainer}>
@@ -91,9 +92,9 @@ export const InspectionForm = ( props : Props) => {
                 label="Title"
                 labelPlacement='outside'
                 placeholder="Inspection title"
-                value={title}
+                value={inspectionTitle}
                 
-                onValueChange={(value) => (setTitle(value))}
+                onValueChange={(value) => (setInspectionTitle(value))}
                 classNames={{
                     inputWrapper: [(readmode ? "" : 'bg-petal-white-bright')]
                 }}
@@ -129,7 +130,7 @@ export const InspectionForm = ( props : Props) => {
         <section className={style.ListingContainer}>
 
         </section>
-        <section className={style.ListingContainer}>
+        <section className={`${style.ListingContainer} ${readmode ? "" : "pb-[80px]"}` }>
             <Input
                 isReadOnly={readmode}
                 isClearable={!readmode}
@@ -159,11 +160,23 @@ export const InspectionForm = ( props : Props) => {
                 }}
             />
         </section>
-        </>
+        {readmode ?
+        null // Do not render save button if readmode is on.
+        :
+        <Button 
+            type="submit"
+            className={inputStyles.saveButton}
+            startContent={<CheckCircle weight='fill' size={72}/>}
+            onPress={() => HandeleSumbmitAndSave()}
+        >
+            <h3>Save</h3>  
+        </Button>
+        }
+    </form>
     );
 
     function cancelEdit() {
-        setTitle(props.currentinspection?.title || "");
+        setInspectionTitle(props.currentinspection?.title || "");
         setBeehive({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
         setInspectionDate(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));
         setIllness(props.currentinspection?.illness || "");
@@ -171,10 +184,18 @@ export const InspectionForm = ( props : Props) => {
         setReadmode(true)
     } 
 
+    function showWarningModal() {
+        // TODO: logic to warn user about unsaved changes, cancelEdit on confirm.
+        cancelEdit()
+    }
+
     function handleBeehiveSelectionChange(event: React.ChangeEvent<HTMLSelectElement>) {
         const _foundBeehiveName: BeehiveName = props.beehiveNames!.find(beehive => beehive._id === event.target.value)!;
-        setBeehive(_foundBeehiveName);
-        
+        setBeehive(_foundBeehiveName); 
+    }
+
+    function HandeleSumbmitAndSave() {
+        // TODO: Save the inspection to the database.
     }
 }
 

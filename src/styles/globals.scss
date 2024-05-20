@@ -28,6 +28,8 @@
 
   --page-side-spacing: 1.5rem;
   --card-spacing: 0.5rem;
+
+  --BottomNavigationBar-height: 88px;
 }
 
 * {
@@ -56,6 +58,10 @@ body {
 body .mainWrapper {
   flex-grow: 1;
   overflow: auto;
+}
+
+main {
+  position: relative;
 }
 
 h1 {
