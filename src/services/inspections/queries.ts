@@ -34,7 +34,7 @@ export async function getSummerizedInspections(): Promise<{ documents: Summerize
  * Fetches all inspections from the database in full detail with the frames counted.
  * @returns all detailed inspections, frames counted not listed.
  */
-export async function getAllDetailedInspections(): Promise<{ documents: FullInspection[] }> {
+export async function getAllFullyDetailedInspections(): Promise<{ documents: FullInspection[] }> {
   try {
     const response = await fetch(generateDataApiUrl("find"), {
       method: "POST",
@@ -61,7 +61,7 @@ export async function getAllDetailedInspections(): Promise<{ documents: FullInsp
     })
     return response.json();
   } catch ( error ) {
-    throw new Error(`Realm Data API returned an error on getFullInspectionsOfBeehive: ${ error }`) 
+    throw new Error(`Realm Data API returned an error on getAllFullyDetailedInspections: ${ error }`) 
   }
 }
 
@@ -69,7 +69,7 @@ export async function getAllDetailedInspections(): Promise<{ documents: FullInsp
  * Fetches all inspections from a beehive from the database in full detail with the frames counted.
  * @returns all detailed inspections of a beehive, frames counted not listed.
  */
-export async function getAllDetailedInspectionsOfBeehiveByBeehiveRefID(beehiveID: string): Promise<{ documents: FullInspection[] }> {
+export async function getAllFullyDetailedInspectionsByBeehiveRefID(beehiveID: string): Promise<{ documents: FullInspection[] }> {
   try {
     const response = await fetch(generateDataApiUrl("find"), {
       method: "POST",
@@ -90,6 +90,43 @@ export async function getAllDetailedInspectionsOfBeehiveByBeehiveRefID(beehiveID
           "title": 1,
           "description": 1,
           "frameAmount": { "$size": "$frames" },
+          "illness": 1,
+          "medication": 1,
+          "ref_beehive": 1,
+          "creation_date": 1,
+          "last_updated": 1,
+          "draft": 1
+        },
+      })
+    })
+    return response.json();
+  } catch ( error ) {
+    throw new Error(`Realm Data API returned an error on getFullInspectionsOfBeehiveByBeehiveRefID: ${ error }`) 
+  }
+}
+
+/**
+ * fetches a single inspection by its ID
+ * @param inspectionID - string notation of the inspection ObjectID.
+ * @returns detailed inspection, frames listed.
+ */
+export async function getFullInspectionByID(inspectionID: string): Promise<{ document: FullInspection }> {
+  try {
+    const response = await fetch(generateDataApiUrl("findOne"), {
+      method: "POST",
+      headers: generateRequestHeaders(),
+      body: JSON.stringify({
+        ...generateDataSource("inspections"),
+        "filter": {
+          "_id": {
+            "$oid": inspectionID
+          },
+        },
+        "projection": {
+          "_id": 1,
+          "title": 1,
+          "description": 1,
+          "frames": 1,
           "illness": 1,
           "medication": 1,
           "ref_beehive": 1,

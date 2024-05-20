@@ -1,4 +1,4 @@
-import { getAllDetailedInspections, getAllDetailedInspectionsOfBeehiveByBeehiveRefID } from '@/services/inspections/queries';
+import { getAllFullyDetailedInspections, getAllFullyDetailedInspectionsByBeehiveRefID } from '@/services/inspections/queries';
 import { InspectionCard } from '@/components/inspection/InspectionCard';
 import { Button } from "@nextui-org/react";
 import { PlusCircle } from "@phosphor-icons/react/dist/ssr";
@@ -11,8 +11,8 @@ const InspectionsPage = async (
 ) => {
   // Conditional if beeHiveRefID is provided.
   const allInspections: FullInspection[] = searchParams?.beehiveRefID ?
-    (await getAllDetailedInspectionsOfBeehiveByBeehiveRefID( searchParams.beehiveRefID )).documents :
-    (await getAllDetailedInspections()).documents
+    (await getAllFullyDetailedInspectionsByBeehiveRefID( searchParams.beehiveRefID )).documents :
+    (await getAllFullyDetailedInspections()).documents
 
   // TODO: make query to get single beehive by ID.
   // const currentBeehive: SummerizedBeehive | null = searchParams?.beehiveRefID ?
@@ -45,7 +45,7 @@ const InspectionsPage = async (
           {/* Insert search field */}
         </div>
         <Link href={{
-          pathname: '/inspections/create',
+          pathname: '/inspections/create/',
           query: searchParams ? { beehiveRefID: searchParams.beehiveRefID } : null
         }}>
           <Button 
@@ -66,7 +66,10 @@ const InspectionsPage = async (
           <h2>Inspections with problems:</h2>
           {allInspections.map((mongoDocument => 
             mongoDocument.illness || mongoDocument.medication || mongoDocument.draft ? 
-              <Link key={mongoDocument._id} href={`inspections/${mongoDocument._id}`}>
+              <Link key={mongoDocument._id} href={{
+                  pathname: `inspections/manage/${mongoDocument._id}`,
+                  query: {beehiveRefID: searchParams?.beehiveRefID ?? undefined}
+                }}>
                 <InspectionCard
                   inspectionID={ mongoDocument._id }
                   img="https://placehold.co/400x400/png"

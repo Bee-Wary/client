@@ -30,6 +30,14 @@ interface SummerizedBeehive{
 }
 
 /**
+ * Beehive datamodel, basic info for dropdowns or selections. 
+ */
+interface BeehiveName{
+    _id: string;
+    name: string;
+}
+
+/**
  * The beehive frame data model, beehive frames with inspection data.
  */
 interface BeehiveFrameForInspection{
