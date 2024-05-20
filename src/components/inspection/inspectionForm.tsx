@@ -1,9 +1,12 @@
 'use client';
 
 import { ReactNode, useState } from 'react';
-import { Select, SelectItem, SelectedItems, Input, Button } from "@nextui-org/react";
+import { Select, SelectItem, Input, Button, DatePicker } from "@nextui-org/react";
+import { DateValue, parseDate } from "@internationalized/date";
 import { Pencil, PencilSlash    } from '@phosphor-icons/react/dist/ssr';
+import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
 import style from '@/styles/inspections/inspectionsPage.module.scss';
+import inputStyles from '@/styles/inputs/inputs.module.scss'
 
 
 // Children can be any node type (less type safe)
@@ -19,6 +22,11 @@ export const InspectionForm = ( props : Props) => {
     const [readmode, setReadmode] = useState<boolean>(false);
     const [beehive , setBeehive] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
     const [title, setTitle] = useState<string>(props.currentinspection?.title || "");
+    const [inspectionDate, setInspectionDate] = useState<DateValue>(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));    
+    const [description, setDescription] = useState<string>(props.currentinspection?.description || "");
+    const [illness, setIllness] = useState<string>(props.currentinspection?.illness || "");
+    const [medication, setMedication] = useState<string>(props.currentinspection?.medication || "");
+
 
     return (
         <>
@@ -51,12 +59,13 @@ export const InspectionForm = ( props : Props) => {
         <section className={style.ListingContainer}>
             <h2>Connected beehive</h2>
             <Select 
+                isDisabled={readmode}
                 label="Beehive" 
                 labelPlacement='outside'
                 selectionMode="single"
-                isDisabled={readmode}
-                onChange={handleBeehiveSelectionChange}
+                placeholder="Connect a beehive"
                 selectedKeys={[beehive._id]}
+                onChange={handleBeehiveSelectionChange}
                 classNames={{
                     trigger: [(readmode ? "" : 'bg-petal-white-bright')]
                 }}
@@ -81,9 +90,70 @@ export const InspectionForm = ( props : Props) => {
                 type="text"
                 label="Title"
                 labelPlacement='outside'
+                placeholder="Inspection title"
                 value={title}
                 
                 onValueChange={(value) => (setTitle(value))}
+                classNames={{
+                    inputWrapper: [(readmode ? "" : 'bg-petal-white-bright')]
+                }}
+            />
+            <div className='row'>
+                <DatePicker
+                    className={readmode ? "" : inputStyles.datePicker}
+                    isReadOnly={readmode}
+                    shouldForceLeadingZeros
+                    label="Date"
+                    labelPlacement='outside'
+                    value={inspectionDate}
+
+                    onChange={(value) => {setInspectionDate(parseDate(value.year + "-" + MakeMinimumTwoDigit(value.month) + "-" + MakeMinimumTwoDigit(value.day)))}}
+                />
+
+            </div>
+            <Input
+                isReadOnly={readmode}
+                isClearable={!readmode}
+                type="text"
+                label="Description"
+                labelPlacement='outside'
+                placeholder="Inspection description"
+                value={description}
+                
+                onValueChange={(value) => (setDescription(value))}
+                classNames={{
+                    inputWrapper: [(readmode ? "" : 'bg-petal-white-bright')]
+                }}
+            />
+        </section>
+        <section className={style.ListingContainer}>
+
+        </section>
+        <section className={style.ListingContainer}>
+            <Input
+                isReadOnly={readmode}
+                isClearable={!readmode}
+                type="text"
+                label="Illnesses / bugs"
+                labelPlacement='outside'
+                placeholder="Illnesses / bugs noticed"
+                value={illness}
+                
+                onValueChange={(value) => (setIllness(value))}
+                classNames={{
+                    inputWrapper: [(readmode ? "" : 'bg-petal-white-bright')]
+                }}
+            />
+            <Input
+                isReadOnly={readmode}
+                isClearable={!readmode}
+                type="text"
+                label="Medication"
+                labelPlacement='outside'
+                placeholder="Medication applied"
+                value={medication}
+                
+                onValueChange={(value) => (setMedication(value))}
                 classNames={{
                     inputWrapper: [(readmode ? "" : 'bg-petal-white-bright')]
                 }}
@@ -95,6 +165,9 @@ export const InspectionForm = ( props : Props) => {
     function cancelEdit() {
         setTitle(props.currentinspection?.title || "");
         setBeehive({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
+        setInspectionDate(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));
+        setIllness(props.currentinspection?.illness || "");
+        setMedication(props.currentinspection?.medication || "");
         setReadmode(true)
     } 
 

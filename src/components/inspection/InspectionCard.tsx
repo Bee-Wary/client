@@ -1,6 +1,6 @@
 import { Heartbeat, Pill, PencilSimple, CalendarBlank } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
-import { DateToStringDate, DateToStringTime } from "@/utils/helpers/dateTimeToString";
+import { DateToStringDateDDMMYY, DateToStringTime } from "@/utils/helpers/dateTimeToString";
 import BadgeIndicatorRow from "@/components/shared/indicators/badgeIndicatorRow";
 import BadgeIndicator from "@/components/shared/indicators/badgeIndicator";
 import style from "@/styles/inspections/inspectionCard.module.scss";
@@ -56,7 +56,7 @@ export function InspectionCard(
                 <div className={style.infoRow}>
                     <CalendarBlank weight="fill"/>
                     <h4>Created:</h4>
-                    <p>{DateToStringDate(creationDateConvertedToDate)} {DateToStringTime(creationDateConvertedToDate)}</p>
+                    <p>{DateToStringDateDDMMYY(creationDateConvertedToDate)} {DateToStringTime(creationDateConvertedToDate)}</p>
                 </div>
                 <div className={style.infoRow}>
                     <PencilSimple weight="fill"/>

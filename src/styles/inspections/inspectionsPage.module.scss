@@ -35,3 +35,7 @@
 .ListingContainer:not(:last-child){
     margin-bottom: 3rem;
 }
+
+.white [data-slot=input-wrapper]{
+    background-color: var.$petal-white-bright;
+}

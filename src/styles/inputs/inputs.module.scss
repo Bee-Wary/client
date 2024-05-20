@@ -1,0 +1,7 @@
+@use "@/styles/partials/variables" as var;
+
+.datePicker {
+    [data-slot=input-wrapper]:not(:hover){
+        background-color: var.$petal-white-bright;
+    }
+}
