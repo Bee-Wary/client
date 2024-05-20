@@ -5,7 +5,7 @@ import { Select, SelectItem, Input, Button, DatePicker } from "@nextui-org/react
 import { DateValue, parseDate } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle    } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
-import { getFullInspectionByID } from "@/services/inspections/queries";
+import { getFullInspectionByID, createNewInspection } from "@/services/inspections/queries";
 import style from '@/styles/inspections/inspectionsPage.module.scss';
 import inputStyles from '@/styles/inputs/inputs.module.scss'
 
@@ -24,8 +24,8 @@ export const InspectionForm = ( props : Props) => {
     const [beehive , setBeehive] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
     const [inspectionTitle, setInspectionTitle] = useState<string>(props.currentinspection?.title || "");
     const [inspectionDate, setInspectionDate] = useState<DateValue>(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));    
-    const [description, setDescription] = useState<string>(props.currentinspection?.description || "");
-    const [inspectionFrames, setInspectionFrames] = useState<BeehiveInspectionFrame[]>(props.currentinspection?.frames || []);
+    const [inspectionDescription, setInspectionDescription] = useState<string>(props.currentinspection?.description || "");
+    const [inspectionFrames, setInspectionFrames] = useState<InspectionBeeFrame[]>(props.currentinspection?.frames || []);
     const [illness, setIllness] = useState<string>(props.currentinspection?.illness || "");
     const [medication, setMedication] = useState<string>(props.currentinspection?.medication || "");
 
@@ -119,18 +119,27 @@ export const InspectionForm = ( props : Props) => {
                 label="Description"
                 labelPlacement='outside'
                 placeholder="Inspection description"
-                value={description}
+                value={inspectionDescription}
                 
-                onValueChange={(value) => (setDescription(value))}
+                onValueChange={(value) => (setInspectionDescription(value))}
                 classNames={{
                     inputWrapper: [(readmode ? "" : 'bg-petal-white-bright')]
                 }}
             />
         </section>
-        <section className={style.ListingContainer}>
-
-        </section>
+        {inspectionFrames && inspectionFrames.length !== 0 ?
+            <section className={style.ListingContainer}>
+                <h2>Frame Selection:</h2>
+                {inspectionFrames.map((frame, index) => (
+                    <div key={index}>
+                        {frame.ref_frame}
+                    </div>
+                ))}
+            </section>
+        : null // Do not render dropdown if no beehive names are passed.
+        } 
         <section className={`${style.ListingContainer} ${readmode ? "" : "pb-[80px]"}` }>
+            <h2>Mitigations:</h2>
             <Input
                 isReadOnly={readmode}
                 isClearable={!readmode}
@@ -179,6 +188,7 @@ export const InspectionForm = ( props : Props) => {
         setInspectionTitle(props.currentinspection?.title || "");
         setBeehive({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
         setInspectionDate(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));
+        setInspectionDescription(props.currentinspection?.description || "");
         setIllness(props.currentinspection?.illness || "");
         setMedication(props.currentinspection?.medication || "");
         setReadmode(true)
@@ -196,6 +206,16 @@ export const InspectionForm = ( props : Props) => {
 
     function HandeleSumbmitAndSave() {
         // TODO: Save the inspection to the database.
+        console.log(createNewInspection({
+            title: inspectionTitle,
+            description: inspectionDescription,
+            frames: inspectionFrames,
+            illness: illness,
+            medication: medication, 
+            ref_beehive: beehive._id, 
+            creation_date: new Date(inspectionDate.toString()).toISOString(),
+            e
+        }));
     }
 }
 

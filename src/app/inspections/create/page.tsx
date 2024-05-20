@@ -12,10 +12,7 @@ const CreateInspectionPage = async (
       // TODO: Finish query single beehive by ID, then pass it to the form component. 
    const currentBeehiveInfo: SummerizedBeehive | undefined = searchParams.beehiveRefID ?
       (await getSummerizedBeehiveByID(searchParams.beehiveRefID)).document
-      : undefined ;
-
-   console.log("### beehive from ID: ", currentBeehiveInfo);
-   
+      : undefined ;   
 
    return (
         <InspectionForm

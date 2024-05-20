@@ -40,7 +40,7 @@ interface BeehiveName{
 /**
  * The beehive frame data model, beehive frames with inspection data.
  */
-interface BeehiveFrameForInspection{
+interface InspectionBeeFrame{
     ref_frame: string
     queen_present: boolean;
     brood_percentage: number;
@@ -69,7 +69,7 @@ interface FullInspection{
     _id: string;
     title: string;
     description: string;
-    frames: BeehiveFrameForInspection[];
+    frames: InspectionBeeFrame[];
     illness: string;
     medication: string;
     ref_beehive: string;
