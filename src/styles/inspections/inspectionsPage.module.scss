@@ -12,14 +12,15 @@
     .searchField{
         flex-grow: 1;
     }
-    button {
-        flex-grow: 0;
-        background-color: var.$dusty-green;
-        color: var.$pineapple-yellow;
-        font-size: 1.25rem;
-        font-weight: 700;
-        height: 4rem;
-    }
+}
+
+.actionButton {
+    flex-grow: 0;
+    background-color: var.$dusty-green;
+    color: var.$pineapple-yellow;
+    font-size: 1.25rem;
+    font-weight: 700;
+    height: 4rem;
 }
 
 .ListingContainer{

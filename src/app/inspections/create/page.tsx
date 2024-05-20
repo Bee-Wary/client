@@ -9,7 +9,7 @@ const CreateInspectionPage = async (
    { searchParams: { beehiveRefID?: string }} 
 ) => {   
    const allBeehivesNames: BeehiveName[] = (await getAllBeehiveNamesAndIDs()).documents
-      // TODO: Finish query single beehive by ID. 
+      // TODO: Finish query single beehive by ID, then pass it to the form component. 
    const currentBeehiveInfo: SummerizedBeehive | undefined = searchParams.beehiveRefID ?
       (await getSummerizedBeehiveByID(searchParams.beehiveRefID)).document
       : undefined ;

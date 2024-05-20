@@ -49,7 +49,7 @@ const InspectionsPage = async (
           query: searchParams ? { beehiveRefID: searchParams.beehiveRefID } : null
         }}>
           <Button 
-            className='p-3 '
+            className={`${style.actionButton} p-3`}
             size="lg"
             endContent={<PlusCircle 
             weight='fill' size={64}/>}
