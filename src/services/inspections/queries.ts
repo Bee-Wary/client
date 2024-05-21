@@ -105,6 +105,51 @@ export async function getAllFullyDetailedInspectionsByBeehiveRefID(beehiveID: st
   }
 }
 
+export async function getMergedInspectionByBeehiveRefID(beehiveRefID: string): Promise<{ documents: FullInspection[] }> {
+  try {
+    const response = await fetch(generateDataApiUrl("aggregate"), {
+      method: "POST",
+      headers: generateRequestHeaders(),
+      body: JSON.stringify({
+        ...generateDataSource("inspections"),
+        "pipeline": [
+          {
+            '$match': {
+              'ref_beehive': { "$oid": beehiveRefID }
+            }
+          }, {
+            '$lookup': {
+              'as': 'frameIDs', 
+              'from': 'beehives', 
+              'localField': 'ref_beehive', 
+              'foreignField': '_id', 
+              'pipeline': [
+                {
+                  '$project': {
+                    '_id': 0, 
+                    'frames.id': 1, 
+                    'frames.title': 1
+                  }
+                }
+              ]
+            }
+          }, {
+            '$unwind': {
+              'path': '$frameIDs', 
+              'preserveNullAndEmptyArrays': true
+            }
+          }
+        ]
+      })
+    })
+    return response.json();
+  } catch ( error ) {
+    throw new Error(`Realm Data API returned an error on getInspectionByBeehiveID: ${ error }`) 
+  }
+}
+
+
+
 /**
  * fetches a single inspection by its ID
  * @param inspectionID - string notation of the inspection ObjectID.

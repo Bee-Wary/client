@@ -15,13 +15,14 @@ type Props = {
     beehiveNames?: BeehiveName[],
     connectedBeehive?: SummerizedBeehive,
     currentinspection?: FullInspection ,
-    // Children defenition:
-    children?: ReactNode,
 }
+
+// ! first finish the create, this wil only have a beehive as ref,
+// * use a suspense until a beehive is selected (or passed). if one is selected query the beehive and fill its info.
 
 export const InspectionForm = ( props : Props) => {
     const [readmode, setReadmode] = useState<boolean>(false);
-    const [beehive , setBeehive] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
+    const [beehiveName , setBeehiveName] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
     const [connectedBeehive, setConnectedBeehive] = useState<SummerizedBeehive | undefined>(props.connectedBeehive || undefined)
     const [inspectionTitle, setInspectionTitle] = useState<string>(props.currentinspection?.title || "");
     const [inspectionDate, setInspectionDate] = useState<DateValue>(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));    
@@ -29,14 +30,16 @@ export const InspectionForm = ( props : Props) => {
     const [inspectionFrames, setInspectionFrames] = useState<InspectionBeeFrame[]>(props.currentinspection?.frames || [
         // Temp mock data.
         {
-            ref_frame: "hello",
+            id: "1",
+            title: "hello",
             queen_present: true,
             brood_percentage: 10,
             pollen_percentage: 20,
             honey_percentage: 40
         },
         {
-            ref_frame: "world",
+            id: "2",
+            title: "world",
             queen_present: false,
             brood_percentage: 30,
             pollen_percentage: 40,
@@ -83,7 +86,7 @@ export const InspectionForm = ( props : Props) => {
                 labelPlacement='outside'
                 selectionMode="single"
                 placeholder="Connect a beehive"
-                selectedKeys={[beehive?._id]}
+                selectedKeys={[beehiveName?._id]}
                 onChange={handleBeehiveSelectionChange}
                 classNames={{
                     trigger: [(readmode ? "" : 'bg-petal-white-bright')]
@@ -145,7 +148,7 @@ export const InspectionForm = ( props : Props) => {
             />
         </section>
         {/* //TODO: Finish carousel. */}
-        {beehive && inspectionFrames.length !== 0 ?
+        {connectedBeehive && inspectionFrames.length !== 0 ?
             <section className={style.ListingContainer}>
                 <h2>Frame Selection:</h2>
                 <div id='frameCarousel' className={style.carousel}>
@@ -162,7 +165,7 @@ export const InspectionForm = ( props : Props) => {
                     <ul id='frameContent'>
                     {inspectionFrames.map((frame, index) => (
                         <li key={index}>
-                            {frame.ref_frame}
+                            {frame.title}
                         </li>
                     ))}
                     </ul>
@@ -201,6 +204,7 @@ export const InspectionForm = ( props : Props) => {
                 }}
             />
         </section>
+
         {readmode ?
         null // Do not render save button if readmode is on.
         :
@@ -218,7 +222,7 @@ export const InspectionForm = ( props : Props) => {
 
     function cancelEdit() {
         setInspectionTitle(props.currentinspection?.title || "");
-        setBeehive({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
+        setBeehiveName({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
         setInspectionDate(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));
         setInspectionDescription(props.currentinspection?.description || "");
         setIllness(props.currentinspection?.illness || "");
@@ -242,7 +246,7 @@ export const InspectionForm = ( props : Props) => {
 
     function handleBeehiveSelectionChange(event: React.ChangeEvent<HTMLSelectElement>) {
         const _foundBeehiveName: BeehiveName = props.beehiveNames!.find(beehive => beehive._id === event.target.value)!;
-        setBeehive(_foundBeehiveName); 
+        setBeehiveName(_foundBeehiveName); 
         // awiat connectedBeehive
     }
 
@@ -254,7 +258,7 @@ export const InspectionForm = ( props : Props) => {
             frames: inspectionFrames,
             illness: illness,
             medication: medication,
-            ref_beehive: beehive._id,
+            ref_beehive: connectedBeehive?._id || "",
             creation_date: new Date(inspectionDate.toString()).toISOString(),
             last_updated: new Date().toISOString(),
             draft: inspectionDraft

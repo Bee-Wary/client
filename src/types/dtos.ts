@@ -41,12 +41,12 @@ type BeehiveName = {
  * The beehive frame data model, beehive frames with inspection data.
  */
 type InspectionBeeFrame = {
-    ref_frame: string
+    id: string
+    title: string,
     queen_present: boolean;
     brood_percentage: number;
     pollen_percentage: number;
     honey_percentage: number;
-
 }
 
 /**
