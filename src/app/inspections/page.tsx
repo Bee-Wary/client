@@ -18,7 +18,7 @@ const InspectionsPage = async (
 
   const currentBeehive: SummerizedBeehive | null = searchParams?.beehiveRefID ?
     (await getSummerizedBeehiveByID(searchParams.beehiveRefID)).documents[0]
-    : null ;
+    : null ;    
     
   return (
     <>

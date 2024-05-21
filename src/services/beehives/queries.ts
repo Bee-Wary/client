@@ -228,7 +228,7 @@ export async function getSummerizedBeehives(): Promise<{ documents: SummerizedBe
 }
 */
 
-export async function getSummerizedBeehiveByID(beehiveID: string): Promise<{ documents: SummerizedBeehive }> {
+export async function getSummerizedBeehiveByID(beehiveID: string): Promise<{ documents: SummerizedBeehive[] }> {
   try {
     const response = await fetch(generateDataApiUrl("aggregate"), {
       method: "POST",
