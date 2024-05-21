@@ -144,6 +144,7 @@ export const InspectionForm = ( props : Props) => {
                 }}
             />
         </section>
+        {/* //TODO: Finish carousel. */}
         {beehive && inspectionFrames.length !== 0 ?
             <section className={style.ListingContainer}>
                 <h2>Frame Selection:</h2>
