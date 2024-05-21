@@ -1,4 +1,4 @@
-import { getAllBeehiveNamesAndIDs, getSummerizedBeehiveByID } from '@/services/beehives/queries';
+import { getAllBeehiveNamesAndIDs, getBeehiveByID } from '@/services/beehives/queries';
 import { getFullInspectionByID } from "@/services/inspections/queries";
 import { InspectionForm } from '@/components/inspection/inspectionForm';
 import styles from '@/styles/inspections/inspectionsPage.module.scss';
@@ -15,8 +15,8 @@ const CreateInspectionPage = async (
 
    // * This Will be querried after a beehive is selected, OR if a beehiveRefID is passed as searchparams.
    // via this we know how many frames there are needed.
-   const currentBeehiveInfo: SummerizedBeehive | undefined = searchParams.beehiveRefID ?
-      (await getSummerizedBeehiveByID(searchParams.beehiveRefID)).documents
+   const connectedBeehive: Beehive | undefined = searchParams.beehiveRefID ?
+      (await getBeehiveByID(searchParams.beehiveRefID)).document
       : undefined ;   
 
    // * This will be passed if editing a existing inspection ONLY.
@@ -45,7 +45,7 @@ const CreateInspectionPage = async (
    return (
         <InspectionForm
          beehiveNames={allBeehivesNames}
-         connectedBeehive={currentBeehiveInfo}
+         connectedBeehive={connectedBeehive}
          currentinspection={currentinspection}
          />
    );

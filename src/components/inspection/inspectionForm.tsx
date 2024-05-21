@@ -6,6 +6,7 @@ import { DateValue, parseDate } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
 import { getFullInspectionByID, createNewInspection } from "@/services/inspections/queries";
+import { getBeehiveByID } from '@/services/beehives/queries';
 import style from '@/styles/inspections/inspectionsPage.module.scss';
 import inputStyles from '@/styles/inputs/inputs.module.scss'
 
@@ -13,7 +14,7 @@ import inputStyles from '@/styles/inputs/inputs.module.scss'
 // Children can be any node type (less type safe)
 type Props = {
     beehiveNames?: BeehiveName[],
-    connectedBeehive?: SummerizedBeehive,
+    connectedBeehive?: Beehive,
     currentinspection?: FullInspection ,
 }
 
@@ -23,7 +24,7 @@ type Props = {
 export const InspectionForm = ( props : Props) => {
     const [readmode, setReadmode] = useState<boolean>(false);
     const [beehiveName , setBeehiveName] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
-    const [connectedBeehive, setConnectedBeehive] = useState<SummerizedBeehive | undefined>(props.connectedBeehive || undefined)
+    const [connectedBeehive, setConnectedBeehive] = useState<Beehive | undefined>(props.connectedBeehive || undefined)
     const [inspectionTitle, setInspectionTitle] = useState<string>(props.currentinspection?.title || "");
     const [inspectionDate, setInspectionDate] = useState<DateValue>(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));    
     const [inspectionDescription, setInspectionDescription] = useState<string>(props.currentinspection?.description || "");

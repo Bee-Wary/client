@@ -23,7 +23,7 @@ export async function getAllBeehiveNamesAndIDs(): Promise<{ documents: BeehiveNa
   }
 }
 
-export async function getBeehiveByID(beehiveID: string): Promise<{ documents: Beehive }> {
+export async function getBeehiveByID(beehiveID: string): Promise<{ document: Beehive }> {
   try {
     const response = await fetch(generateDataApiUrl("findOne"), {
       method: "POST",
@@ -42,7 +42,7 @@ export async function getBeehiveByID(beehiveID: string): Promise<{ documents: Be
 }
 
 // ! --> TG deprecated, use the frame merger function.
-export async function getFramesByBeehiveID(beehiveID: string): Promise<{ documents: Beehive }> {
+export async function getFramesByBeehiveID(beehiveID: string): Promise<{ documents: Frame }> {
   try {
     const response = await fetch(generateDataApiUrl("aggregate"), {
       method: "POST",

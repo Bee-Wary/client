@@ -3,12 +3,19 @@
  * *This is mostly used when working with aggregation pipelines
  */
 
+
+/**
+ * Beehive datamodel, basic info for dropdowns or selections. 
+ */
+type BeehiveName = {
+    _id: string;
+    name: string;
+}
+
 /**
  * The beehive data model, summerized and stripped down for the homepage to only the needed info
  */
-interface SummerizedBeehive{
-    _id: string;
-    name: string;
+type SummerizedBeehive = BeehiveName & {
     location: GeoPoint;
     last_inspection?: {
         illness: string | null;
@@ -27,14 +34,6 @@ interface SummerizedBeehive{
         draft: boolean;
     }[]
     creation_date: string;
-}
-
-/**
- * Beehive datamodel, basic info for dropdowns or selections. 
- */
-type BeehiveName = {
-    _id: string;
-    name: string;
 }
 
 /**
