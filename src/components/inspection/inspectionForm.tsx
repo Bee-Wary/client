@@ -6,12 +6,10 @@ import { DateValue, parseDate } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
 import { getFullInspectionByID, createNewInspection } from "@/services/inspections/queries";
-import { getBeehiveByID } from '@/services/beehives/queries';
+import { fetchBeehiveByID } from "@/services/beehives/routeFetches";
 import style from '@/styles/inspections/inspectionsPage.module.scss';
 import inputStyles from '@/styles/inputs/inputs.module.scss'
 
-
-// Children can be any node type (less type safe)
 type Props = {
     beehiveNames?: BeehiveName[],
     connectedBeehive?: Beehive,
@@ -19,8 +17,6 @@ type Props = {
 }
 
 // ! first finish the create, this wil only have a beehive as ref,
-// * use a suspense until a beehive is selected (or passed). if one is selected query the beehive and fill its info.
-
 export const InspectionForm = ( props : Props) => {
     const [readmode, setReadmode] = useState<boolean>(false);
     const [beehiveName , setBeehiveName] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
@@ -28,36 +24,19 @@ export const InspectionForm = ( props : Props) => {
     const [inspectionTitle, setInspectionTitle] = useState<string>(props.currentinspection?.title || "");
     const [inspectionDate, setInspectionDate] = useState<DateValue>(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));    
     const [inspectionDescription, setInspectionDescription] = useState<string>(props.currentinspection?.description || "");
-    const [inspectionFrames, setInspectionFrames] = useState<InspectionBeeFrame[]>(props.currentinspection?.frames || [
-        // Temp mock data.
-        {
-            id: "1",
-            title: "hello",
-            queen_present: true,
-            brood_percentage: 10,
-            pollen_percentage: 20,
-            honey_percentage: 40
-        },
-        {
-            id: "2",
-            title: "world",
-            queen_present: false,
-            brood_percentage: 30,
-            pollen_percentage: 40,
-            honey_percentage: 60
-        }  
-    ]);
+    // TODO: fallback for if there is no currentInspection frames but there is a connected beehive with frames passed.
+    const [inspectionFrames, setInspectionFrames] = useState<InspectionBeeFrame[]>(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
     const [illness, setIllness] = useState<string>(props.currentinspection?.illness || "");
     const [medication, setMedication] = useState<string>(props.currentinspection?.medication || "");
     const [inspectionDraft, setInspectionDraft] = useState<boolean>(true)
-    
+
     return (
     <form className='h-100%'>
         <section className={style.searchAndCrud}>
             <div className={style.searchField}>
                 {/* Keep field for default flex spacing. */}
             </div>
-            {readmode ?
+            {readmode ? // Each button has different logic.
                 <Button 
                     className={`${style.actionButton} p-3`}
                     size="lg"
@@ -71,36 +50,36 @@ export const InspectionForm = ( props : Props) => {
                     className={`${style.actionButton} p-3`}
                     size="lg"
                     endContent={<PencilSlash  weight='fill' size={64}/>}
-                    onPress={() => showWarningModal()}
+                    onPress={() => cancelEdit()}
                 >
-                    {readmode ? "Edit" : "Cancel"}
+                    Cancel
                 </Button>
             }  
         </section>
 
         {props.beehiveNames ?
-        <section className={style.ListingContainer}>
-            <h2>Connected beehive</h2>
-            <Select 
-                isDisabled={readmode}
-                label="Beehive" 
-                labelPlacement='outside'
-                selectionMode="single"
-                placeholder="Connect a beehive"
-                selectedKeys={[beehiveName?._id]}
-                onChange={handleBeehiveSelectionChange}
-                classNames={{
-                    trigger: [(readmode ? "" : 'bg-petal-white-bright')]
-                }}
-            >
-                {props.beehiveNames.map((beehive) => (
-                    <SelectItem key={beehive._id} textValue={beehive.name} value={beehive._id}>
-                        {beehive.name}
-                    </SelectItem>
-                ))}
-            </Select>
-        </section>
-        : null // Do not render dropdown if no beehive names are passed.
+            <section className={style.ListingContainer}>
+                <h2>Connected beehive</h2>
+                <Select 
+                    isDisabled={readmode}
+                    label="Beehive" 
+                    labelPlacement='outside'
+                    selectionMode="single"
+                    placeholder="Connect a beehive"
+                    selectedKeys={[beehiveName?._id]}
+                    onChange={handleBeehiveSelectionChange}
+                    classNames={{
+                        trigger: [(readmode ? "" : 'bg-petal-white-bright')]
+                    }}
+                >
+                    {props.beehiveNames.map((beehive) => (
+                        <SelectItem key={beehive._id} textValue={beehive.name} value={beehive._id}>
+                            {beehive.name}
+                        </SelectItem>
+                    ))}
+                </Select>
+            </section>
+            : null // Do not render dropdown if no beehive names are passed.
         }
 
         <section className={style.ListingContainer}>
@@ -149,30 +128,34 @@ export const InspectionForm = ( props : Props) => {
             />
         </section>
         {/* //TODO: Finish carousel. */}
-        {connectedBeehive && inspectionFrames.length !== 0 ?
+        {connectedBeehive && inspectionFrames.length >= 1 ?
             <section className={style.ListingContainer}>
                 <h2>Frame Selection:</h2>
                 <div id='frameCarousel' className={style.carousel}>
-                    <Button isIconOnly
-                     onPress={(event) => carouselLeft(event)}
+                    <Button
+                        id='frameCarouselLeft' 
+                        isIconOnly
+                        onPress={(event) => carouselLeft(event)}
                     >
                         <CaretLeft  weight='fill'/>
                     </Button>
-                    <Button isIconOnly
+                    <Button 
+                        id='frameCarouselRight' 
+                        isIconOnly
                         onPress={(event) => carouselRight(event)}
                     >
                         <CaretRight weight='fill'/>
                     </Button>
                     <ul id='frameContent'>
                     {inspectionFrames.map((frame, index) => (
-                        <li key={index}>
-                            {frame.title}
+                        <li key={frame.id}>
+                            {frame.title} {frame.id}
                         </li>
                     ))}
                     </ul>
                 </div>
             </section>
-        : null // Do not render dropdown if no beehive names are passed.
+        : null // Do not render dropdown if no beehive is connected.
         } 
         <section className={`${style.ListingContainer} ${readmode ? "" : "pb-[80px]"}` }>
             <h2>Mitigations:</h2>
@@ -221,19 +204,10 @@ export const InspectionForm = ( props : Props) => {
     </form>
     );
 
-    function cancelEdit() {
-        setInspectionTitle(props.currentinspection?.title || "");
-        setBeehiveName({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
-        setInspectionDate(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));
-        setInspectionDescription(props.currentinspection?.description || "");
-        setIllness(props.currentinspection?.illness || "");
-        setMedication(props.currentinspection?.medication || "");
-        setReadmode(true)
-    } 
 
-    function showWarningModal() {
+    function showWarningModal(): boolean {
         // TODO: logic to warn user about unsaved changes, cancelEdit on confirm.
-        cancelEdit()
+        return true
     }
 
     function carouselLeft(event: any) {
@@ -245,11 +219,31 @@ export const InspectionForm = ( props : Props) => {
         // document.getElementById("frameContent")?.scrollLeft
     }
 
-    function handleBeehiveSelectionChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    async function handleBeehiveSelectionChange(event: React.ChangeEvent<HTMLSelectElement>) {
         const _foundBeehiveName: BeehiveName = props.beehiveNames!.find(beehive => beehive._id === event.target.value)!;
-        setBeehiveName(_foundBeehiveName); 
-        // awiat connectedBeehive
+        setBeehiveName(_foundBeehiveName);
+        if (_foundBeehiveName && _foundBeehiveName._id) {
+            let _currentBeehive = await fetchBeehiveByID(_foundBeehiveName._id);
+            setConnectedBeehive(_currentBeehive);
+            setInspectionFrames(_currentBeehive.frames);
+        } else {
+            setConnectedBeehive(undefined);
+            setInspectionFrames([]);
+        }
     }
+
+    function cancelEdit() {
+        if(showWarningModal()) {
+            setBeehiveName({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
+            setInspectionTitle(props.currentinspection?.title || "");
+            setInspectionDate(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));
+            setInspectionDescription(props.currentinspection?.description || "");
+            setInspectionFrames(props.currentinspection?.frames || []);
+            setIllness(props.currentinspection?.illness || "");
+            setMedication(props.currentinspection?.medication || "");
+            setReadmode(true)
+        }
+    } 
 
     async function HandeleSumbmitAndSave() {
         // TODO: Save the inspection to the database.
@@ -265,10 +259,6 @@ export const InspectionForm = ( props : Props) => {
             draft: inspectionDraft
         }));
     }
-
-    // function checkIsDraft() {
-    //     if (inspectionDescription)
-    // }
 }
 
 export default InspectionForm;
