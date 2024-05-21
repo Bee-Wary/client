@@ -1,11 +1,11 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
-import { Select, SelectItem, Input, Button, DatePicker } from "@nextui-org/react";
+import { useState } from 'react';
+import { Select, SelectItem, Input, Button, DatePicker, Slider } from "@nextui-org/react";
 import { DateValue, parseDate } from "@internationalized/date";
-import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr';
+import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight, Crown  } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
-import { getFullInspectionByID, createNewInspection } from "@/services/inspections/queries";
+import { createNewInspection } from "@/services/inspections/queries";
 import { fetchBeehiveByID } from "@/services/beehives/routeFetches";
 import style from '@/styles/inspections/inspectionsPage.module.scss';
 import inputStyles from '@/styles/inputs/inputs.module.scss'
@@ -132,24 +132,106 @@ export const InspectionForm = ( props : Props) => {
             <section className={style.ListingContainer}>
                 <h2>Frame Selection:</h2>
                 <div id='frameCarousel' className={style.carousel}>
-                    <Button
-                        id='frameCarouselLeft' 
-                        isIconOnly
-                        onPress={(event) => carouselLeft(event)}
-                    >
-                        <CaretLeft  weight='fill'/>
-                    </Button>
-                    <Button 
-                        id='frameCarouselRight' 
-                        isIconOnly
-                        onPress={(event) => carouselRight(event)}
-                    >
-                        <CaretRight weight='fill'/>
-                    </Button>
+                    <div className={style.carouselButtonContainer}>
+                        <Button 
+                            id='frameCarouselLeft' 
+                            isIconOnly
+                            onPress={() => carouselScroll(-1)}
+                        >
+                            <CaretLeft  weight='fill'/>
+                        </Button>
+                        <Button 
+                            id='frameCarouselRight' 
+                            isIconOnly
+                            onPress={() => carouselScroll(1)}
+                        >
+                            <CaretRight weight='fill'/>
+                        </Button>
+                    </div>
                     <ul id='frameContent'>
                     {inspectionFrames.map((frame, index) => (
                         <li key={frame.id}>
-                            {frame.title} {frame.id}
+                            <h4>{frame.title}</h4>
+                            <div className='flex justify-center'>
+                                {frame.queen_present ?
+                                <Button 
+                                    className={`${style.actionButton}  flex flex-col gap-0 align-self-center p-3`}
+                                    startContent={<Crown weight='fill' size={64}/>}
+                                    onPress={() => updateFrameArrayValue(frame.id, "queen_present", false)}
+                                >
+                                    Queen
+                                </Button>
+                                :
+                                <Button 
+                                    className={`${style.actionButton} ${style.unselected} flex flex-col gap-0 align-self-center p-3`}
+                                    startContent={<Crown weight='fill' size={64}/>}
+                                    onPress={() => updateFrameArrayValue(frame.id, "queen_present", true)}
+                                >
+                                    Queen
+                                </Button>
+                                }
+                            </div>
+                            <Slider 
+                                className={inputStyles.slider}  
+                                size="lg"
+                                step={10}
+                                isDisabled={readmode}
+                                label="Brood %"
+                                showSteps={true} 
+                                maxValue={100} 
+                                minValue={0} 
+                                defaultValue={frame.brood_percentage}
+                                onChange={(value) => updateFrameArrayValue(frame.id, "brood_percentage", Number(value))}
+                                marks={[
+                                    { value: 0, label: "0%"},
+                                    { value: 20, label: "20%"},
+                                    { value: 40, label: "40%"},
+                                    { value: 60, label: "60%"},
+                                    { value: 80, label: "80%"},
+                                    { value: 100, label: "100%"},
+                                  ]}
+                            />
+                            <Slider 
+                                className={inputStyles.slider}  
+                                size="lg"
+                                step={10}
+                                isDisabled={readmode}
+                                label="Pollen %"
+                                showSteps={true} 
+                                maxValue={100} 
+                                minValue={0} 
+                                defaultValue={frame.pollen_percentage}
+                                onChange={(value) => updateFrameArrayValue(frame.id, "pollen_percentage", Number(value))}
+                                marks={[
+                                    { value: 0, label: "0%"},
+                                    { value: 20, label: "20%"},
+                                    { value: 40, label: "40%"},
+                                    { value: 60, label: "60%"},
+                                    { value: 80, label: "80%"},
+                                    { value: 100, label: "100%"},
+                                  ]}
+                            />
+                            <Slider 
+                                className={inputStyles.slider}  
+                                size="lg"
+                                step={10}
+                                isDisabled={readmode}
+                                label="Honey %"
+                                showSteps={true} 
+                                maxValue={100} 
+                                minValue={0} 
+                                defaultValue={frame.honey_percentage}
+                                onChange={(value) => updateFrameArrayValue(frame.id, "honey_percentage", Number(value))}
+                                marks={[
+                                    { value: 0, label: "0%"},
+                                    { value: 20, label: "20%"},
+                                    { value: 40, label: "40%"},
+                                    { value: 60, label: "60%"},
+                                    { value: 80, label: "80%"},
+                                    { value: 100, label: "100%"},
+                                  ]}
+                            />
+
                         </li>
                     ))}
                     </ul>
@@ -210,13 +292,10 @@ export const InspectionForm = ( props : Props) => {
         return true
     }
 
-    function carouselLeft(event: any) {
-        console.log(event);
-        // document.getElementById("frameContent")?.scrollLeft 
-    }
-    function carouselRight(event: any) {
-        console.log(event);
-        // document.getElementById("frameContent")?.scrollLeft
+    function carouselScroll(directionNumber: 1 | -1 ) {
+        const _frameContent = document.getElementById("frameContent");
+        const _frameWidth = document.querySelector("#frameContent li")!.clientWidth;
+        _frameContent!.scrollLeft += (_frameWidth * directionNumber)
     }
 
     async function handleBeehiveSelectionChange(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -232,13 +311,27 @@ export const InspectionForm = ( props : Props) => {
         }
     }
 
+    function updateFrameArrayValue(id: string, key: string, value: string | boolean | number) {
+        const index = inspectionFrames.findIndex(frame => frame.id === id);
+
+        if (index !== -1) {
+        // Create a new array with the updated object
+        const updatedInspectionFrames = [
+            ...inspectionFrames.slice(0, index),
+            { ...inspectionFrames[index], [key]: value },
+            ...inspectionFrames.slice(index + 1)
+        ];
+        setInspectionFrames(updatedInspectionFrames);
+        }
+    }
+
     function cancelEdit() {
         if(showWarningModal()) {
             setBeehiveName({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
             setInspectionTitle(props.currentinspection?.title || "");
             setInspectionDate(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));
             setInspectionDescription(props.currentinspection?.description || "");
-            setInspectionFrames(props.currentinspection?.frames || []);
+            setInspectionFrames(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
             setIllness(props.currentinspection?.illness || "");
             setMedication(props.currentinspection?.medication || "");
             setReadmode(true)
@@ -257,7 +350,7 @@ export const InspectionForm = ( props : Props) => {
             creation_date: new Date(inspectionDate.toString()).toISOString(),
             last_updated: new Date().toISOString(),
             draft: inspectionDraft
-        }));
+        }));   
     }
 }
 

@@ -6,6 +6,24 @@
     }
 }
 
+.slider {
+    margin-top: 2rem ;
+    margin-bottom: 2rem ;
+    width: 98%;
+    div[data-slot=track-wrapper]{
+        height: 3rem;
+    }
+    div[data-slot=filler] {
+        background-color: var.$dusty-green;
+    }
+    div[data-slot=thumb] {
+        background-color: var.$dusty-green;
+    }
+    div[data-slot=track] {
+        border-left: 15px solid var.$dusty-green;
+    }
+}
+
 .saveButton{
     position: fixed;
     right: 1.5rem;
@@ -20,7 +38,7 @@
     gap: 0;
 
     border-radius: 5rem 5rem var.$rounding-small var.$rounding-small;
-    background-color: rgba($color: black, $alpha: 0.3);
+    background-color: var.$transparent-black;
     color: var.$petal-white;
     
     svg {
