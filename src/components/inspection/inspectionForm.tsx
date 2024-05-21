@@ -180,7 +180,7 @@ export const InspectionForm = ( props : Props) => {
                                 showSteps={true} 
                                 maxValue={100} 
                                 minValue={0} 
-                                defaultValue={frame.brood_percentage}
+                                value={frame.brood_percentage || 0}
                                 onChange={(value) => updateFrameArrayValue(frame.id, "brood_percentage", Number(value))}
                                 marks={[
                                     { value: 0, label: "0%"},
@@ -200,7 +200,7 @@ export const InspectionForm = ( props : Props) => {
                                 showSteps={true} 
                                 maxValue={100} 
                                 minValue={0} 
-                                defaultValue={frame.pollen_percentage}
+                                value={frame.pollen_percentage || 0}
                                 onChange={(value) => updateFrameArrayValue(frame.id, "pollen_percentage", Number(value))}
                                 marks={[
                                     { value: 0, label: "0%"},
@@ -220,7 +220,7 @@ export const InspectionForm = ( props : Props) => {
                                 showSteps={true} 
                                 maxValue={100} 
                                 minValue={0} 
-                                defaultValue={frame.honey_percentage}
+                                value={frame.honey_percentage || 0}
                                 onChange={(value) => updateFrameArrayValue(frame.id, "honey_percentage", Number(value))}
                                 marks={[
                                     { value: 0, label: "0%"},
@@ -334,7 +334,7 @@ export const InspectionForm = ( props : Props) => {
             setInspectionFrames(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
             setIllness(props.currentinspection?.illness || "");
             setMedication(props.currentinspection?.medication || "");
-            setReadmode(true)
+            setReadmode(true);         
         }
     } 
 
