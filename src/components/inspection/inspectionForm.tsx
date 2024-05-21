@@ -206,16 +206,16 @@ export const InspectionForm = ( props : Props) => {
 
     function HandeleSumbmitAndSave() {
         // TODO: Save the inspection to the database.
-        console.log(createNewInspection({
-            title: inspectionTitle,
-            description: inspectionDescription,
-            frames: inspectionFrames,
-            illness: illness,
-            medication: medication, 
-            ref_beehive: beehive._id, 
-            creation_date: new Date(inspectionDate.toString()).toISOString(),
-            e
-        }));
+        // console.log(createNewInspection({
+        //     title: inspectionTitle,
+        //     description: inspectionDescription,
+        //     frames: inspectionFrames,
+        //     illness: illness,
+        //     medication: medication, 
+        //     ref_beehive: beehive._id, 
+        //     creation_date: new Date(inspectionDate.toString()).toISOString(),
+        //     e
+        // }));
     }
 }
 

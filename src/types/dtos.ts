@@ -32,7 +32,7 @@ interface SummerizedBeehive{
 /**
  * Beehive datamodel, basic info for dropdowns or selections. 
  */
-interface BeehiveName{
+type BeehiveName = {
     _id: string;
     name: string;
 }
@@ -40,7 +40,7 @@ interface BeehiveName{
 /**
  * The beehive frame data model, beehive frames with inspection data.
  */
-interface InspectionBeeFrame{
+type InspectionBeeFrame = {
     ref_frame: string
     queen_present: boolean;
     brood_percentage: number;
@@ -65,7 +65,7 @@ interface SummerizedInspection{
 /**
  * The inspection data model, Detailed data needed to display card info.
  */
-interface FullInspection{
+type FullInspection = {
     _id: string;
     title: string;
     description: string;
