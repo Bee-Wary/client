@@ -11,13 +11,9 @@ const manageInspectionPage = async (
 
    const allBeehivesNames: BeehiveName[] = (await getAllBeehiveNamesAndIDs()).documents
    const currentInspection: FullInspection | undefined = params.inspectionID 
-      ? (await getFullInspectionByID(params.inspectionID)).document
+      ? (await getFullInspectionByID(params.inspectionID)).documents
       : undefined;
-
-   console.log(currentInspection);
    
-   
-
    return (
      <InspectionForm 
       beehiveNames={allBeehivesNames}

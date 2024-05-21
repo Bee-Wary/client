@@ -5,20 +5,26 @@ import styles from '@/styles/inspections/inspectionsPage.module.scss';
 
 
 const CreateInspectionPage = async (
-   { searchParams }: 
-   { searchParams: { beehiveRefID?: string }} 
+   { params, searchParams }: 
+   { 
+      params: {inspectionID?: string}
+      searchParams: { beehiveRefID?: string }
+   } 
 ) => {   
    const allBeehivesNames: BeehiveName[] = (await getAllBeehiveNamesAndIDs()).documents
-      // TODO: Finish query single beehive by ID, then pass it to the form component. 
    const currentBeehiveInfo: SummerizedBeehive | undefined = searchParams.beehiveRefID ?
-      (await getSummerizedBeehiveByID(searchParams.beehiveRefID)).document
+      (await getSummerizedBeehiveByID(searchParams.beehiveRefID)).documents[0]
       : undefined ;   
 
+   const currentinspection: FullInspection | undefined = params.inspectionID ?
+      (await getFullInspectionByID(params.inspectionID)).documents
+      : undefined ;      
+      
    return (
         <InspectionForm
          beehiveNames={allBeehivesNames}
          connectedBeehive={currentBeehiveInfo}
-         currentinspection={undefined}
+         currentinspection={currentinspection}
          />
    );
 }

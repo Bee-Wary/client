@@ -1,9 +1,9 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Select, SelectItem, Input, Button, DatePicker } from "@nextui-org/react";
 import { DateValue, parseDate } from "@internationalized/date";
-import { Pencil, PencilSlash, CheckCircle    } from '@phosphor-icons/react/dist/ssr';
+import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
 import { getFullInspectionByID, createNewInspection } from "@/services/inspections/queries";
 import style from '@/styles/inspections/inspectionsPage.module.scss';
@@ -22,14 +22,31 @@ type Props = {
 export const InspectionForm = ( props : Props) => {
     const [readmode, setReadmode] = useState<boolean>(false);
     const [beehive , setBeehive] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
+    const [connectedBeehive, setConnectedBeehive] = useState<SummerizedBeehive | undefined>(props.connectedBeehive || undefined)
     const [inspectionTitle, setInspectionTitle] = useState<string>(props.currentinspection?.title || "");
     const [inspectionDate, setInspectionDate] = useState<DateValue>(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));    
     const [inspectionDescription, setInspectionDescription] = useState<string>(props.currentinspection?.description || "");
-    const [inspectionFrames, setInspectionFrames] = useState<InspectionBeeFrame[]>(props.currentinspection?.frames || []);
+    const [inspectionFrames, setInspectionFrames] = useState<InspectionBeeFrame[]>(props.currentinspection?.frames || [
+        // Temp mock data.
+        {
+            ref_frame: "hello",
+            queen_present: true,
+            brood_percentage: 10,
+            pollen_percentage: 20,
+            honey_percentage: 40
+        },
+        {
+            ref_frame: "world",
+            queen_present: false,
+            brood_percentage: 30,
+            pollen_percentage: 40,
+            honey_percentage: 60
+        }  
+    ]);
     const [illness, setIllness] = useState<string>(props.currentinspection?.illness || "");
     const [medication, setMedication] = useState<string>(props.currentinspection?.medication || "");
-
-
+    const [inspectionDraft, setInspectionDraft] = useState<boolean>(true)
+    
     return (
     <form className='h-100%'>
         <section className={style.searchAndCrud}>
@@ -66,7 +83,7 @@ export const InspectionForm = ( props : Props) => {
                 labelPlacement='outside'
                 selectionMode="single"
                 placeholder="Connect a beehive"
-                selectedKeys={[beehive._id]}
+                selectedKeys={[beehive?._id]}
                 onChange={handleBeehiveSelectionChange}
                 classNames={{
                     trigger: [(readmode ? "" : 'bg-petal-white-bright')]
@@ -127,14 +144,28 @@ export const InspectionForm = ( props : Props) => {
                 }}
             />
         </section>
-        {inspectionFrames && inspectionFrames.length !== 0 ?
+        {beehive && inspectionFrames.length !== 0 ?
             <section className={style.ListingContainer}>
                 <h2>Frame Selection:</h2>
-                {inspectionFrames.map((frame, index) => (
-                    <div key={index}>
-                        {frame.ref_frame}
-                    </div>
-                ))}
+                <div id='frameCarousel' className={style.carousel}>
+                    <Button isIconOnly
+                     onPress={(event) => carouselLeft(event)}
+                    >
+                        <CaretLeft  weight='fill'/>
+                    </Button>
+                    <Button isIconOnly
+                        onPress={(event) => carouselRight(event)}
+                    >
+                        <CaretRight weight='fill'/>
+                    </Button>
+                    <ul id='frameContent'>
+                    {inspectionFrames.map((frame, index) => (
+                        <li key={index}>
+                            {frame.ref_frame}
+                        </li>
+                    ))}
+                    </ul>
+                </div>
             </section>
         : null // Do not render dropdown if no beehive names are passed.
         } 
@@ -199,24 +230,39 @@ export const InspectionForm = ( props : Props) => {
         cancelEdit()
     }
 
+    function carouselLeft(event: any) {
+        console.log(event);
+        // document.getElementById("frameContent")?.scrollLeft 
+    }
+    function carouselRight(event: any) {
+        console.log(event);
+        // document.getElementById("frameContent")?.scrollLeft
+    }
+
     function handleBeehiveSelectionChange(event: React.ChangeEvent<HTMLSelectElement>) {
         const _foundBeehiveName: BeehiveName = props.beehiveNames!.find(beehive => beehive._id === event.target.value)!;
         setBeehive(_foundBeehiveName); 
+        // awiat connectedBeehive
     }
 
-    function HandeleSumbmitAndSave() {
+    async function HandeleSumbmitAndSave() {
         // TODO: Save the inspection to the database.
-        // console.log(createNewInspection({
-        //     title: inspectionTitle,
-        //     description: inspectionDescription,
-        //     frames: inspectionFrames,
-        //     illness: illness,
-        //     medication: medication, 
-        //     ref_beehive: beehive._id, 
-        //     creation_date: new Date(inspectionDate.toString()).toISOString(),
-        //     e
-        // }));
+        (await createNewInspection({
+            title: inspectionTitle,
+            description: inspectionDescription,
+            frames: inspectionFrames,
+            illness: illness,
+            medication: medication,
+            ref_beehive: beehive._id,
+            creation_date: new Date(inspectionDate.toString()).toISOString(),
+            last_updated: new Date().toISOString(),
+            draft: inspectionDraft
+        }));
     }
+
+    // function checkIsDraft() {
+    //     if (inspectionDescription)
+    // }
 }
 
 export default InspectionForm;

@@ -1,5 +1,7 @@
 import { getAllFullyDetailedInspections, getAllFullyDetailedInspectionsByBeehiveRefID } from '@/services/inspections/queries';
+import { getSummerizedBeehiveByID } from '@/services/beehives/queries';
 import { InspectionCard } from '@/components/inspection/InspectionCard';
+import HiveCard from '@/components/HiveCard';
 import { Button } from "@nextui-org/react";
 import { PlusCircle } from "@phosphor-icons/react/dist/ssr";
 import Link from 'next/link';
@@ -14,16 +16,14 @@ const InspectionsPage = async (
     (await getAllFullyDetailedInspectionsByBeehiveRefID( searchParams.beehiveRefID )).documents :
     (await getAllFullyDetailedInspections()).documents
 
-  // TODO: make query to get single beehive by ID.
-  // const currentBeehive: SummerizedBeehive | null = searchParams?.beehiveRefID ?
-  //   (await getSummerizedBeehiveByID(searchParams.beehiveRefID)).document
-  //   : null ;
-
+  const currentBeehive: SummerizedBeehive | null = searchParams?.beehiveRefID ?
+    (await getSummerizedBeehiveByID(searchParams.beehiveRefID)).documents[0]
+    : null ;
     
-
   return (
     <>
-      {/* {currentBeehive ? 
+      {currentBeehive ? 
+      <section className={style.ListingContainer}>
         <Link key={currentBeehive._id} href={{
             pathname: `beehives/${currentBeehive._id}`,
         }}>
@@ -34,10 +34,11 @@ const InspectionsPage = async (
             illness={(currentBeehive.last_inspection && currentBeehive.last_inspection.illness) ? true : false}
             location={currentBeehive.location.coordinates}
             sensor={currentBeehive.last_sensor_entry ? true : false}
-            />
-          </Link>
+          />
+        </Link>
+      </section>
         : null
-      } */}
+      }
     
       {/* TODO: change this section to search and CRUD component. */}
       <section className={style.searchAndCrud}>

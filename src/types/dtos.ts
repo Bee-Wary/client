@@ -63,10 +63,9 @@ interface SummerizedInspection{
 
 
 /**
- * The inspection data model, Detailed data needed to display card info.
+ * The inspection data model without ID, Detailed data needed to display card info.
  */
-type FullInspection = {
-    _id: string;
+type BaseFullInspection = {
     title: string;
     description: string;
     frames: InspectionBeeFrame[];
@@ -76,4 +75,8 @@ type FullInspection = {
     creation_date: string;
     last_updated: string;
     draft: boolean;
+}
+
+type FullInspection = BaseFullInspection & {
+    _id: string;
 }

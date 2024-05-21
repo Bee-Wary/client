@@ -110,7 +110,7 @@ export async function getAllFullyDetailedInspectionsByBeehiveRefID(beehiveID: st
  * @param inspectionID - string notation of the inspection ObjectID.
  * @returns detailed inspection, frames listed.
  */
-export async function getFullInspectionByID(inspectionID: string): Promise<{ document: FullInspection }> {
+export async function getFullInspectionByID(inspectionID: string): Promise<{ documents: FullInspection }> {
   try {
     const response = await fetch(generateDataApiUrl("findOne"), {
       method: "POST",
@@ -147,8 +147,8 @@ export async function getFullInspectionByID(inspectionID: string): Promise<{ doc
  * @returns the added inspection from the database.
  */
 export async function createNewInspection(
-  {title, description, frames, illness, medication, ref_beehive, creation_date} : FullInspection
-): Promise<{ document: FullInspection }> {
+  {title, description, frames, illness, medication, ref_beehive, creation_date, last_updated, draft} : BaseFullInspection
+): Promise<{ document: BaseFullInspection }> {
   try {
     const response = await fetch(generateDataApiUrl("insertOne"), {
       method: "POST",
@@ -165,17 +165,18 @@ export async function createNewInspection(
           "$oid": ref_beehive
         },
         "creation_date": {
-          "$date": "2024-05-12T08:11:41.000Z"
+          "$date": creation_date
         },
         "last_updated": {
-          "$date": "2024-05-12T08:13:41.000Z"
+          "$date": last_updated
         },
-        "draft": true,
+        "draft": draft,
           }
       })
     })
     return response.json();
   } catch ( error ) {
-    throw new Error(`Realm Data API returned an error on getFullInspectionsOfBeehiveByBeehiveRefID: ${ error }`) 
+    throw new Error(`Realm Data API returned an error on createNewInspection: ${ error }`) 
   }
 }
+
