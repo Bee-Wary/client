@@ -201,22 +201,22 @@ export async function createNewInspection(
       body: JSON.stringify({
         ...generateDataSource("inspections"),
         "document": {
-        "title": title,
-        "description": description,
-        "frames": frames,
-        "illness": illness,
-        "medication": medication,
-        "ref_beehive": {
-          "$oid": ref_beehive
-        },
-        "creation_date": {
-          "$date": creation_date
-        },
-        "last_updated": {
-          "$date": last_updated
-        },
-        "draft": draft,
-          }
+          "title": title,
+          "description": description,
+          "frames": frames,
+          "illness": illness,
+          "medication": medication,
+          "ref_beehive": {
+            "$oid": ref_beehive
+          },
+          "creation_date": {
+            "$date": creation_date
+          },
+          "last_updated": {
+            "$date": last_updated
+          },
+          "draft": draft,
+        }
       })
     })
     return response.json();

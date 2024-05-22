@@ -24,7 +24,6 @@ export const InspectionForm = ( props : Props) => {
     const [inspectionTitle, setInspectionTitle] = useState<string>(props.currentinspection?.title || "");
     const [inspectionDate, setInspectionDate] = useState<DateValue>(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD( new Date(), "-")));    
     const [inspectionDescription, setInspectionDescription] = useState<string>(props.currentinspection?.description || "");
-    // TODO: fallback for if there is no currentInspection frames but there is a connected beehive with frames passed.
     const [inspectionFrames, setInspectionFrames] = useState<InspectionBeeFrame[]>(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
     const [illness, setIllness] = useState<string>(props.currentinspection?.illness || "");
     const [medication, setMedication] = useState<string>(props.currentinspection?.medication || "");
@@ -339,8 +338,8 @@ export const InspectionForm = ( props : Props) => {
     } 
 
     async function HandeleSumbmitAndSave() {
-        // TODO: Save the inspection to the database.
-        (await createNewInspection({
+
+        const inspectionSave : BaseFullInspection = {
             title: inspectionTitle,
             description: inspectionDescription,
             frames: inspectionFrames,
@@ -349,8 +348,12 @@ export const InspectionForm = ( props : Props) => {
             ref_beehive: connectedBeehive?._id || "",
             creation_date: new Date(inspectionDate.toString()).toISOString(),
             last_updated: new Date().toISOString(),
-            draft: inspectionDraft
-        }));   
+            draft: inspectionDraft,
+        };
+        // TODO: Save the inspection to the database.
+        (await createNewInspection(
+            inspectionSave
+        ));   
     }
 }
 
