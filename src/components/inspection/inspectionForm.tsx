@@ -5,7 +5,7 @@ import { Select, SelectItem, Input, Button, DatePicker, Slider } from "@nextui-o
 import { DateValue, parseDate } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight, Crown  } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
-import { createNewInspection } from "@/services/inspections/queries";
+import { fetchCreateNewInspection } from "@/services/inspections/routeFetches";
 import { fetchBeehiveByID } from "@/services/beehives/routeFetches";
 import style from '@/styles/inspections/inspectionsPage.module.scss';
 import inputStyles from '@/styles/inputs/inputs.module.scss'
@@ -351,9 +351,7 @@ export const InspectionForm = ( props : Props) => {
             draft: inspectionDraft,
         };
         // TODO: Save the inspection to the database.
-        (await createNewInspection(
-            inspectionSave
-        ));   
+        (await fetchCreateNewInspection(inspectionSave));   
     }
 }
 

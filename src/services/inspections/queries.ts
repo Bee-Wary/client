@@ -194,6 +194,8 @@ export async function getFullInspectionByID(inspectionID: string): Promise<{ doc
 export async function createNewInspection(
   {title, description, frames, illness, medication, ref_beehive, creation_date, last_updated, draft} : BaseFullInspection
 ): Promise<{ document: BaseFullInspection }> {
+  // console.log('[debug] createNewInspection ', title, description, frames, illness, medication, ref_beehive, creation_date, last_updated, draft);
+
   try {
     const response = await fetch(generateDataApiUrl("insertOne"), {
       method: "POST",
@@ -203,7 +205,17 @@ export async function createNewInspection(
         "document": {
           "title": title,
           "description": description,
-          "frames": frames,
+          "frames": [
+            frames.map(frame => (
+            {
+              "queen_present": frame.queen_present,
+              "brood_percentage": frame.brood_percentage,
+              "pollen_percentage": frame.pollen_percentage,
+              "honey_percentage": frame.honey_percentage,
+              "ref_frame": { "$oid": frame.id }
+            }
+            ))
+          ],
           "illness": illness,
           "medication": medication,
           "ref_beehive": {
@@ -219,7 +231,9 @@ export async function createNewInspection(
         }
       })
     })
-    return response.json();
+    console.log('[debug] response createNewInspection ', await response.json());
+    
+    return await response.json();
   } catch ( error ) {
     throw new Error(`Realm Data API returned an error on createNewInspection: ${ error }`) 
   }
