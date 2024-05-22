@@ -1,5 +1,5 @@
 /**
- * Create a new inspection
+ * Create a new inspection that queries the route handler in '/api/inspections/route.ts' .
  * @param {BaseFullInspection} createInspection - The full baseinspection object to create.
  * @returns The Object response from the creation.
  */
