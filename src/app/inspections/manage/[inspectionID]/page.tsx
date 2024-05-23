@@ -1,5 +1,5 @@
-import { getAllBeehiveNamesAndIDs } from '@/services/beehives/queries';
-import { getFullInspectionByID } from "@/services/inspections/queries";
+import { getAllBeehiveNamesAndIDs } from '@/services/server/beehives/queries';
+import { getFullInspectionByID } from "@/services/server/inspections/queries";
 import { InspectionForm } from '@/components/inspection/inspectionForm';
 import styles from '@/styles/inspections/inspectionsPage.module.scss';
 
@@ -18,6 +18,7 @@ const manageInspectionPage = async (
      <InspectionForm 
       beehiveNames={allBeehivesNames}
       currentinspection={currentInspection}
+      readmode={true}
       >
       
      </InspectionForm>

@@ -1,5 +1,5 @@
-import { getAllBeehiveNamesAndIDs, getBeehiveByID } from '@/services/beehives/queries';
-import { getFullInspectionByID } from "@/services/inspections/queries";
+import { getAllBeehiveNamesAndIDs, getBeehiveByID } from '@/services/server/beehives/queries';
+import { getFullInspectionByID } from "@/services/server/inspections/queries";
 import { InspectionForm } from '@/components/inspection/inspectionForm';
 import styles from '@/styles/inspections/inspectionsPage.module.scss';
 
@@ -17,8 +17,8 @@ const CreateInspectionPage = async (
    // via this we know how many frames there are needed.
    const connectedBeehive: Beehive | undefined = searchParams.beehiveRefID ?
       (await getBeehiveByID(searchParams.beehiveRefID)).document
-      : undefined ;   
-
+      : undefined ;  
+      
    // * This will be passed if editing a existing inspection ONLY.
    const currentinspection: FullInspection | undefined = params.inspectionID ?
       (await getFullInspectionByID(params.inspectionID)).documents
@@ -37,9 +37,6 @@ const CreateInspectionPage = async (
             the connected beehive will populate the frames
             correlate the beehive frame IDs to the connectedbeehive ref_frame and generate sliders with that data.
       put sections: frames and Mitigations in suspense, load these when the connected beehive is not-null/filled.
-      build the POST object corresponding to a BaseFullInspection
-      
-      fix carousel.
       */
       
    return (

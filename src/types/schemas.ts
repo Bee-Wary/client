@@ -19,8 +19,8 @@ interface Beehive {
  * The Frames subdocument found in the Beehive documents
  */
 interface Frame {
-    "id": string,
-    "title": string
+    id: string,
+    title: string
 }
 
 /**

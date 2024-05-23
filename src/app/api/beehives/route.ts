@@ -1,8 +1,12 @@
-import { getBeehiveByID } from '@/services/beehives/queries';
+import { getBeehiveByID } from '@/services/server/beehives/queries';
 
-export async function POST(request: Request) {
+/**
+ * Get a beehive by ID, this is with the frame Title NOT frame content.
+ * @param request a request with the body containing the beehiveID.
+ * @returns Response of the found beehive.
+ */
+export async function POST(request: Request): Promise<Response> {
     const beehiveID = (await request.json()).beehiveID
-    const data: Beehive = (await getBeehiveByID(beehiveID)).document;
-    // console.log('[debug]', await Response.json( data ).json());
-    return Response.json( data )
+    const response: Beehive = (await getBeehiveByID(beehiveID)).document;
+    return Response.json( response )
 }

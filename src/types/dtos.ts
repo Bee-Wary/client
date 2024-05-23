@@ -3,7 +3,6 @@
  * *This is mostly used when working with aggregation pipelines
  */
 
-
 /**
  * Beehive datamodel, basic info for dropdowns or selections. 
  */

@@ -5,20 +5,24 @@ import { Select, SelectItem, Input, Button, DatePicker, Slider } from "@nextui-o
 import { DateValue, parseDate } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight, Crown  } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
-import { fetchCreateNewInspection } from "@/services/inspections/routeFetches";
-import { fetchBeehiveByID } from "@/services/beehives/routeFetches";
+import { fetchCreateNewInspection } from "@/services/client/inspections/routeFetches";
+import { fetchBeehiveByID } from "@/services/client/beehives/routeFetches";
+import { useRouter } from 'next/navigation'
+
 import style from '@/styles/inspections/inspectionsPage.module.scss';
 import inputStyles from '@/styles/inputs/inputs.module.scss'
 
 type Props = {
     beehiveNames?: BeehiveName[],
     connectedBeehive?: Beehive,
-    currentinspection?: FullInspection ,
+    currentinspection?: FullInspection,
+    readmode?: boolean,
 }
 
-// ! first finish the create, this wil only have a beehive as ref,
+// * the create, wil only need a beehive as ref,
 export const InspectionForm = ( props : Props) => {
-    const [readmode, setReadmode] = useState<boolean>(false);
+    const router = useRouter();
+    const [readmode, setReadmode] = useState<boolean>(props.readmode || false);
     const [beehiveName , setBeehiveName] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
     const [connectedBeehive, setConnectedBeehive] = useState<Beehive | undefined>(props.connectedBeehive || undefined)
     const [inspectionTitle, setInspectionTitle] = useState<string>(props.currentinspection?.title || "");
@@ -27,17 +31,19 @@ export const InspectionForm = ( props : Props) => {
     const [inspectionFrames, setInspectionFrames] = useState<InspectionBeeFrame[]>(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
     const [illness, setIllness] = useState<string>(props.currentinspection?.illness || "");
     const [medication, setMedication] = useState<string>(props.currentinspection?.medication || "");
-    const [inspectionDraft, setInspectionDraft] = useState<boolean>(true)
 
     return (
-    <form className='h-100%'>
-        <section className={style.searchAndCrud}>
-            <div className={style.searchField}>
+    <form 
+        className='h-100%'
+        onSubmit={(event) => HandeleSumbmitAndSave(event)}
+    >
+        <section className={inputStyles.searchAndCrud}>
+            <div className={inputStyles.searchField}>
                 {/* Keep field for default flex spacing. */}
             </div>
             {readmode ? // Each button has different logic.
                 <Button 
-                    className={`${style.actionButton} p-3`}
+                    className={`${inputStyles.actionButton} p-3`}
                     size="lg"
                     endContent={<Pencil  weight='fill' size={64}/>}
                     onPress={() => setReadmode(false)}
@@ -46,7 +52,7 @@ export const InspectionForm = ( props : Props) => {
                 </Button>
                 :
                 <Button 
-                    className={`${style.actionButton} p-3`}
+                    className={`${inputStyles.actionButton} p-3`}
                     size="lg"
                     endContent={<PencilSlash  weight='fill' size={64}/>}
                     onPress={() => cancelEdit()}
@@ -153,8 +159,9 @@ export const InspectionForm = ( props : Props) => {
                             <h4>{frame.title}</h4>
                             <div className='flex justify-center'>
                                 {frame.queen_present ?
-                                <Button 
-                                    className={`${style.actionButton}  flex flex-col gap-0 align-self-center p-3`}
+                                <Button
+                                    className={`${inputStyles.actionButton}  flex flex-col gap-0 align-self-center p-3`}
+                                    isDisabled={readmode}
                                     startContent={<Crown weight='fill' size={64}/>}
                                     onPress={() => updateFrameArrayValue(frame.id, "queen_present", false)}
                                 >
@@ -162,7 +169,8 @@ export const InspectionForm = ( props : Props) => {
                                 </Button>
                                 :
                                 <Button 
-                                    className={`${style.actionButton} ${style.unselected} flex flex-col gap-0 align-self-center p-3`}
+                                    className={`${inputStyles.actionButton} ${inputStyles.unselected} flex flex-col gap-0 align-self-center p-3`}
+                                    isDisabled={readmode}
                                     startContent={<Crown weight='fill' size={64}/>}
                                     onPress={() => updateFrameArrayValue(frame.id, "queen_present", true)}
                                 >
@@ -277,7 +285,7 @@ export const InspectionForm = ( props : Props) => {
             type="submit"
             className={inputStyles.saveButton}
             startContent={<CheckCircle weight='fill' size={72}/>}
-            onPress={() => HandeleSumbmitAndSave()}
+            // onPress={() => HandeleSumbmitAndSave()}
         >
             <h3>Save</h3>  
         </Button>
@@ -301,9 +309,25 @@ export const InspectionForm = ( props : Props) => {
         const _foundBeehiveName: BeehiveName = props.beehiveNames!.find(beehive => beehive._id === event.target.value)!;
         setBeehiveName(_foundBeehiveName);
         if (_foundBeehiveName && _foundBeehiveName._id) {
-            let _currentBeehive = await fetchBeehiveByID(_foundBeehiveName._id);
-            setConnectedBeehive(_currentBeehive);
-            setInspectionFrames(_currentBeehive.frames);
+            await fetchBeehiveByID(_foundBeehiveName._id)
+                .then((_currentBeehive) => {
+                    setConnectedBeehive(_currentBeehive);
+                    if (props.currentinspection && props.currentinspection?.frames) {
+                        setInspectionFrames(props.currentinspection!.frames)
+                    } else {                        
+                        const _convertedFrames = _currentBeehive?.frames.map(frame => {
+                            return {
+                                id: frame.id,
+                                title: frame.title,
+                                queen_present: false,
+                                brood_percentage: 0,
+                                pollen_percentage: 0,
+                                honey_percentage: 0
+                            }
+                        })
+                        setInspectionFrames(_convertedFrames)
+                    }
+                });
         } else {
             setConnectedBeehive(undefined);
             setInspectionFrames([]);
@@ -337,21 +361,26 @@ export const InspectionForm = ( props : Props) => {
         }
     } 
 
-    async function HandeleSumbmitAndSave() {
-
-        const inspectionSave : BaseFullInspection = {
-            title: inspectionTitle,
-            description: inspectionDescription,
-            frames: inspectionFrames,
-            illness: illness,
-            medication: medication,
-            ref_beehive: connectedBeehive?._id || "",
-            creation_date: new Date(inspectionDate.toString()).toISOString(),
-            last_updated: new Date().toISOString(),
-            draft: inspectionDraft,
-        };
-        // TODO: Save the inspection to the database.
-        (await fetchCreateNewInspection(inspectionSave));   
+    async function HandeleSumbmitAndSave(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        if (inspectionTitle !== null ) {
+            const _inspectionSave : BaseFullInspection = {
+                title: inspectionTitle,
+                description: inspectionDescription,
+                frames: inspectionFrames,
+                illness: illness,
+                medication: medication,
+                ref_beehive: connectedBeehive?._id || "",
+                creation_date: new Date(inspectionDate.toString()).toISOString(),
+                last_updated: new Date().toISOString(),
+                draft: !(inspectionTitle && inspectionDescription && inspectionFrames.find(
+                    frame => frame.hasOwnProperty("queen_present") && (frame as InspectionBeeFrame).queen_present === true
+                ))
+            };
+            await fetchCreateNewInspection(_inspectionSave).then(() => {
+                router.back(); 
+            });
+        }        
     }
 }
 

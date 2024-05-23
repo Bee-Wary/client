@@ -1,11 +1,12 @@
-import { getAllFullyDetailedInspections, getAllFullyDetailedInspectionsByBeehiveRefID } from '@/services/inspections/queries';
-import { getSummerizedBeehiveByID } from '@/services/beehives/queries';
+import { getAllFullyDetailedInspections, getAllFullyDetailedInspectionsByBeehiveRefID } from '@/services/server/inspections/queries';
+import { getSummerizedBeehiveByID } from '@/services/server/beehives/queries';
 import { InspectionCard } from '@/components/inspection/InspectionCard';
 import HiveCard from '@/components/HiveCard';
 import { Button } from "@nextui-org/react";
 import { PlusCircle } from "@phosphor-icons/react/dist/ssr";
 import Link from 'next/link';
 import style from '@/styles/inspections/inspectionsPage.module.scss';
+import inputStyles from '@/styles/inputs/inputs.module.scss';
 
 const InspectionsPage = async (
   { searchParams } :
@@ -25,7 +26,7 @@ const InspectionsPage = async (
       {currentBeehive ? 
       <section className={style.ListingContainer}>
         <Link key={currentBeehive._id} href={{
-            pathname: `beehives/${currentBeehive._id}`,
+            pathname: `beehives/manage/${currentBeehive._id}`,
         }}>
           <HiveCard
             img="https://placehold.co/400x400/png"
@@ -41,8 +42,8 @@ const InspectionsPage = async (
       }
     
       {/* TODO: change this section to search and CRUD component. */}
-      <section className={style.searchAndCrud}>
-        <div className={style.searchField}>
+      <section className={inputStyles.searchAndCrud}>
+        <div className={inputStyles.searchField}>
           {/* Insert search field */}
         </div>
         <Link href={{
@@ -50,7 +51,7 @@ const InspectionsPage = async (
           query: searchParams ? { beehiveRefID: searchParams.beehiveRefID } : null
         }}>
           <Button 
-            className={`${style.actionButton} p-3`}
+            className={`${inputStyles.actionButton} p-3`}
             size="lg"
             endContent={<PlusCircle 
             weight='fill' size={64}/>}
@@ -65,22 +66,22 @@ const InspectionsPage = async (
         {allInspections ? 
         <>
           <h2>Inspections with problems:</h2>
-          {allInspections.map((mongoDocument => 
-            mongoDocument.illness || mongoDocument.medication || mongoDocument.draft ? 
-              <Link key={mongoDocument._id} href={{
-                  pathname: `inspections/manage/${mongoDocument._id}`,
+          {allInspections.map((inspection => 
+            inspection.illness || inspection.medication || inspection.draft ? 
+              <Link key={inspection._id} href={{
+                  pathname: `inspections/manage/${inspection._id}`,
                   query: {beehiveRefID: searchParams?.beehiveRefID ?? undefined}
                 }}>
                 <InspectionCard
-                  inspectionID={ mongoDocument._id }
-                  img="https://placehold.co/400x400/png"
-                  title={ mongoDocument.title }
-                  description={ mongoDocument.description}
-                  illness={ mongoDocument.illness }
-                  medication={ mongoDocument.medication }
-                  draft={ mongoDocument.draft }
-                  creation_date={ mongoDocument.creation_date }
-                  last_updated={ mongoDocument.last_updated }
+                  inspectionID={ inspection._id }
+                  img=""
+                  title={ inspection.title }
+                  description={ inspection.description}
+                  illness={ inspection.illness }
+                  medication={ inspection.medication }
+                  draft={ inspection.draft }
+                  creation_date={ inspection.creation_date }
+                  last_updated={ inspection.last_updated }
                 />
               </Link>
               // Do not render anything if illness, medication and draft are all false.
@@ -96,18 +97,22 @@ const InspectionsPage = async (
       <section className={style.ListingContainer}>
         <h2>All inspections:</h2>
         {allInspections ? 
-        allInspections.map((mongoDocument =>  
-          <Link key={mongoDocument._id} href={`inspections/${mongoDocument._id}`}>
+        allInspections.map((inspection =>  
+          <Link key={inspection._id} href={{
+            pathname: `inspections/manage/${inspection._id}`,
+            query: {beehiveRefID: searchParams?.beehiveRefID ?? undefined}
+            }}
+          >
             <InspectionCard
-              inspectionID={ mongoDocument._id }
-              img="https://placehold.co/400x400/png"
-              title={ mongoDocument.title }
-              description={ mongoDocument.description}
-              illness={ mongoDocument.illness }
-              medication={ mongoDocument.medication }
-              draft={ mongoDocument.draft }
-              creation_date={ mongoDocument.creation_date }
-              last_updated={ mongoDocument.last_updated }
+              inspectionID={ inspection._id }
+              img=""
+              title={ inspection.title }
+              description={ inspection.description}
+              illness={ inspection.illness }
+              medication={ inspection.medication }
+              draft={ inspection.draft }
+              creation_date={ inspection.creation_date }
+              last_updated={ inspection.last_updated }
             />
           </Link>
         ))

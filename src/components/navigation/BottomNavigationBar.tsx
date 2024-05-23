@@ -10,7 +10,7 @@ import { Archive, FilePlus, Files  } from "@phosphor-icons/react/dist/ssr";
     <>
       <div className={styles.navigationBar}>
           <NavigationbarButton icon={<Archive weight="fill"/>} >Hives</NavigationbarButton>
-          <NavigationbarButton icon={<FilePlus weight="fill"/>} route="/statistics">Add note</NavigationbarButton>
+          <NavigationbarButton icon={<FilePlus weight="fill"/>} route="/inspections/create">Add note</NavigationbarButton>
           <NavigationbarButton icon={<Files  weight="fill"/>} route="/inspections">Notes</NavigationbarButton>
       </div>
     </>

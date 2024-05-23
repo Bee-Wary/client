@@ -1,9 +1,11 @@
-import { getSummerizedBeehives } from '@/services/beehives/queries';
 import styles from '@/styles/page.module.scss';
 import Link from 'next/link';
 import HiveCard from '@/components/HiveCard';
-import { getSummerizedInspections } from '@/services/inspections/queries';
-import { CaretRight } from '@phosphor-icons/react/dist/ssr';
+import { getSummerizedBeehives } from '@/services/server/beehives/queries';
+import { getSummerizedInspections } from '@/services/server/inspections/queries';
+import { CaretRight, PlusCircle  } from '@phosphor-icons/react/dist/ssr';
+import { Button } from "@nextui-org/react";
+import inputStyles from '@/styles/inputs/inputs.module.scss'
 
 export default async function Beehivespage() {
   const beehives = (await getSummerizedBeehives()).documents;
@@ -11,6 +13,24 @@ export default async function Beehivespage() {
 
   return (
     <main className={styles.main}>
+      <section className={inputStyles.searchAndCrud}>
+        <div className={inputStyles.searchField}>
+            {/* Keep field for default flex spacing. */}
+        </div>
+        <Link 
+          key={"addbeehive"} href={{
+              pathname: `/beehives/create`,
+          }}>
+          <Button 
+              className={`${inputStyles.actionButton} p-3`}
+              size="lg"
+              endContent={<PlusCircle  weight='fill' size={64}/>}
+          >
+            Add<br/>
+            Beehive
+          </Button>
+        </Link>
+      </section>
       <section className={styles.itemList}>
         <div className={styles.sectionTitle}>
           <h2>Beehives</h2>
@@ -18,7 +38,7 @@ export default async function Beehivespage() {
         </div>
         {beehives.map(doc =>
         <Link key={doc._id} href={{
-          pathname: `beehives/${doc._id}`,
+          pathname: `beehives/manage/${doc._id}`,
         }}>
           <HiveCard
             img="https://placehold.co/400x400/png"
@@ -44,7 +64,7 @@ export default async function Beehivespage() {
             <CaretRight weight='regular' />
           </div>
           {inspections.map(doc => 
-            <a href={`inspections/${doc._id}`} key={doc._id}>
+            <a href={`inspections/manage/${doc._id}`} key={doc._id}>
               <span>{doc.title}</span>
               <span>{new Date(doc.last_updated).toLocaleDateString()}</span>
               <span>{doc.draft ? "Draft" : "Finished"}</span>

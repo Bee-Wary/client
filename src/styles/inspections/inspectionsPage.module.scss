@@ -1,33 +1,5 @@
 @use "@/styles/partials/variables" as var;
 
-// TODO: change this section for search and CRUD component.
-.searchAndCrud{
-    display: flex;
-    flex-flow: row nowrap;
-    margin-left: var.$page-side-spacing;
-    margin-right: var.$page-side-spacing;
-    margin-top: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var.$dusty-green;
-    .searchField{
-        flex-grow: 1;
-    }
-}
-
-.actionButton {
-    flex-grow: 0;
-    background-color: var.$dusty-green;
-    color: var.$pineapple-yellow;
-    font-size: 1.25rem;
-    font-weight: 700;
-    height: 4rem;
-
-    &.unselected {
-        background-color: var.$dusty-green-shade;
-        color: var.$off-black ;
-    }
-}
-
 .ListingContainer{
     display: flex;
     flex-flow: column nowrap;

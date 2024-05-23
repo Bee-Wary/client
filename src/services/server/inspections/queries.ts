@@ -24,7 +24,7 @@ export async function getSummerizedInspections(): Promise<{ documents: Summerize
         }
       })
     })
-    return response.json();
+    return await response.json();
   } catch (e) {
     throw new Error(`Realm Data API returned an error: ${e}`)
   }
@@ -59,7 +59,7 @@ export async function getAllFullyDetailedInspections(): Promise<{ documents: Ful
         },
       })
     })
-    return response.json();
+    return await response.json();
   } catch ( error ) {
     throw new Error(`Realm Data API returned an error on getAllFullyDetailedInspections: ${ error }`) 
   }
@@ -99,7 +99,7 @@ export async function getAllFullyDetailedInspectionsByBeehiveRefID(beehiveID: st
         },
       })
     })
-    return response.json();
+    return await response.json();
   } catch ( error ) {
     throw new Error(`Realm Data API returned an error on getFullInspectionsOfBeehiveByBeehiveRefID: ${ error }`) 
   }
@@ -142,7 +142,7 @@ export async function getMergedInspectionByBeehiveRefID(beehiveRefID: string): P
         ]
       })
     })
-    return response.json();
+    return await response.json();
   } catch ( error ) {
     throw new Error(`Realm Data API returned an error on getInspectionByBeehiveID: ${ error }`) 
   }
@@ -181,7 +181,7 @@ export async function getFullInspectionByID(inspectionID: string): Promise<{ doc
         },
       })
     })
-    return response.json();
+    return await response.json();
   } catch ( error ) {
     throw new Error(`Realm Data API returned an error on getFullInspectionsOfBeehiveByBeehiveRefID: ${ error }`) 
   }
@@ -194,8 +194,6 @@ export async function getFullInspectionByID(inspectionID: string): Promise<{ doc
 export async function createNewInspection(
   {title, description, frames, illness, medication, ref_beehive, creation_date, last_updated, draft} : BaseFullInspection
 ): Promise<{ document: BaseFullInspection }> {
-  // console.log('[debug] createNewInspection ', title, description, frames, illness, medication, ref_beehive, creation_date, last_updated, draft);
-
   try {
     const response = await fetch(generateDataApiUrl("insertOne"), {
       method: "POST",
@@ -205,7 +203,7 @@ export async function createNewInspection(
         "document": {
           "title": title,
           "description": description,
-          "frames": [
+          "frames": 
             frames.map(frame => (
             {
               "queen_present": frame.queen_present,
@@ -214,8 +212,7 @@ export async function createNewInspection(
               "honey_percentage": frame.honey_percentage,
               "ref_frame": { "$oid": frame.id }
             }
-            ))
-          ],
+            )),
           "illness": illness,
           "medication": medication,
           "ref_beehive": {
@@ -231,7 +228,6 @@ export async function createNewInspection(
         }
       })
     })
-    console.log('[debug] response createNewInspection ', await response.json());
     
     return await response.json();
   } catch ( error ) {

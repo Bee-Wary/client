@@ -26,7 +26,8 @@ export function InspectionCard(
     return (
         <article className={style.inspectionCard}>
             <div>
-                <Image src={img} width={400} height={400} alt={`Image of ${ title }`} />
+                {/* Random image loading with the defenition with time to return random values. this banchmarks load times. */}
+                <Image src={"https://picsum.photos/400?random&rnd" + new Date().getTime() + ")"} width={400} height={400} alt={`Image of ${ title }`} />
             </div>
             <div>
                 <div className={style.headingContainer}>
