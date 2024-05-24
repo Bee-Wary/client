@@ -12,7 +12,7 @@ import { createNewInspection } from '@/services/server/inspections/queries';
  */
 export async function POST(request: Request): Promise<Response> {
     const baseFullInspectionContent: BaseFullInspection = await request.json();  
-    const response: BaseFullInspection = (await createNewInspection(baseFullInspectionContent)).document;
-
-    return Response.json( response )
+    const insertedID = (await createNewInspection(baseFullInspectionContent));
+    
+    return Response.json( insertedID )
 }

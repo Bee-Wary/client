@@ -195,41 +195,74 @@ export async function createNewInspection(
   {title, description, frames, illness, medication, ref_beehive, creation_date, last_updated, draft} : BaseFullInspection
 ): Promise<{ document: BaseFullInspection }> {
   try {
-    const response = await fetch(generateDataApiUrl("insertOne"), {
-      method: "POST",
-      headers: generateRequestHeaders(),
-      body: JSON.stringify({
-        ...generateDataSource("inspections"),
-        "document": {
-          "title": title,
-          "description": description,
-          "frames": 
-            frames.map(frame => (
-            {
-              "queen_present": frame.queen_present,
-              "brood_percentage": frame.brood_percentage,
-              "pollen_percentage": frame.pollen_percentage,
-              "honey_percentage": frame.honey_percentage,
-              "ref_frame": { "$oid": frame.id }
-            }
-            )),
-          "illness": illness,
-          "medication": medication,
-          "ref_beehive": {
-            "$oid": ref_beehive
-          },
-          "creation_date": {
-            "$date": creation_date
-          },
-          "last_updated": {
-            "$date": last_updated
-          },
-          "draft": draft,
-        }
+    if (ref_beehive) { // Check if any ref_beehive is truly given.
+      const response = await fetch(generateDataApiUrl("insertOne"), {
+        method: "POST",
+        headers: generateRequestHeaders(),
+        body: JSON.stringify({
+          ...generateDataSource("inspections"),
+          "document": {
+            "title": title,
+            "description": description,
+            "frames": 
+              frames.map(frame => (
+              {
+                "queen_present": frame.queen_present,
+                "brood_percentage": frame.brood_percentage,
+                "pollen_percentage": frame.pollen_percentage,
+                "honey_percentage": frame.honey_percentage,
+                "ref_frame": { "$oid": frame.id }
+              }
+              )),
+            "illness": illness,
+            "medication": medication,
+            "ref_beehive": {
+              "$oid": ref_beehive
+            },
+            "creation_date": {
+              "$date": creation_date
+            },
+            "last_updated": {
+              "$date": last_updated
+            },
+            "draft": draft,
+          }
+        })
       })
-    })
-    
-    return await response.json();
+      return await response.json();
+    } else {
+      const response = await fetch(generateDataApiUrl("insertOne"), {
+        method: "POST",
+        headers: generateRequestHeaders(),
+        body: JSON.stringify({
+          ...generateDataSource("inspections"),
+          "document": {
+            "title": title,
+            "description": description,
+            "frames": 
+              frames.map(frame => (
+              {
+                "queen_present": frame.queen_present,
+                "brood_percentage": frame.brood_percentage,
+                "pollen_percentage": frame.pollen_percentage,
+                "honey_percentage": frame.honey_percentage,
+                "ref_frame": { "$oid": frame.id }
+              }
+              )),
+            "illness": illness,
+            "medication": medication,
+            "creation_date": {
+              "$date": creation_date
+            },
+            "last_updated": {
+              "$date": last_updated
+            },
+            "draft": draft,
+          }
+        })
+      })      
+      return await response.json();
+    }
   } catch ( error ) {
     throw new Error(`Realm Data API returned an error on createNewInspection: ${ error }`) 
   }

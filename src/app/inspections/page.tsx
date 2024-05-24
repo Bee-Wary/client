@@ -20,7 +20,7 @@ const InspectionsPage = async (
   const currentBeehive: SummerizedBeehive | null = searchParams?.beehiveRefID ?
     (await getSummerizedBeehiveByID(searchParams.beehiveRefID)).documents[0]
     : null ;    
-    
+        
   return (
     <>
       {currentBeehive ? 
@@ -63,7 +63,7 @@ const InspectionsPage = async (
 
       {/** Problem beehive section.  **/}
       <section className={style.ListingContainer}>
-        {allInspections ? 
+        {allInspections.length > 0 ? 
         <>
           <h2>Inspections with problems:</h2>
           {allInspections.map((inspection => 
@@ -76,7 +76,7 @@ const InspectionsPage = async (
                   inspectionID={ inspection._id }
                   img=""
                   title={ inspection.title }
-                  description={ inspection.description}
+                  description={ inspection.description ? inspection.description : "-no data-"}
                   illness={ inspection.illness }
                   medication={ inspection.medication }
                   draft={ inspection.draft }
@@ -88,15 +88,14 @@ const InspectionsPage = async (
               : null
           ))}
         </> 
-        // Do not render anything if no inspections are found.
-        :  null
+        :  <p>Great! there are no problems.</p>
         }
       </section>
 
       {/** All beehive section.  **/}
       <section className={style.ListingContainer}>
         <h2>All inspections:</h2>
-        {allInspections ? 
+        {allInspections.length > 0 ? 
         allInspections.map((inspection =>  
           <Link key={inspection._id} href={{
             pathname: `inspections/manage/${inspection._id}`,
