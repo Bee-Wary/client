@@ -1,20 +1,18 @@
+@use "@/styles/partials/variables" as var;
+
 .outerBox {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     justify-content: center;
     align-items: center;
-
-    // TODO: fix variabe imports.
-    color: #F3F4F0;
+    color: var.$petal-white;
 }
 
 .outerBox:active, 
 .outerBox:hover {
     background-color: rgba(231, 233, 226, 0.03);
-    // TODO: fix variabe imports.
-    color: #FFDD37;
-
+    color: var.$pineapple-yellow-bright;
 }
 
 .icon {

@@ -4,11 +4,17 @@
  */
 
 /**
- * The beehive data model, summerized and stripped down for the homepage to only the needed info
+ * Beehive datamodel, basic info for dropdowns or selections. 
  */
-interface SummerizedBeehive{
+type BeehiveName = {
     _id: string;
     name: string;
+}
+
+/**
+ * The beehive data model, summerized and stripped down for the homepage to only the needed info
+ */
+type SummerizedBeehive = BeehiveName & {
     location: GeoPoint;
     last_inspection?: {
         illness: string | null;
@@ -30,6 +36,18 @@ interface SummerizedBeehive{
 }
 
 /**
+ * The beehive frame data model, beehive frames with inspection data.
+ */
+type InspectionBeeFrame = {
+    id: string
+    title: string,
+    queen_present: boolean;
+    brood_percentage: number;
+    pollen_percentage: number;
+    honey_percentage: number;
+}
+
+/**
  * The inspection data model, summerized and stripped down for the homepage to only the needed info
  */
 interface SummerizedInspection{
@@ -39,4 +57,24 @@ interface SummerizedInspection{
     ref_beehive: string;
     last_updated: string;
     draft: boolean;
+}
+
+
+/**
+ * The inspection data model without ID, Detailed data needed to display card info.
+ */
+type BaseFullInspection = {
+    title: string;
+    description: string;
+    frames: InspectionBeeFrame[];
+    illness: string;
+    medication: string;
+    ref_beehive: string;
+    creation_date: string;
+    last_updated: string;
+    draft: boolean;
+}
+
+type FullInspection = BaseFullInspection & {
+    _id: string;
 }
