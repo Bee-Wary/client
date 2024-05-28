@@ -20,6 +20,13 @@ type StatisticsList = {
   };
 };
 
+type NotificationList = {
+  _id: string;
+  Name: string;
+  Message: string;
+  DateOfCreation: string;
+};
+
 /**
  * The beehive data model, summerized and stripped down for the homepage to only the needed info
  */
