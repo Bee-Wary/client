@@ -1,7 +1,7 @@
 'use client';
 
 import { Select, SelectItem } from '@nextui-org/react';
-import { Hexagon, Drop } from '@phosphor-icons/react/dist/ssr';
+import { Hexagon, Drop, Thermometer } from '@phosphor-icons/react/dist/ssr';
 import style from '@/styles/statistics/statisticPage.module.scss';
 import { SetStateAction, useState } from 'react';
 
@@ -39,7 +39,7 @@ export const StatiscticsForm = (props: Props) => {
         {props.StatisticsList.map((statistic, index) => (
           <div key={statistic._id} className={style.StatisticItem}>
             <div className={`${style.StatisticIcon} ${index === activeIndex ? style.active : ''}`} onClick={() => handleItemClick(index)}>
-              <Hexagon size={47} className={style.StatisticSVG} />
+              {statistic.metadata.type === 'temperature' ? <Thermometer size={47} className={style.StatisticSVG} /> : <Drop size={47} className={style.StatisticSVG} />}
             </div>
             <p className={style.StatisticName}>{statistic.metadata.type}</p>
           </div>
