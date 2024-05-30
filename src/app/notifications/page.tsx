@@ -1,10 +1,11 @@
-const NotificationPage = () => {
+import { getAllNotifications } from '@/services/server/notifications/queries';
 
-    return (
-        <>
-        <p>NotificationPage</p>
-        </>
-    );
-}
+import { NotificationForm } from '@/components/notification/notificationForm';
 
-export default NotificationPage
+const NotificationPage = async ({ params, searchParams }: { params: { inspectionID?: string }; searchParams: { beehiveRefID?: string } }) => {
+  const allNotifications: NotificationList[] = (await getAllNotifications()).documents;
+
+  return <NotificationForm NotificationList={allNotifications} />;
+};
+
+export default NotificationPage;

@@ -1,5 +1,6 @@
 import { Select, SelectItem } from '@nextui-org/react';
-import { getAllBeehiveNamesAndIDs, getAllStatistics } from '@/services/server/beehives/queries';
+import { getAllBeehiveNamesAndIDs } from '@/services/server/beehives/queries';
+import { getAllStatistics } from '@/services/server/statistics/queries';
 import { StatiscticsForm } from '@/components/statistics/statisticsForm';
 
 const Statisticspage = async ({ params, searchParams }: { params: { inspectionID?: string }; searchParams: { beehiveRefID?: string } }) => {

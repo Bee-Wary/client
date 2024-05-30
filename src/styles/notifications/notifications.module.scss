@@ -1,0 +1,28 @@
+.NotificationCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  background-color: #e7e9e2;
+  padding: 10px;
+  margin: 10px;
+}
+
+.NotificationCardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.NotificationTitle {
+  font-size: 24px;
+  font-weight: 900;
+}
+.NotificationMessage {
+  font-size: 16px;
+  font-weight: 200;
+  letter-spacing: 0.32px;
+  color: #7a7b78;
+}
