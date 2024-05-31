@@ -268,3 +268,90 @@ export async function createNewInspection(
   }
 }
 
+/**
+ * Fetches all inspections from the database in full detail with the frames counted.
+ * @returns all detailed inspections, frames counted not listed.
+ */
+export async function getInspectionWithBeehiveFrameDataByInspectionID(inspectionID: string): Promise<{ documents: FullInspection[] }> {
+  try {
+    const response = await fetch(generateDataApiUrl("aggregate"), {
+      method: "POST",
+      headers: generateRequestHeaders(),
+      body: JSON.stringify({
+        ...generateDataSource("inspections"),
+      pipeline: [
+        {
+          $match: {
+            _id: { $oid: inspectionID }
+          }
+        },
+        {
+          $lookup: {
+            from: "beehives",
+            localField: "ref_beehive",
+            foreignField: "_id",
+            as: "beehiveframes",
+            pipeline: [
+              {
+                $project: {
+                  _id: 0,
+                  frames: 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          $unwind: {
+            path: "$beehiveframes",
+            preserveNullAndEmptyArrays: true
+          }
+        },
+        {
+          $addFields: {
+            beehiveframes: "$beehiveframes.frames"
+          }
+        },
+        {
+          $addFields: {
+            frames: {
+              $map: {
+                input: "$frames",
+                as: "frame",
+                in: {
+                  $mergeObjects: [
+                    "$$frame",
+                    {
+                      $arrayElemAt: [
+                        {
+                          $filter: {
+                            input: "$beehiveframes",
+                            as: "beeframe",
+                            cond: {
+                              $eq: [
+                                "$$frame.ref_frame",
+                                "$$beeframe.id"
+                              ]
+                            }
+                          }
+                        },
+                        0
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          $unset: ["beehiveframes"]
+        }
+      ]
+      })
+    }) 
+    return await response.json();
+  } catch ( error ) {
+    throw new Error(`Realm Data API returned an error on getAllFullyDetailedInspections: ${ error }`) 
+  }
+}

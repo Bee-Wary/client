@@ -25,7 +25,7 @@ export const DateToStringDateDDMMYY = (date: Date, seperator?: string): string =
  * @param seperator - optional preferred seperator, defaut is / .
  * @returns - a string notation of the date YYMMDD with seperators.
  */
-export const DateToStringDateYYMMDD = (date: Date, seperator?: string): string => {
+export const DateToStringDateYYMMDD = (date: Date , seperator?: string): string => {
     const thisSeperator = seperator || dateSeperator;
     return date.getFullYear() + thisSeperator + MakeMinimumTwoDigit(date.getMonth()) + thisSeperator + MakeMinimumTwoDigit(date.getDate());
 }
