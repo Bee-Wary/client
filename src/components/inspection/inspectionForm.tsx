@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Select, SelectItem, Input, Button, DatePicker, Slider } from "@nextui-org/react";
-import { DateValue, CalendarDate, parseDate, parseAbsoluteToLocal, parseDateTime } from "@internationalized/date";
+import { parseAbsoluteToLocal, ZonedDateTime } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight, Crown } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
 import { fetchCreateNewInspection } from "@/services/client/inspections/routeFetches";
@@ -20,31 +20,15 @@ type Props = {
 }
 
 // * the create, wil only need a beehive as ref,
+// TODO: update method not implemented yet. wil just do a new post.
 export const InspectionForm = (props: Props) => {
-    console.log("### Current inspection: ", props.currentinspection);
 
     const router = useRouter();
     const [readmode, setReadmode] = useState<boolean>(props.readmode || false);
     const [beehiveName, setBeehiveName] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
     const [connectedBeehive, setConnectedBeehive] = useState<Beehive | undefined>(props.connectedBeehive || undefined)
     const [inspectionTitle, setInspectionTitle] = useState<string>(props.currentinspection?.title || "");
-
-
-    // ### Datetime handling ###
-    // values used in: DatePicker, cancelEdit(function), HandeleSumbmitAndSave(function)
-    // Datepicker needs DateValue - mongo does only accept correct IOS format.
-    console.log("DateValue object: ", parseAbsoluteToLocal(props.currentinspection?.creation_date || new Date().toISOString()));
-    const [inspectionDate, setInspectionDate] = useState<DateValue>(parseAbsoluteToLocal(props.currentinspection?.creation_date || new Date().toISOString()));
-
-    // Console logs return the right date format, but typscript does not accept toAbsoluteString() (which converts to IOS)
-    console.log("savedate ISO: ", inspectionDate.toAbsoluteString());
-    console.log("savedate ISO 2: ", new Date(inspectionDate.toAbsoluteString()).toISOString(),);
-
-    // TODO: update method not implemented yet. wil just do a new post.
-
-    // ### Original, current date only ###
-    // const [inspectionDate, setInspectionDate] = useState<DateValue>(parseDate(DateToStringDateYYMMDD(new Date(), "-")));
-
+    const [inspectionDate, setInspectionDate] = useState<ZonedDateTime>(parseAbsoluteToLocal(props.currentinspection?.creation_date || new Date().toISOString()));
     const [inspectionDescription, setInspectionDescription] = useState<string>(props.currentinspection?.description || "");
     const [inspectionFrames, setInspectionFrames] = useState<InspectionBeeFrame[]>(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
     const [illness, setIllness] = useState<string>(props.currentinspection?.illness || "");
@@ -371,7 +355,7 @@ export const InspectionForm = (props: Props) => {
         if (showWarningModal()) {
             setBeehiveName({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
             setInspectionTitle(props.currentinspection?.title || "");
-            setInspectionDate(parseDateTime(props.currentinspection?.creation_date || new Date().toISOString()));
+            setInspectionDate(parseAbsoluteToLocal(props.currentinspection?.creation_date || new Date().toISOString()));
             setInspectionDescription(props.currentinspection?.description || "");
             setInspectionFrames(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
             setIllness(props.currentinspection?.illness || "");
@@ -390,7 +374,7 @@ export const InspectionForm = (props: Props) => {
                 illness: illness,
                 medication: medication,
                 ref_beehive: connectedBeehive?._id || "",
-                creation_date: new Date(inspectionDate.toAbsoluteString()).toISOString(),
+                creation_date: inspectionDate.toAbsoluteString(),
                 last_updated: new Date().toISOString(),
                 draft: !(inspectionTitle && inspectionDescription && inspectionFrames.find(
                     frame => frame.hasOwnProperty("queen_present") && (frame as InspectionBeeFrame).queen_present === true
