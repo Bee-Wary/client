@@ -7,6 +7,7 @@ import { PlusCircle } from "@phosphor-icons/react/dist/ssr";
 import Link from 'next/link';
 import style from '@/styles/inspections/inspectionsPage.module.scss';
 import inputStyles from '@/styles/inputs/inputs.module.scss';
+import HeaderButton from '@/components/HeaderButton';
 
 const InspectionsPage = async (
   { searchParams } :
@@ -24,17 +25,17 @@ const InspectionsPage = async (
   return (
     <>
       {currentBeehive ? 
-      <section className={style.ListingContainer}>
-          <HiveCard
-            href={`beehives/manage/${currentBeehive._id}`}
-            img="https://placehold.co/400x400/png"
-            name={currentBeehive.name}
-            lastInspection={currentBeehive.last_inspection ? new Date(currentBeehive.last_inspection.last_updated) : undefined}
-            illness={(currentBeehive.last_inspection && currentBeehive.last_inspection.illness) ? true : false}
-            location={currentBeehive.location.coordinates}
-            sensor={currentBeehive.last_sensor_entry ? true : false}
-          />
-      </section>
+        <section className={style.ListingContainer}>
+            <HiveCard
+              href={`beehives/manage/${currentBeehive._id}`}
+              img="https://placehold.co/400x400/png"
+              name={currentBeehive.name}
+              lastInspection={currentBeehive.last_inspection ? new Date(currentBeehive.last_inspection.last_updated) : undefined}
+              illness={(currentBeehive.last_inspection && currentBeehive.last_inspection.illness) ? true : false}
+              location={currentBeehive.location.coordinates}
+              sensor={currentBeehive.last_sensor_entry ? true : false}
+            />
+        </section>
         : null
       }
     
@@ -43,19 +44,14 @@ const InspectionsPage = async (
         <div className={inputStyles.searchField}>
           {/* Insert search field */}
         </div>
-        <Link href={{
-          pathname: '/inspections/create/',
-          query: searchParams ? { beehiveRefID: searchParams.beehiveRefID } : null
-        }}>
-          <Button 
-            className={`${inputStyles.actionButton} p-3`}
-            size="lg"
-            endContent={<PlusCircle 
-            weight='fill' size={64}/>}
-          >
-            Create<br/>note
-          </Button>  
-        </Link> 
+        <HeaderButton
+          href={{
+            pathname: '/inspections/create/',
+            query: searchParams ? { beehiveRefID: searchParams.beehiveRefID } : null
+          }}
+          icon={<PlusCircle weight='fill' size={64}/>}>
+            Create <br/> note
+        </HeaderButton>
       </section>
 
       {/** Problem beehive section.  **/}

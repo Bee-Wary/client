@@ -4,8 +4,8 @@ import HiveCard from '@/components/HiveCard';
 import { getSummerizedBeehives } from '@/services/server/beehives/queries';
 import { getSummerizedInspections } from '@/services/server/inspections/queries';
 import { CaretRight, PlusCircle  } from '@phosphor-icons/react/dist/ssr';
-import { Button } from "@nextui-org/react";
 import inputStyles from '@/styles/inputs/inputs.module.scss'
+import HeaderButton from '@/components/HeaderButton';
 
 export default async function Beehivespage() {
   const beehives = (await getSummerizedBeehives()).documents;
@@ -17,19 +17,11 @@ export default async function Beehivespage() {
         <div className={inputStyles.searchField}>
             {/* Keep field for default flex spacing. */}
         </div>
-        <Link 
-          key={"addbeehive"} href={{
-              pathname: `/beehives/create`,
-          }}>
-          <Button 
-              className={`${inputStyles.actionButton} p-3`}
-              size="lg"
-              endContent={<PlusCircle  weight='fill' size={64}/>}
-          >
-            Add<br/>
-            Beehive
-          </Button>
-        </Link>
+        <HeaderButton 
+          href="/inspections/create/" 
+          icon={<PlusCircle weight='fill' size={64}/>}>
+            Create <br/> note
+        </HeaderButton>
       </section>
       <section className={styles.itemList}>
         <div className={styles.sectionTitle}>
