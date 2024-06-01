@@ -8,7 +8,7 @@ type props = {
 
 export default function LocationInput({ lat, lng, readOnly }: props) {
     return (
-        <div>
+        <div className="flex flex-row">
             <Input
                 type="number"
                 isReadOnly={readOnly}
