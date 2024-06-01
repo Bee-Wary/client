@@ -25,20 +25,17 @@ const InspectionsPage = async (
   return (
     <>
       {currentBeehive ? 
-      <section className={style.ListingContainer}>
-        <Link href={{
-            pathname: `beehives/manage/${currentBeehive._id}`,
-        }}>
-          <HiveCard
-            img="https://placehold.co/400x400/png"
-            name={currentBeehive.name}
-            lastInspection={currentBeehive.last_inspection ? new Date(currentBeehive.last_inspection.last_updated) : undefined}
-            illness={(currentBeehive.last_inspection && currentBeehive.last_inspection.illness) ? true : false}
-            location={currentBeehive.location.coordinates}
-            sensor={currentBeehive.last_sensor_entry ? true : false}
-          />
-        </Link>
-      </section>
+        <section className={style.ListingContainer}>
+            <HiveCard
+              href={`beehives/manage/${currentBeehive._id}`}
+              img="https://placehold.co/400x400/png"
+              name={currentBeehive.name}
+              lastInspection={currentBeehive.last_inspection ? new Date(currentBeehive.last_inspection.last_updated) : undefined}
+              illness={(currentBeehive.last_inspection && currentBeehive.last_inspection.illness) ? true : false}
+              location={currentBeehive.location.coordinates}
+              sensor={currentBeehive.last_sensor_entry ? true : false}
+            />
+        </section>
         : null
       }
     
