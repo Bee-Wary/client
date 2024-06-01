@@ -27,7 +27,7 @@ const BeehiveDetailPage = async (
             <HeaderButton
                 href={{
                     pathname: `/inspections`,
-                    query: { beehiveRefID: CurrentBeehive._id }
+                    query: { beehiveRefID: currentBeehive._id }
                 }}
                 icon={<Note size={32} weight="fill" />}>
                     Notes
