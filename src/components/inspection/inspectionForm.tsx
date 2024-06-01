@@ -376,12 +376,13 @@ export const InspectionForm = (props: Props) => {
                 ref_beehive: connectedBeehive?._id || "",
                 creation_date: inspectionDate.toAbsoluteString(),
                 last_updated: new Date().toISOString(),
-                draft: !( // Inverted condition.
-                    inspectionTitle ? true : false
-                        && inspectionDescription ? true : false
-                            && inspectionFrames.length >= 1 && inspectionFrames.find(
-                                frame => frame.hasOwnProperty("queen_present") && (frame as InspectionBeeFrame).queen_present === true
-                            ) ? true : false
+                draft: !Boolean( // Inverted condition, if everything is present it is NOT a draft.
+                    inspectionTitle
+                    && inspectionDescription
+                    && inspectionFrames.length >= 1
+                    && inspectionFrames.find(
+                        frame => frame.hasOwnProperty("queen_present") && (frame as InspectionBeeFrame).queen_present === true
+                    )
                 )
             };
 
