@@ -54,7 +54,7 @@ export const BeehiveForm = ({readOnly, name, material, location, queen, frames} 
                 <Input 
                     isReadOnly={readmode}
                     isClearable={!readmode}
-                    label="Queen Marking descriptrion"
+                    label="Queen Marking description"
                     labelPlacement='outside'
                     value={queen.markingDescription} />
                 <LocationInput 
