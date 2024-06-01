@@ -19,48 +19,48 @@ interface Props {
 
 export function InspectionCard(
     { inspectionID, img, title, description, illness, medication, draft, creation_date, last_updated }
-    : Props
-) {        
+        : Props
+) {
     const creationDateConvertedToDate: Date = new Date(creation_date);
-    
+
     return (
         <article className={style.inspectionCard}>
             <div>
                 {/* Random image loading with the defenition with time to return random values. this banchmarks load times. */}
-                <Image src={"https://picsum.photos/400?random&rnd" + new Date().getTime() + ")"} width={400} height={400} alt={`Image of ${ title }`} />
+                <Image src={"https://picsum.photos/400?random&rnd" + new Date().getTime() + ")"} width={400} height={400} alt={`Image of ${title}`} />
             </div>
             <div>
                 <div className={style.headingContainer}>
-                    <h3 >{ title }</h3>
+                    <h3 >{title}</h3>
                     <BadgeIndicatorRow>
-                        <BadgeIndicator 
+                        <BadgeIndicator
                             isNegative={illness ? true : undefined}
                         >
                             <Heartbeat weight="fill" />
                         </BadgeIndicator>
-                        <BadgeIndicator 
+                        <BadgeIndicator
                             isNegative={medication ? true : undefined}
-                            // Define a route with pathname and routeSectionID to scroll to a specific section of the page.
-                            // route={{ pathname: `inspections/${inspectionID}`, routeSectionID: 'medication' }}
+                        // Define a route with pathname and routeSectionID to scroll to a specific section of the page.
+                        // route={{ pathname: `inspections/${inspectionID}`, routeSectionID: 'medication' }}
                         >
                             <Pill weight="fill" />
                         </BadgeIndicator>
-                        <BadgeIndicator 
-                            isNegative={draft ? true : undefined}
-                            // Define a route with a pathname only, to make it a link.
-                            // route={{ pathname: `inspections/${inspectionID}`}}
+                        <BadgeIndicator
+                            isNegative={draft ? draft : undefined}
+                        // Define a route with a pathname only, to make it a link.
+                        // route={{ pathname: `inspections/${inspectionID}`}}
                         >
-                            <PencilSimple weight="fill"/>
+                            <PencilSimple weight="fill" />
                         </BadgeIndicator>
                     </BadgeIndicatorRow>
                 </div>
                 <div className={style.infoRow}>
-                    <CalendarBlank weight="fill"/>
+                    <CalendarBlank weight="fill" />
                     <h4>Created:</h4>
                     <p>{DateToStringDateDDMMYY(creationDateConvertedToDate)} {DateToStringTime(creationDateConvertedToDate)}</p>
                 </div>
                 <div className={style.infoRow}>
-                    <PencilSimple weight="fill"/>
+                    <PencilSimple weight="fill" />
                     <h4>Description:</h4>
                     <p>{description}</p>
                 </div>

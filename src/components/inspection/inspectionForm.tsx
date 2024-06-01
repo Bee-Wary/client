@@ -5,7 +5,7 @@ import { Select, SelectItem, Input, Button, DatePicker, Slider } from "@nextui-o
 import { parseAbsoluteToLocal, ZonedDateTime } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight, Crown } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
-import { fetchCreateNewInspection } from "@/services/client/inspections/routeFetches";
+import { fetchCreateNewInspection, fetchUpdateInspection } from "@/services/client/inspections/routeFetches";
 import { fetchBeehiveByID } from "@/services/client/beehives/routeFetches";
 import { useRouter } from 'next/navigation'
 
@@ -376,19 +376,29 @@ export const InspectionForm = (props: Props) => {
                 ref_beehive: connectedBeehive?._id || "",
                 creation_date: inspectionDate.toAbsoluteString(),
                 last_updated: new Date().toISOString(),
-                draft: !(inspectionTitle && inspectionDescription && inspectionFrames.find(
-                    frame => frame.hasOwnProperty("queen_present") && (frame as InspectionBeeFrame).queen_present === true
-                ))
+                draft: !( // Inverted condition.
+                    inspectionTitle ? true : false
+                        & inspectionDescription ? true : false
+                            && inspectionFrames.length >= 1 && inspectionFrames.find(
+                                frame => frame.hasOwnProperty("queen_present") && (frame as InspectionBeeFrame).queen_present === true
+                            ) ? true : false
+                )
             };
-            console.log(_inspectionSave);
+
+            console.log("1", inspectionTitle ? true : false);
+            console.log("2", inspectionDescription ? true : false);
+            console.log("3", inspectionFrames.length >= 1 && inspectionFrames.find(
+                frame => frame.hasOwnProperty("queen_present") && (frame as InspectionBeeFrame).queen_present === true
+            ) ? true : false);
+
 
             if (props.currentinspection) {
-                await fetchCreateNewInspection(_inspectionSave).then(() => {
-                    // router.back();
+                await fetchUpdateInspection(props.currentinspection._id, _inspectionSave).then(() => {
+                    router.back();
                 });
             } else {
                 await fetchCreateNewInspection(_inspectionSave).then(() => {
-                    // router.back();
+                    router.back();
                 });
             }
         }
