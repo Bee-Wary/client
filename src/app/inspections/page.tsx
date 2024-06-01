@@ -25,10 +25,8 @@ const InspectionsPage = async (
     <>
       {currentBeehive ? 
       <section className={style.ListingContainer}>
-        <Link key={currentBeehive._id} href={{
-            pathname: `beehives/manage/${currentBeehive._id}`,
-        }}>
           <HiveCard
+            href={`beehives/manage/${currentBeehive._id}`}
             img="https://placehold.co/400x400/png"
             name={currentBeehive.name}
             lastInspection={currentBeehive.last_inspection ? new Date(currentBeehive.last_inspection.last_updated) : undefined}
@@ -36,7 +34,6 @@ const InspectionsPage = async (
             location={currentBeehive.location.coordinates}
             sensor={currentBeehive.last_sensor_entry ? true : false}
           />
-        </Link>
       </section>
         : null
       }
