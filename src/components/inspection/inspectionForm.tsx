@@ -378,19 +378,12 @@ export const InspectionForm = (props: Props) => {
                 last_updated: new Date().toISOString(),
                 draft: !( // Inverted condition.
                     inspectionTitle ? true : false
-                        & inspectionDescription ? true : false
+                        && inspectionDescription ? true : false
                             && inspectionFrames.length >= 1 && inspectionFrames.find(
                                 frame => frame.hasOwnProperty("queen_present") && (frame as InspectionBeeFrame).queen_present === true
                             ) ? true : false
                 )
             };
-
-            console.log("1", inspectionTitle ? true : false);
-            console.log("2", inspectionDescription ? true : false);
-            console.log("3", inspectionFrames.length >= 1 && inspectionFrames.find(
-                frame => frame.hasOwnProperty("queen_present") && (frame as InspectionBeeFrame).queen_present === true
-            ) ? true : false);
-
 
             if (props.currentinspection) {
                 await fetchUpdateInspection(props.currentinspection._id, _inspectionSave).then(() => {
