@@ -1,8 +1,8 @@
 import { generateDataApiUrl, generateDataSource, generateRequestHeaders } from "@/utils/dataApi";
 
 /**
- * Fetches all inspections from the database in full detail with the frames counted.
- * @returns all detailed inspections, frames counted not listed.
+ * Fetches all inspections from the database in full detail with the frames content.
+ * @returns all detailed inspections, frames from beehives merged.
  */
 export async function getAllFullyDetailedInspections(): Promise<{ documents: FullInspection[] }> {
   try {
@@ -247,7 +247,7 @@ export async function createNewInspection(
 }
 
 /**
- * create a single new inspection.
+ * update a single inspection.
  * @returns the added inspection from the database.
  */
 export async function UpdateInspectionByInspectionID(
@@ -306,4 +306,29 @@ export async function UpdateInspectionByInspectionID(
   }
 }
 
-
+/**
+ * Delete a single inspection.
+ * @returns the amount deleted items from the database.
+ */
+export async function DeleteInspectionByInspectionID(
+  inspectionID : String, 
+): Promise<{ document: string }> {
+  try {
+    console.log('[debug] delete: ', inspectionID);
+    
+    const response = await fetch(generateDataApiUrl("deleteOne"), {
+      method: "POST",
+      headers: generateRequestHeaders(),
+      body: JSON.stringify({
+        ...generateDataSource("inspections"),
+        filter: {
+          _id: { "$oid": inspectionID }
+        }
+      })
+    })
+    return await response.json();
+    
+  } catch ( error ) {
+    throw new Error(`Realm Data API returned an error on DeleteInspectionByInspectionID: ${ error }`) 
+  }
+}

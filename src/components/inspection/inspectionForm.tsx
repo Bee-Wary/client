@@ -5,7 +5,7 @@ import { Select, SelectItem, Input, Button, DatePicker, Slider } from "@nextui-o
 import { parseAbsoluteToLocal, ZonedDateTime } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight, Crown } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
-import { fetchCreateNewInspection, fetchUpdateInspection } from "@/services/client/inspections/routeFetches";
+import { fetchCreateNewInspection, fetchUpdateInspection, fetchDeleteInspection } from "@/services/client/inspections/routeFetches";
 import { fetchBeehiveByID } from "@/services/client/beehives/routeFetches";
 import { useRouter } from 'next/navigation'
 
@@ -249,7 +249,7 @@ export const InspectionForm = (props: Props) => {
                 </section>
                 : null // Do not render dropdown if no beehive is connected.
             }
-            <section className={`${style.ListingContainer} ${readmode ? "" : "pb-[80px]"}`}>
+            <section className={`${style.ListingContainer}`}>
                 <h2>Mitigations:</h2>
                 <Input
                     isReadOnly={readmode}
@@ -280,6 +280,16 @@ export const InspectionForm = (props: Props) => {
                     }}
                 />
             </section>
+            <section className={`${style.ListingContainer} ${readmode ? "" : "pt-[24px] pb-[24px]"}`}>
+                {props.currentinspection && !readmode ?
+                    <Button onClick={handelDelete} className={inputStyles.deleteButton}>
+                        Delete Inspection
+                    </Button>
+                    :
+                    null
+                }
+            </section>
+
 
             {readmode ?
                 null // Do not render save button if readmode is on.
@@ -395,6 +405,14 @@ export const InspectionForm = (props: Props) => {
                     router.back();
                 });
             }
+        }
+    }
+
+    async function handelDelete() {
+        if (showWarningModal()) {
+            await fetchDeleteInspection(props.currentinspection!._id).then(() => {
+                router.back();
+            });
         }
     }
 }

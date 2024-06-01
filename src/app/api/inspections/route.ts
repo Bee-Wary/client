@@ -1,4 +1,4 @@
-import { createNewInspection, UpdateInspectionByInspectionID } from '@/services/server/inspections/queries';
+import { createNewInspection, UpdateInspectionByInspectionID, DeleteInspectionByInspectionID } from '@/services/server/inspections/queries';
 
 /**
  * catches any API route resuest with the correct handler and signature parameters.
@@ -30,6 +30,18 @@ export async function PATCH(request: Request): Promise<Response> {
     
     
     const insertedID = (await UpdateInspectionByInspectionID(_InspectionID, _InspectionBody));
+    
+    return Response.json(insertedID)
+}
+
+/**
+ * Post a new BaseFullInspection to the database.
+ * @param request A JSON stringified inspectionID of string
+ * @returns The the created Fullinspection with _id.
+ */
+export async function DELETE(request: Request): Promise<Response> {
+    const _InspectionID = await request.json();
+    const insertedID = (await DeleteInspectionByInspectionID(_InspectionID));
     
     return Response.json(insertedID)
 }
