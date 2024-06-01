@@ -35,7 +35,12 @@ const BeehiveDetailPage = async (
         
         <BeehiveForm
             readOnly={true}
-            name={currentBeehive.name}>
+            name={currentBeehive.name}
+            material={currentBeehive.material}
+            location={currentBeehive.location}
+            queen={currentBeehive.queen}
+            frames={currentBeehive.frames}
+            >
 
             </BeehiveForm>
         </>
