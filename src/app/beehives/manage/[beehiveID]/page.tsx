@@ -18,7 +18,7 @@ const BeehiveDetailPage = async (
                 {/* Keep field for default flex spacing. */}
             </div>
             <Link 
-            key={CurrentBeehive._id} href={{
+            href={{
                 pathname: `/inspections`,
                 query: { beehiveRefID: CurrentBeehive._id }
             }}>

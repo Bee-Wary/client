@@ -25,7 +25,7 @@ const InspectionsPage = async (
     <>
       {currentBeehive ? 
       <section className={style.ListingContainer}>
-        <Link key={currentBeehive._id} href={{
+        <Link href={{
             pathname: `beehives/manage/${currentBeehive._id}`,
         }}>
           <HiveCard
