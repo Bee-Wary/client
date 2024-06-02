@@ -23,7 +23,7 @@ type Props = {
 // * the create, wil only need a beehive as ref,
 export const InspectionForm = (props: Props) => {
     const router = useRouter();
-    const { showChoiceModalFunction, ModalComponent } = useChoiceModal();
+    const { showChoiceModal, ModalComponent } = useChoiceModal();
     const [readmode, setReadmode] = useState<boolean>(props.readmode || false);
     const [beehiveName, setBeehiveName] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
     const [connectedBeehive, setConnectedBeehive] = useState<Beehive | undefined>(props.connectedBeehive || undefined)
@@ -296,14 +296,6 @@ export const InspectionForm = (props: Props) => {
         </form>
     );
 
-
-    async function showWarningModal(): Promise<boolean> {
-        return await showChoiceModalFunction({
-            titleContent: <h2>Remove changes?</h2>,
-            cancelText: "Go back"
-        })
-    }
-
     function carouselScroll(directionNumber: 1 | -1) {
         const _frameContent = document.getElementById("frameContent");
         const _frameWidth = document.querySelector("#frameContent li")!.clientWidth;
@@ -354,7 +346,11 @@ export const InspectionForm = (props: Props) => {
     }
 
     async function cancelEdit() {
-        if (await showWarningModal()) {
+        if (await showChoiceModal({
+            titleContent: <h2>Remove changes?</h2>,
+            cancelText: "Go back"
+        })
+        ) {
             setBeehiveName({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
             setInspectionTitle(props.currentinspection?.title || "");
             setInspectionDate(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD(new Date(), "-")));

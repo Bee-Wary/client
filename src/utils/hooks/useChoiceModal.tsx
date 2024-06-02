@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChoiceModal } from '@/components/modals/choiceModal';
 import { Check, X } from "@phosphor-icons/react/dist/ssr";
+import { jsx } from '@emotion/react';
 
 
 type ShowChoiceModalOptions = {
@@ -12,6 +13,18 @@ type ShowChoiceModalOptions = {
     cancelIcon?: React.ReactNode;
 }
 
+/**
+ * A fullscreen popup modal that prompts the user to make a choice.
+ * In a a page:component, import the useChoiceModal hook and caal it into a varable like: const { showChoiceModal, ModalComponent } = useChoiceModal();
+ * Then set the component somewere int he page like: {ModalComponent()}
+ * the useChoice hook can be used like:
+ * await showChoiceModal({
+            titleContent: <h2>Remove changes?</h2>,
+            cancelText: "Go back"
+        })
+ * It will return a boolean value of true if the choice is continue, and false if it is canceled. clicking outside the modal triggers cancel.
+ * @returns showChoiceModal and ModalComponent - A function to show the modal and the modal component itself.
+ */
 export const useChoiceModal = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [titleContent, setTitleContent] = useState<React.ReactNode>(null);
@@ -22,7 +35,7 @@ export const useChoiceModal = () => {
     const [cancelIcon, setCancelIcon] = useState<React.ReactNode>(<X />);
     const [resolvePromise, setResolvePromise] = useState<(value: boolean) => void>(() => { });
 
-    const showChoiceModalFunction = (options: ShowChoiceModalOptions): Promise<boolean> => {
+    const showChoiceModal = (options: ShowChoiceModalOptions): Promise<boolean> => {
         setTitleContent(options.titleContent);
         setContinueText(options.continueText || 'Confirm');
         setCancelText(options.cancelText || 'Cancel');
@@ -60,7 +73,7 @@ export const useChoiceModal = () => {
         />
     );
 
-    return { showChoiceModalFunction, ModalComponent };
+    return { showChoiceModal, ModalComponent };
 };
 
 export default useChoiceModal;
