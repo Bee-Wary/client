@@ -6,6 +6,7 @@ import { getAllSummerizedInspections } from '@/services/server/inspections/queri
 import { CaretRight, PlusCircle } from '@phosphor-icons/react/dist/ssr';
 import { Button } from "@nextui-org/react";
 import inputStyles from '@/styles/inputs/inputs.module.scss'
+import HeaderButton from '@/components/HeaderButton';
 
 export default async function Beehivespage() {
   const beehives = (await getSummerizedBeehives()).documents;
@@ -17,38 +18,28 @@ export default async function Beehivespage() {
         <div className={inputStyles.searchField}>
           {/* Keep field for default flex spacing. */}
         </div>
-        <Link
-          key={"addbeehive"} href={{
-            pathname: `/beehives/create`,
-          }}>
-          <Button
-            className={`${inputStyles.actionButton} p-3`}
-            size="lg"
-            endContent={<PlusCircle weight='fill' size={64} />}
-          >
-            Add<br />
-            Beehive
-          </Button>
-        </Link>
+        <HeaderButton 
+          href="/beehives/create" 
+          icon={<PlusCircle weight='fill' size={64}/>}>
+            Create <br/> note
+        </HeaderButton>
       </section>
       <section className={styles.itemList}>
         <div className={styles.sectionTitle}>
           <h2>Beehives</h2>
-          <Link href="#">View all</Link>
+          <Link href="/beehives">View all</Link>
         </div>
         {beehives.map(doc =>
-          <Link key={doc._id} href={{
-            pathname: `beehives/manage/${doc._id}`,
-          }}>
-            <HiveCard
-              img="https://placehold.co/400x400/png"
-              name={doc.name}
-              lastInspection={doc.last_inspection ? new Date(doc.last_inspection.last_updated) : undefined}
-              illness={(doc.last_inspection && doc.last_inspection.illness) ? true : false}
-              location={doc.location.coordinates}
-              sensor={doc.last_sensor_entry ? true : false}
+          <HiveCard
+            key={doc._id}
+            href={`beehives/manage/${doc._id}`}
+            img="https://placehold.co/400x400/png"
+            name={doc.name}
+            lastInspection={doc.last_inspection ? new Date(doc.last_inspection.last_updated) : undefined}
+            illness={(doc.last_inspection && doc.last_inspection.illness) ? true : false}
+            location={doc.location.coordinates}
+            sensor={doc.last_sensor_entry ? true : false}
             />
-          </Link>
         )}
       </section>
       <section className={styles.itemList}>
