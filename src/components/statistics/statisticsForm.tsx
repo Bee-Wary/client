@@ -26,18 +26,18 @@ const chartIdMapping = {
   },
 };
 
+const timePeriods = ['1 Month', '3 Months', '6 Months', '1 Year'];
+
+const sdk = new ChartsEmbedSDK({
+  baseUrl: 'https://charts.mongodb.com/charts-thomas-more-ndtmfzm',
+});
+
 export const StatisticsForm = (props: Props) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeTimeIndex, setActiveTimeIndex] = useState(0);
   const [chart, setChart] = useState<Chart | null>(null);
 
-  const timePeriods = useMemo(() => ['1 Month', '3 Months', '6 Months', '1 Year'], []);
-
   useEffect(() => {
-    const sdk = new ChartsEmbedSDK({
-      baseUrl: 'https://charts.mongodb.com/charts-thomas-more-ndtmfzm',
-    });
-
     const selectedStatistic: 'temperature' | 'humidity' = props.StatisticsList[activeIndex].metadata.type as 'temperature' | 'humidity';
     const selectedTimePeriod: '1 Month' | '3 Months' | '6 Months' | '1 Year' = timePeriods[activeTimeIndex] as '1 Month' | '3 Months' | '6 Months' | '1 Year';
     const chartId = chartIdMapping[selectedStatistic][selectedTimePeriod];
@@ -54,7 +54,7 @@ export const StatisticsForm = (props: Props) => {
     }
 
     setChart(newChart);
-  }, [activeIndex, activeTimeIndex, props.StatisticsList, timePeriods]);
+  }, [activeIndex, activeTimeIndex, props.StatisticsList]);
 
   const handleItemClick = (index: SetStateAction<number>) => {
     setActiveIndex(index);
