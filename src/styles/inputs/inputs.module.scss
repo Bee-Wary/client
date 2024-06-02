@@ -49,7 +49,18 @@
         background-color: var.$dusty-green-shade;
         color: var.$off-black ;
     }
+
+    &.dangerButton {
+        background-color: var.$negative-red;
+        color: var.$petal-white;
+    }
+    &.warningButton {
+        background-color: var.$pineapple-yellow;
+        color: var.$off-black;
+    }
 }
+
+
 
 .saveButton{
     position: fixed;
