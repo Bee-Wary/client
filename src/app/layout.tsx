@@ -42,7 +42,7 @@ export default function RootLayout(
         {/* Providers include UI component library provider. */}
         <Providers>
           {/* TODO: Use a context provider to pass a fitting header text per page. */}
-          <Header text="Welcome user" />
+          <Header text='Welcome user' />
           {/* Children is the current route active page.tsx.  */}
           <div className="mainWrapper">{children}</div>
           <BottomNavigationBar />
