@@ -11,14 +11,16 @@ interface Beehive {
     location: GeoPoint,
     material: string,
     frames: Frame[]
+    queen: Queen
+    creation_date: string
 }
 
 /**
  * The Frames subdocument found in the Beehive documents
  */
 interface Frame {
-    "id": string,
-    "title": string
+    id: string,
+    title: string
 }
 
 /**
@@ -27,4 +29,9 @@ interface Frame {
 interface GeoPoint {
     type: "Point",
     coordinates: [number, number]
+}
+
+type Queen = {
+    creationDate: string,
+    markingDescription: string,
 }

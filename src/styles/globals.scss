@@ -12,16 +12,25 @@
   --pineapple-yellow: #FBD100;
   --pineapple-yellow-bright: #FFDD37;
   --pineapple-yellow-shade: #C9A700;
-  --dusty-green: #CFD720;
+  --dusty-green: #86792E;
   --dusty-green-bright: #8F8548;
   --dusty-green-shade: #6B6125;
   --tiki-torch-grey: #494F37;
   --tiki-torch-grey-bright: #5B614B;
   --tiki-torch-grey-shade: #3A3F2C;
   --off-black: #121301;
+  --transparent-black: rgba(0, 0 , 0, 0.25);
   
   --positive-green: #639A23;
   --negative-red: #D72A41; 
+
+  --rounding-small: 1rem;
+  --rounding-big: 2rem;
+
+  --page-side-spacing: 1.5rem;
+  --card-spacing: 0.5rem;
+
+  --BottomNavigationBar-height: 88px;
 }
 
 * {
@@ -36,17 +45,47 @@ body {
   overflow-x: hidden;
 }
 
-body {
-  height: 100vh;
-  height: 100dvh;
-}
-
 html {
   color-scheme: light;
 }
 body {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-flow: column nowrap;
   background-color: var.$petal-white;
   color: var.$off-black;
+}
+body .mainWrapper {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+main {
+  position: relative;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+h4{
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+h5{
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 

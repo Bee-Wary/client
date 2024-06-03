@@ -13,7 +13,16 @@ export function Providers(
     setIsClient(true);
   }, []);
   
-  return isClient ? <NextUIProvider>{children}</NextUIProvider> : <></>;
+  return (
+    isClient ?
+    <NextUIProvider>
+      <div style={{display: "flex", flexDirection: "column", height: "100vh"}}>
+          {children}
+      </div> 
+    </NextUIProvider>
+    : 
+    <></>
+  );
 
   // return (
   //   <NextUIProvider>

@@ -1,0 +1,90 @@
+.StatisticPage {
+  margin-top: 16px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.StatisticPageTitle {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.StatisticPageSubTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.StatisticList {
+  display: flex;
+  align-items: flex-start;
+  padding: 0;
+  gap: 10px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+}
+.StatisticItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.StatisticIcon {
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  background-color: rgba(134, 121, 46, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.active {
+  background-color: #fbd100 !important;
+}
+
+.StatisticName {
+  font-size: 15;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.StatisticSVG {
+  align-items: center;
+  justify-content: center;
+}
+
+////////////////////////////////////////
+/// Toggle Months
+///////////////////////////////////////
+
+.StatisticTimeToggle {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  gap: 10px;
+}
+
+.StatisticTimeToggleItem {
+  min-width: 108px;
+  min-height: 27px;
+  border-radius: 13.5px;
+  background-color: rgba(134, 121, 46, 0.5);
+}
+
+.StatisticTimeToggleItemText {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.StatisticChart {
+  margin-top: 10px;
+  height: 360px;
+}
+.StatisticChart iframe {
+  background-color: transparent !important;
+}

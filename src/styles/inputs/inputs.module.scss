@@ -1,0 +1,101 @@
+@use "@/styles/partials/variables" as var;
+
+.searchAndCrud{
+    display: flex;
+    flex-flow: row nowrap;
+    margin-left: var.$page-side-spacing;
+    margin-right: var.$page-side-spacing;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var.$dusty-green;
+    .searchField{
+        flex-grow: 1;
+    }
+}
+
+.datePicker {
+    [data-slot=input-wrapper]:not(:hover){
+        background-color: var.$petal-white-bright;
+    }
+}
+
+.slider {
+    margin-top: 2rem ;
+    margin-bottom: 2rem ;
+    width: 98%;
+    div[data-slot=track-wrapper]{
+        height: 3rem;
+    }
+    div[data-slot=filler] {
+        background-color: var.$dusty-green;
+    }
+    div[data-slot=thumb] {
+        background-color: var.$dusty-green;
+    }
+    div[data-slot=track] {
+        border-left: 15px solid var.$dusty-green;
+    }
+}
+
+.actionButton {
+    flex-grow: 0;
+    background-color: var.$dusty-green;
+    color: var.$pineapple-yellow;
+    font-size: 1.25rem;
+    font-weight: 700;
+    height: 4rem;
+
+    &.unselected {
+        background-color: var.$dusty-green-shade;
+        color: var.$off-black ;
+    }
+
+    &.dangerButton {
+        background-color: var.$negative-red;
+        color: var.$petal-white;
+    }
+    &.warningButton {
+        background-color: var.$pineapple-yellow;
+        color: var.$off-black;
+    }
+}
+
+
+
+.saveButton{
+    position: fixed;
+    right: 1.5rem;
+    bottom: calc(var.$BottomNavigationBar-height + 1.5rem);
+    height: 88px;
+    width: 5px;
+
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 0.2rem 0;
+    justify-content: end;
+    gap: 0;
+
+    border-radius: 5rem 5rem var.$rounding-small var.$rounding-small;
+    background-color: var.$transparent-black;
+    color: var.$petal-white;
+    
+    svg {
+        height: 56px;
+        width: 56px;
+        scale: 2;
+        fill: var.$dusty-green;
+        display: block;
+
+    }
+    h3 {
+        flex-grow: 0;
+        flex-shrink: 1;
+    }
+}
+
+.deleteButton {
+    border: 2px solid red;
+    background-color: transparent;
+    color: red;
+    max-width: fit-content;
+}

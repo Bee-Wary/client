@@ -5,8 +5,8 @@ import { ReactNode } from 'react';
 import { Image } from "@phosphor-icons/react/dist/ssr";
 
 const NavigationbarButton = (
-  { children, labelText = "label", route = "/", icon = <Image weight="fill" alt='fallback icon'/>} : 
-  { children? : ReactNode, labelText? : string, route? : string, icon? : ReactNode}
+  { children, route = "/", icon = <Image weight="fill" alt='fallback icon'/>} : 
+  { children? : ReactNode, route? : string, icon? : ReactNode}
   ) => {
 
    return (
@@ -17,7 +17,7 @@ const NavigationbarButton = (
             {icon}
           </div>
           <p className={styles.content}>
-              {labelText}
+              {children}
           </p>
      </Link>
      </>
