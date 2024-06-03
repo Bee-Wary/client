@@ -2,23 +2,24 @@ import styles from '@/styles/page.module.scss';
 import Link from 'next/link';
 import HiveCard from '@/components/HiveCard';
 import { getSummerizedBeehives } from '@/services/server/beehives/queries';
-import { getSummerizedInspections } from '@/services/server/inspections/queries';
-import { CaretRight, PlusCircle  } from '@phosphor-icons/react/dist/ssr';
+import { getAllSummerizedInspections } from '@/services/server/inspections/queries';
+import { CaretRight, PlusCircle } from '@phosphor-icons/react/dist/ssr';
+import { Button } from "@nextui-org/react";
 import inputStyles from '@/styles/inputs/inputs.module.scss'
 import HeaderButton from '@/components/HeaderButton';
 
 export default async function Beehivespage() {
   const beehives = (await getSummerizedBeehives()).documents;
-  const inspections = (await getSummerizedInspections()).documents;
+  const inspections = (await getAllSummerizedInspections()).documents;
 
   return (
     <main className={styles.main}>
       <section className={inputStyles.searchAndCrud}>
         <div className={inputStyles.searchField}>
-            {/* Keep field for default flex spacing. */}
+          {/* Keep field for default flex spacing. */}
         </div>
         <HeaderButton 
-          href="/inspections/create/" 
+          href="/beehives/create" 
           icon={<PlusCircle weight='fill' size={64}/>}>
             Create <br/> note
         </HeaderButton>
@@ -53,7 +54,7 @@ export default async function Beehivespage() {
             <span>Status</span>
             <CaretRight weight='regular' />
           </div>
-          {inspections.map(doc => 
+          {inspections.map(doc =>
             <a href={`inspections/manage/${doc._id}`} key={doc._id}>
               <span>{doc.title}</span>
               <span>{new Date(doc.last_updated).toLocaleDateString()}</span>

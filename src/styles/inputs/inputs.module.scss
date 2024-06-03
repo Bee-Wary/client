@@ -92,3 +92,10 @@
         flex-shrink: 1;
     }
 }
+
+.deleteButton {
+    border: 2px solid red;
+    background-color: transparent;
+    color: red;
+    max-width: fit-content;
+}

@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { Select, SelectItem, Input, Button, DatePicker, Slider } from "@nextui-org/react";
-import { DateValue, parseDate } from "@internationalized/date";
+import { parseAbsoluteToLocal, ZonedDateTime } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight, Crown } from '@phosphor-icons/react/dist/ssr';
 import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
-import { fetchCreateNewInspection } from "@/services/client/inspections/routeFetches";
+import { fetchCreateNewInspection, fetchUpdateInspection, fetchDeleteInspection } from "@/services/client/inspections/routeFetches";
 import { fetchBeehiveByID } from "@/services/client/beehives/routeFetches";
 import { useRouter } from 'next/navigation'
 import { useChoiceModal } from '@/utils/hooks/useChoiceModal';
@@ -28,7 +28,7 @@ export const InspectionForm = (props: Props) => {
     const [beehiveName, setBeehiveName] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
     const [connectedBeehive, setConnectedBeehive] = useState<Beehive | undefined>(props.connectedBeehive || undefined)
     const [inspectionTitle, setInspectionTitle] = useState<string>(props.currentinspection?.title || "");
-    const [inspectionDate, setInspectionDate] = useState<DateValue>(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD(new Date(), "-")));
+    const [inspectionDate, setInspectionDate] = useState<ZonedDateTime>(parseAbsoluteToLocal(props.currentinspection?.creation_date || new Date().toISOString()));
     const [inspectionDescription, setInspectionDescription] = useState<string>(props.currentinspection?.description || "");
     const [inspectionFrames, setInspectionFrames] = useState<InspectionBeeFrame[]>(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
     const [illness, setIllness] = useState<string>(props.currentinspection?.illness || "");
@@ -114,10 +114,8 @@ export const InspectionForm = (props: Props) => {
                         label="Date"
                         labelPlacement='outside'
                         value={inspectionDate}
-
-                        onChange={(value) => { setInspectionDate(parseDate(value.year + "-" + MakeMinimumTwoDigit(value.month) + "-" + MakeMinimumTwoDigit(value.day))) }}
+                        onChange={(value) => { setInspectionDate(value) }}
                     />
-
                 </div>
                 <Input
                     isReadOnly={readmode}
@@ -134,8 +132,7 @@ export const InspectionForm = (props: Props) => {
                     }}
                 />
             </section>
-            {/* //TODO: Finish carousel. */}
-            {connectedBeehive && inspectionFrames.length >= 1 ?
+            {inspectionFrames.length >= 1 ?
                 <section className={style.ListingContainer}>
                     <h2>Frame Selection:</h2>
                     <div id='frameCarousel' className={style.carousel}>
@@ -248,7 +245,7 @@ export const InspectionForm = (props: Props) => {
                 </section>
                 : null // Do not render dropdown if no beehive is connected.
             }
-            <section className={`${style.ListingContainer} ${readmode ? "" : "pb-[80px]"}`}>
+            <section className={`${style.ListingContainer}`}>
                 <h2>Mitigations:</h2>
                 <Input
                     isReadOnly={readmode}
@@ -279,6 +276,15 @@ export const InspectionForm = (props: Props) => {
                     }}
                 />
             </section>
+            <section className={`${style.ListingContainer} ${readmode ? "" : "pt-[24px] pb-[24px]"}`}>
+                {props.currentinspection && !readmode ?
+                    <Button onClick={handelDelete} className={inputStyles.deleteButton}>
+                        Delete Inspection
+                    </Button>
+                    :
+                    null
+                }
+            </section>
 
             {readmode ?
                 null // Do not render save button if readmode is on.
@@ -292,6 +298,7 @@ export const InspectionForm = (props: Props) => {
                     <h3>Save</h3>
                 </Button>
             }
+
             {ModalComponent()}
         </form>
     );
@@ -345,6 +352,7 @@ export const InspectionForm = (props: Props) => {
         }
     }
 
+
     async function cancelEdit() {
         if (await showChoiceModal({
             titleContent: <h2>Remove changes?</h2>,
@@ -353,7 +361,7 @@ export const InspectionForm = (props: Props) => {
         ) {
             setBeehiveName({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
             setInspectionTitle(props.currentinspection?.title || "");
-            setInspectionDate(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD(new Date(), "-")));
+            setInspectionDate(parseAbsoluteToLocal(props.currentinspection?.creation_date || new Date().toISOString()));
             setInspectionDescription(props.currentinspection?.description || "");
             setInspectionFrames(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
             setIllness(props.currentinspection?.illness || "");
@@ -372,13 +380,37 @@ export const InspectionForm = (props: Props) => {
                 illness: illness,
                 medication: medication,
                 ref_beehive: connectedBeehive?._id || "",
-                creation_date: new Date(inspectionDate.toString()).toISOString(),
+                creation_date: inspectionDate.toAbsoluteString(),
                 last_updated: new Date().toISOString(),
-                draft: !(inspectionTitle && inspectionDescription && inspectionFrames.find(
-                    frame => frame.hasOwnProperty("queen_present") && (frame as InspectionBeeFrame).queen_present === true
-                ))
+                draft: !Boolean( // Inverted condition, if everything is present it is NOT a draft.
+                    inspectionTitle
+                    && inspectionDescription
+                    && inspectionFrames.length >= 1
+                    && inspectionFrames.find(
+                        frame => frame.hasOwnProperty("queen_present") && (frame as InspectionBeeFrame).queen_present === true
+                    )
+                )
             };
-            await fetchCreateNewInspection(_inspectionSave).then(() => {
+
+            if (props.currentinspection) {
+                await fetchUpdateInspection(props.currentinspection._id, _inspectionSave).then(() => {
+                    router.back();
+                });
+            } else {
+                await fetchCreateNewInspection(_inspectionSave).then(() => {
+                    router.back();
+                });
+            }
+        }
+    }
+
+    async function handelDelete() {
+        if (await showChoiceModal({
+            titleContent: <h2>Delete inspection?</h2>,
+            cancelText: "Don't"
+        })
+        ) {
+            await fetchDeleteInspection(props.currentinspection!._id).then(() => {
                 router.back();
             });
         }
