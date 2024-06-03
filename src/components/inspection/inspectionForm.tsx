@@ -8,6 +8,7 @@ import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dat
 import { fetchCreateNewInspection, fetchUpdateInspection, fetchDeleteInspection } from "@/services/client/inspections/routeFetches";
 import { fetchBeehiveByID } from "@/services/client/beehives/routeFetches";
 import { useRouter } from 'next/navigation'
+import { useChoiceModal } from '@/utils/hooks/useChoiceModal';
 
 import style from '@/styles/inspections/inspectionsPage.module.scss';
 import inputStyles from '@/styles/inputs/inputs.module.scss'
@@ -20,10 +21,9 @@ type Props = {
 }
 
 // * the create, wil only need a beehive as ref,
-// TODO: update method not implemented yet. wil just do a new post.
 export const InspectionForm = (props: Props) => {
-
     const router = useRouter();
+    const { showChoiceModal, ModalComponent } = useChoiceModal();
     const [readmode, setReadmode] = useState<boolean>(props.readmode || false);
     const [beehiveName, setBeehiveName] = useState<BeehiveName>({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' });
     const [connectedBeehive, setConnectedBeehive] = useState<Beehive | undefined>(props.connectedBeehive || undefined)
@@ -114,10 +114,8 @@ export const InspectionForm = (props: Props) => {
                         label="Date"
                         labelPlacement='outside'
                         value={inspectionDate}
-
                         onChange={(value) => { setInspectionDate(value) }}
                     />
-
                 </div>
                 <Input
                     isReadOnly={readmode}
@@ -134,8 +132,6 @@ export const InspectionForm = (props: Props) => {
                     }}
                 />
             </section>
-            {/* //TODO: Finish carousel. */}
-            {/* {connectedBeehive && inspectionFrames.length >= 1 ? */}
             {inspectionFrames.length >= 1 ?
                 <section className={style.ListingContainer}>
                     <h2>Frame Selection:</h2>
@@ -290,7 +286,6 @@ export const InspectionForm = (props: Props) => {
                 }
             </section>
 
-
             {readmode ?
                 null // Do not render save button if readmode is on.
                 :
@@ -303,14 +298,10 @@ export const InspectionForm = (props: Props) => {
                     <h3>Save</h3>
                 </Button>
             }
+
+            {ModalComponent()}
         </form>
     );
-
-
-    function showWarningModal(): boolean {
-        // TODO: logic to warn user about unsaved changes, cancelEdit on confirm.
-        return true
-    }
 
     function carouselScroll(directionNumber: 1 | -1) {
         const _frameContent = document.getElementById("frameContent");
@@ -361,11 +352,16 @@ export const InspectionForm = (props: Props) => {
         }
     }
 
-    function cancelEdit() {
-        if (showWarningModal()) {
+
+    async function cancelEdit() {
+        if (await showChoiceModal({
+            titleContent: <h2>Remove changes?</h2>,
+            cancelText: "Go back"
+        })
+        ) {
             setBeehiveName({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
             setInspectionTitle(props.currentinspection?.title || "");
-            setInspectionDate(parseAbsoluteToLocal(props.currentinspection?.creation_date || new Date().toISOString()));
+            setInspectionDate(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD(new Date(), "-")));
             setInspectionDescription(props.currentinspection?.description || "");
             setInspectionFrames(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
             setIllness(props.currentinspection?.illness || "");
