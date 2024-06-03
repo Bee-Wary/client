@@ -361,7 +361,7 @@ export const InspectionForm = (props: Props) => {
         ) {
             setBeehiveName({ _id: props.connectedBeehive?._id || '', name: props.connectedBeehive?.name || '' })
             setInspectionTitle(props.currentinspection?.title || "");
-            setInspectionDate(parseDate(props.currentinspection?.creation_date || DateToStringDateYYMMDD(new Date(), "-")));
+            setInspectionDate(parseAbsoluteToLocal(props.currentinspection?.creation_date || new Date().toISOString()));
             setInspectionDescription(props.currentinspection?.description || "");
             setInspectionFrames(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
             setIllness(props.currentinspection?.illness || "");
