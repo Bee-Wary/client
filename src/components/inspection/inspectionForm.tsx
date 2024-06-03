@@ -405,7 +405,11 @@ export const InspectionForm = (props: Props) => {
     }
 
     async function handelDelete() {
-        if (showWarningModal()) {
+        if (await showChoiceModal({
+            titleContent: <h2>Delete inspection?</h2>,
+            cancelText: "Don't"
+        })
+        ) {
             await fetchDeleteInspection(props.currentinspection!._id).then(() => {
                 router.back();
             });
