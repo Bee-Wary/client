@@ -6,10 +6,6 @@ import '../styles/globals.scss';
 
 import BottomNavigationBar from '@/components/navigation/BottomNavigationBar';
 import Header from '@/components/shared/header';
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button, NavbarMenu, NavbarMenuToggle } from '@nextui-org/react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { DotsThreeOutline } from '@phosphor-icons/react/dist/ssr';
 
 // Set defenition for the font used in the project (and cascades to all children).
 const archivo = Archivo({ subsets: ['latin'] });
@@ -46,39 +42,7 @@ export default function RootLayout(
         {/* Providers include UI component library provider. */}
         <Providers>
           {/* TODO: Use a context provider to pass a fitting header text per page. */}
-          <Navbar>
-            <NavbarContent>
-              <NavbarBrand>
-                <Image src="/mascotte.png" alt="BeeWary" width={50} height={50} />
-                <p className="font-bold text-inherit">BeeWary</p>
-              </NavbarBrand>
-            </NavbarContent>
-
-            <NavbarContent className="hidden sm:flex gap-4" justify="center">
-              <NavbarItem>
-                <Link color="foreground" href="#">
-                  Features
-                </Link>
-              </NavbarItem>
-              <NavbarItem isActive>
-                <Link href="#" aria-current="page">
-                  Customers
-                </Link>
-              </NavbarItem>
-              <NavbarItem>
-                <Link color="foreground" href="#">
-                  Integrations
-                </Link>
-              </NavbarItem>
-            </NavbarContent>
-            <NavbarContent justify="end">
-              {/* TODO: Find a way to replace the default icon*/}
-              <NavbarMenuToggle className="sm:hidden"/>
-            </NavbarContent>
-            <NavbarMenu>
-
-            </NavbarMenu>
-          </Navbar>
+          <Header />
           {/* Children is the current route active page.tsx.  */}
           <div className="mainWrapper">{children}</div>
           <BottomNavigationBar />
