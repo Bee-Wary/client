@@ -1,5 +1,5 @@
 "use client";
-import { ArrowUUpLeft, Bell, BellRinging, Broadcast, CaretRight, ChartBar, Cube, Gear, PencilSimpleLine, UserCircle} from '@phosphor-icons/react/dist/ssr';
+import { ArrowUUpLeft, Bell, BellRinging, Broadcast, CaretRight, ChartBar, Cube, DotsThreeOutline, Gear, PencilSimpleLine, UserCircle} from '@phosphor-icons/react/dist/ssr';
 import { Navbar, NavbarContent, NavbarBrand, NavbarItem, NavbarMenuToggle, NavbarMenu } from '@nextui-org/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -10,7 +10,7 @@ import NavMenuContainer from '../sidebar/NavMenuContainer';
 export default function Header() {
   const router = useRouter();
   return (
-    <Navbar>
+    <Navbar className='bg-tiki-torch-grey text-petal-white-bright'>
       <NavbarContent>
       {/* TODO: Make sure back button is hidden on index */}
       <ArrowUUpLeft weight='fill' size={32} onClick={() => router.back()} />
@@ -23,8 +23,7 @@ export default function Header() {
         <Link href='/notifications'>
           <BellRinging size={32} weight='fill'/>
         </Link>
-        {/* TODO: Find a way to replace the default icon*/}
-        <NavbarMenuToggle className="sm:hidden" />
+        <NavbarMenuToggle className="sm:hidden" icon={<DotsThreeOutline size={32} weight="fill" />}/>
       </NavbarContent>
       <NavbarMenu className='bg-tiki-torch-grey text-petal-white-bright'>
         <div className='flex flex-col gap-1 my-4'>
