@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Select, SelectItem, Input, Button, DatePicker, Slider } from "@nextui-org/react";
 import { parseAbsoluteToLocal, ZonedDateTime } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight, Crown } from '@phosphor-icons/react/dist/ssr';
@@ -31,6 +31,20 @@ export const InspectionForm = (props: Props) => {
     const [inspectionFrames, setInspectionFrames] = useState<InspectionBeeFrame[]>(props.currentinspection?.frames || props.connectedBeehive?.frames as InspectionBeeFrame[] || []);
     const [illness, setIllness] = useState<string>(props.currentinspection?.illness || "");
     const [medication, setMedication] = useState<string>(props.currentinspection?.medication || "");
+
+    // TODO: fix useeffect to trigger on browser back button, then: u^date draft logic.
+    useEffect(() => {
+        const handleClick: () => void = () => {
+            console.log('Browser back button pressed');
+        };
+        console.log("i fired");
+        window.addEventListener('popstate', handleClick, { once: true });
+
+        return () => {
+            console.log("i removed");
+            window.removeEventListener('popstate', handleClick);
+        };
+    }, [])
 
     return (
         <form
