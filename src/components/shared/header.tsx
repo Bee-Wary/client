@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import NavMenuItem from '../sidebar/NavMenuItem';
+import NavMenuContainer from '../sidebar/NavMenuContainer';
 
 export default function Header() {
   const router = useRouter();
@@ -26,24 +27,24 @@ export default function Header() {
         <NavbarMenuToggle className="sm:hidden" />
       </NavbarContent>
       <NavbarMenu className='bg-tiki-torch-grey text-petal-white-bright'>
-        <div>
+        <div className='flex flex-col gap-1 my-4'>
           <h2>BeeWary</h2>
           <h3>John Doe</h3>
           <p>Premium Account</p>
         </div>
-        <div>
+        <NavMenuContainer>
           <h3>Personal</h3>
           <NavMenuItem text="Account Info" icon={<UserCircle size={32} weight='fill'/>} href="#" />
           <NavMenuItem text="Settings" icon={<Gear size={32} weight='fill'/>} href="#" />
           <NavMenuItem text="Notification" icon={<Bell size={32} weight='fill'/>} href="/notifications" />
-        </div>
-        <div>
+        </NavMenuContainer>
+        <NavMenuContainer>
           <h3>Technical</h3>
           <NavMenuItem text="My beehives" icon={<Cube size={32} weight="fill" />} href="#" />
           <NavMenuItem text="My sensors" icon={<Broadcast size={32} weight="fill" />} href="/Sensors" />
           <NavMenuItem text="My inspections" icon={<PencilSimpleLine size={32} weight="fill" />} href="/inspections" />
           <NavMenuItem text="Statistics" icon={<ChartBar size={32} weight="fill" />} href="/statistics" />
-        </div>
+        </NavMenuContainer>
       </NavbarMenu>
     </Navbar>
   );
