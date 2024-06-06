@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Select, SelectItem, Input, Button, DatePicker, Slider } from "@nextui-org/react";
 import { parseAbsoluteToLocal, ZonedDateTime } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight, Crown } from '@phosphor-icons/react/dist/ssr';
