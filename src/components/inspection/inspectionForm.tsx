@@ -32,20 +32,6 @@ export const InspectionForm = (props: Props) => {
     const [illness, setIllness] = useState<string>(props.currentinspection?.illness || "");
     const [medication, setMedication] = useState<string>(props.currentinspection?.medication || "");
 
-    // TODO: fix useeffect to trigger on browser back button, then: u^date draft logic.
-    useEffect(() => {
-        const handleClick: () => void = () => {
-            console.log('Browser back button pressed');
-        };
-        console.log("i fired");
-        window.addEventListener('popstate', handleClick, { once: true });
-
-        return () => {
-            console.log("i removed");
-            window.removeEventListener('popstate', handleClick);
-        };
-    }, [])
-
     return (
         <form
             className='h-100%'
@@ -305,7 +291,6 @@ export const InspectionForm = (props: Props) => {
                     type="submit"
                     className={inputStyles.saveButton}
                     startContent={<CheckCircle weight='fill' size={72} />}
-                // onPress={() => HandeleSumbmitAndSave()}
                 >
                     <h3>Save</h3>
                 </Button>
