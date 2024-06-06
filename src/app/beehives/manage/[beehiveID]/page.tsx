@@ -7,44 +7,45 @@ import inputStyles from '@/styles/inputs/inputs.module.scss'
 import HeaderButton from '@/components/HeaderButton';
 import { BeehiveForm } from '@/components/beehives/BeehiveForm';
 
-const BeehiveDetailPage = async (
-    { params } :
-    { params: { beehiveID: string }}
+const BeehiveManagePage = async (
+    { params }:
+        { params: { beehiveID: string } }
 ) => {
 
     const currentBeehive: Beehive = (await getBeehiveByID(params.beehiveID)).document
     return (
         <>
-        <section className={inputStyles.searchAndCrud}>
-             <HeaderButton
-                href={{
-                    pathname: `/statistics`,
-                    query: { beehiveRefID: currentBeehive._id }
-                }}
-                icon={<ChartBar size={32} weight="fill" />}>
+            <section className={inputStyles.searchAndCrud}>
+                <HeaderButton
+                    href={{
+                        pathname: `/statistics`,
+                        query: { beehiveRefID: currentBeehive._id }
+                    }}
+                    icon={<ChartBar size={32} weight="fill" />}>
                     Statistics
-            </HeaderButton>
-            <HeaderButton
-                href={{
-                    pathname: `/inspections`,
-                    query: { beehiveRefID: currentBeehive._id }
-                }}
-                icon={<Note size={32} weight="fill" />}>
+                </HeaderButton>
+                <HeaderButton
+                    href={{
+                        pathname: `/inspections`,
+                        query: { beehiveRefID: currentBeehive._id }
+                    }}
+                    icon={<Note size={32} weight="fill" />}>
                     Notes
-            </HeaderButton>
-        </section>
-        <BeehiveForm
-            readOnly={true}
-            name={currentBeehive.name}
-            material={currentBeehive.material}
-            location={currentBeehive.location}
-            queen={currentBeehive.queen}
-            frames={currentBeehive.frames}
+                </HeaderButton>
+            </section>
+            <BeehiveForm
+                readOnly={true}
+                beehive={currentBeehive}
+            // name={currentBeehive.name}
+            // material={currentBeehive.material}
+            // location={currentBeehive.location}
+            // queen={currentBeehive.queen}
+            // frames={currentBeehive.frames}
             >
 
-        </BeehiveForm>
+            </BeehiveForm>
         </>
     );
 }
 
-export default BeehiveDetailPage
+export default BeehiveManagePage

@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { ChoiceModal } from '@/components/modals/choiceModal';
 import { Check, X } from "@phosphor-icons/react/dist/ssr";
-import { jsx } from '@emotion/react';
-
 
 type ShowChoiceModalOptions = {
     titleContent: React.ReactNode;
