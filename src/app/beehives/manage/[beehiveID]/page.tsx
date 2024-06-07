@@ -36,13 +36,7 @@ const BeehiveManagePage = async (
             <BeehiveForm
                 readOnly={true}
                 beehive={currentBeehive}
-            // name={currentBeehive.name}
-            // material={currentBeehive.material}
-            // location={currentBeehive.location}
-            // queen={currentBeehive.queen}
-            // frames={currentBeehive.frames}
             >
-
             </BeehiveForm>
         </>
     );

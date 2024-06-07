@@ -27,7 +27,7 @@ export default function LocationInput({ latitiude, longitude, readOnly, setGeopo
             <Input
                 type="number"
                 isReadOnly={readOnly}
-                label="Longitude"
+                label="Longtitude"
                 labelPlacement='outside'
                 value={longitude.toString()}
                 max={90}

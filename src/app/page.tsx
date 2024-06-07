@@ -18,10 +18,10 @@ export default async function Beehivespage() {
         <div className={inputStyles.searchField}>
           {/* Keep field for default flex spacing. */}
         </div>
-        <HeaderButton 
-          href="/beehives/create" 
-          icon={<PlusCircle weight='fill' size={64}/>}>
-            Create <br/> note
+        <HeaderButton
+          href="/beehives/create"
+          icon={<PlusCircle weight='fill' size={64} />}>
+          Create <br /> beehive
         </HeaderButton>
       </section>
       <section className={styles.itemList}>
@@ -39,7 +39,7 @@ export default async function Beehivespage() {
             illness={(beehive.last_inspection && beehive.last_inspection.illness) ? true : false}
             location={beehive.location.coordinates}
             sensor={beehive.last_sensor_entry ? true : false}
-            />
+          />
         )}
       </section>
       <section className={styles.itemList}>

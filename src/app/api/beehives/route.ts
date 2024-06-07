@@ -1,4 +1,4 @@
-import { getBeehiveByID } from '@/services/server/beehives/queries';
+import { createBeehive } from '@/services/server/beehives/queries';
 
 /**
  * Get a beehive by ID, this is with the frame Title NOT frame content.
@@ -6,7 +6,7 @@ import { getBeehiveByID } from '@/services/server/beehives/queries';
  * @returns Response of the found beehive.
  */
 export async function POST(request: Request): Promise<Response> {
-    const beehiveID = (await request.json()).beehiveID
-    const response: Beehive = (await getBeehiveByID(beehiveID)).document;
+    const beehive = await request.json();
+    const response = (await createBeehive(beehive));
     return Response.json( response )
 }

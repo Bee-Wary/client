@@ -1,4 +1,5 @@
 import { generateDataApiUrl, generateDataSource, generateRequestHeaders } from '@/utils/dataApi';
+import { revalidatePath } from 'next/cache';
 
 /**
  * Return a list of all beehive names and their ID.
@@ -308,5 +309,142 @@ export async function getSummerizedBeehiveByID(beehiveID: string): Promise<{ doc
     return await response.json();
   } catch (e) {
     throw new Error(`Realm Data API returned an error: ${e}`);
+  }
+}
+
+/**
+ * Create a new beehive.
+ * @param {BaseBeehive} beehive - the beehive to be created.
+ * @returns {Promise<{beehive}>} - The beehive response object.
+ */
+export async function createBeehive(
+  {name, location, material, frames, queen, creation_date, sensor_ref}: BaseBeehive
+): Promise<{ document: Beehive }> {
+  try {
+    const _documentContent: any = {
+      "name": name,
+      "location": {
+        type: "Point",
+        coordinates: location.coordinates
+      },
+      "material": material,
+      "frames": frames,
+      "queen": {
+        "creationDate": {
+          "$date": queen.creationDate
+        },
+        "markingDescription": queen.markingDescription
+      },
+      "creation_date": {
+        "$date": creation_date
+      }
+    }
+
+    if (sensor_ref) {
+      _documentContent.sensor_ref = { "$oid": sensor_ref };
+    }        
+
+    const response = await fetch(generateDataApiUrl('insertOne'), {
+      method: 'POST',
+      headers: generateRequestHeaders(),
+      body: JSON.stringify({
+        ...generateDataSource('beehives'),
+        "document": {
+          ..._documentContent
+        }
+      }),
+    });
+    revalidatePath("/")    
+
+    return await response.json();
+  } catch (e) {
+    throw new Error(`Realm Data API returned an error in createBeehive: ${e}`);
+  }
+}
+
+
+/**
+ * Update a beehive found by its ID.
+ * @param {BaseBeehive} beehive - the beehive to be created.
+ * @returns {Promise<{beehive}>} - The beehive response object.
+ */
+export async function updateBeehiveByBeehiveID(
+  beehiveID : String, 
+  {name, location, material, frames, queen, creation_date, sensor_ref}: BaseBeehive
+): Promise<{ document: Beehive }> {
+  try {
+    const _documentContent: any = {
+      "name": name,
+      "location": {
+        type: "Point",
+        coordinates: location.coordinates
+      },
+      "material": material,
+      "frames": frames,
+      "queen": {
+        "creationDate": {
+          "$date": queen.creationDate
+        },
+        "markingDescription": queen.markingDescription
+      },
+      "creation_date": {
+        "$date": creation_date
+      }
+    }
+
+    if (sensor_ref) {
+      _documentContent.sensor_ref = { "$oid": sensor_ref };
+    }  
+    console.log('[debug]', _documentContent);
+      
+
+    const response = await fetch(generateDataApiUrl('updateOne'), {
+      method: 'POST',
+      headers: generateRequestHeaders(),
+      body: JSON.stringify({
+        ...generateDataSource('beehives'),
+        filter: {
+          _id: { "$oid": beehiveID }
+        },
+        update: {
+          "$set": {
+            ..._documentContent
+          }
+        },
+        upsert: false
+      }),
+    });
+    revalidatePath("/")
+    revalidatePath(`/beehives/manage/${beehiveID}`)
+    return await response.json();
+  } catch (e) {
+    throw new Error(`Realm Data API returned an error in updateBeehiveByBeehiveID: ${e}`);
+  }
+}
+
+
+/**
+ * Delete a single beehive.
+ * @returns the amount deleted items from the database.
+ */
+export async function DeleteBeehiveByBeehiveID(
+  beehiveID : String, 
+): Promise<{ document: string }> {
+  try {    
+    const response = await fetch(generateDataApiUrl("deleteOne"), {
+      method: "POST",
+      headers: generateRequestHeaders(),
+      body: JSON.stringify({
+        ...generateDataSource("beehives"),
+        filter: {
+          _id: { "$oid": beehiveID }
+        }
+      })
+    })
+    revalidatePath("/")
+    return await response.json();
+    
+  } catch ( error ) {
+    throw new Error(`Realm Data API returned an error on DeleteBeehiveByBeehiveID: ${ error }`) 
   }
 }
