@@ -27,7 +27,7 @@ export default async function Beehivespage() {
       <section className={styles.itemList}>
         <div className={styles.sectionTitle}>
           <h2>Beehives</h2>
-          <Link href="/beehives">View all</Link>
+          <Link href="#">View all</Link>
         </div>
         {beehives.map(beehive =>
           <HiveCard
