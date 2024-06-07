@@ -35,7 +35,7 @@ export const BeehiveForm = ({ beehive, readOnly, }: props) => {
                 <Button
                     className={`${inputStyles.actionButton} p-3`}
                     size="lg"
-                    endContent={<X weight='fill' size={64} />}
+                    endContent={readmode ? <Pencil weight='fill' size={64}/> : <X weight='fill' size={64} />}
                     onClick={() => readmode ? setReadmode(!readmode) : cancelEdit()}
                 >
                     {readmode ? "Edit" : "Cancel"}
