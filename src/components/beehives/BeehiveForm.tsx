@@ -51,6 +51,7 @@ export const BeehiveForm = ({ beehive, readOnly, }: props) => {
                     required
                     label="Name"
                     labelPlacement='outside'
+                    placeholder="Enter a name"
                     onValueChange={(value) => setName(value)}
                     value={name}
                     classNames={{
@@ -62,6 +63,7 @@ export const BeehiveForm = ({ beehive, readOnly, }: props) => {
                     isClearable={!readmode}
                     label="Material"
                     labelPlacement='outside'
+                    placeholder="Enter a material"
                     value={material}
                     onValueChange={(value) => setMaterial(value)}
                     classNames={{
@@ -73,6 +75,7 @@ export const BeehiveForm = ({ beehive, readOnly, }: props) => {
                     isClearable={!readmode}
                     label="Queen Marking description"
                     labelPlacement='outside'
+                    placeholder="Enter a marking"
                     value={queenMarking}
                     onValueChange={(value) => setQueenMarking(value)}
                 />
@@ -202,12 +205,12 @@ export const BeehiveForm = ({ beehive, readOnly, }: props) => {
 
             if (beehive) {
                 await fetchUpdateBeehive(beehive._id, _beehiveSave).then(() => {
-                    router.back();
+                    router.push("/");
                     router.refresh()
                 });
             } else {
                 await fetchCreateNewBeehive(_beehiveSave).then(() => {
-                    router.back();
+                    router.push("/");
                     router.refresh()
                 });
             }
@@ -221,7 +224,7 @@ export const BeehiveForm = ({ beehive, readOnly, }: props) => {
         })
         ) {
             await fetchDeleteBeehive(beehive!._id).then(() => {
-                router.back();
+                router.push("/");
                 router.refresh();
             });
         }

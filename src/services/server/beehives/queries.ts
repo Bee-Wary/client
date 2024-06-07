@@ -380,7 +380,13 @@ export async function updateBeehiveByBeehiveID(
         coordinates: location.coordinates
       },
       "material": material,
-      "frames": frames,
+      "frames": 
+        frames.map((frame: { title: string, id?: string }) => (
+          {
+            "title": frame.title,
+            ...(frame.id && { "id": { "$oid": frame.id } })
+          }
+        )),
       "queen": {
         "creationDate": {
           "$date": queen.creationDate
@@ -394,9 +400,7 @@ export async function updateBeehiveByBeehiveID(
 
     if (sensor_ref) {
       _documentContent.sensor_ref = { "$oid": sensor_ref };
-    }  
-    console.log('[debug]', _documentContent);
-      
+    }        
 
     const response = await fetch(generateDataApiUrl('updateOne'), {
       method: 'POST',
@@ -415,7 +419,7 @@ export async function updateBeehiveByBeehiveID(
       }),
     });
     revalidatePath("/")
-    revalidatePath(`/beehives/manage/${beehiveID}`)
+    revalidatePath(`/beehives/manage/${beehiveID}`)    
     return await response.json();
   } catch (e) {
     throw new Error(`Realm Data API returned an error in updateBeehiveByBeehiveID: ${e}`);
