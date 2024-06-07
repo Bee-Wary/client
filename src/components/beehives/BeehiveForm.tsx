@@ -4,7 +4,7 @@ import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import { useChoiceModal } from '@/utils/hooks/useChoiceModal';
-import { Pencil, CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { Pencil, CheckCircle, Cross, X } from "@phosphor-icons/react/dist/ssr";
 import { fetchCreateNewBeehive, fetchDeleteBeehive, fetchUpdateBeehive } from '@/services/client/beehives/routeFetches';
 import inputStyles from '@/styles/inputs/inputs.module.scss'
 import styles from '@/styles/beehives/beehivePage.module.scss'
@@ -35,7 +35,7 @@ export const BeehiveForm = ({ beehive, readOnly, }: props) => {
                 <Button
                     className={`${inputStyles.actionButton} p-3`}
                     size="lg"
-                    endContent={<Pencil weight='fill' size={64} />}
+                    endContent={<X weight='fill' size={64} />}
                     onClick={() => readmode ? setReadmode(!readmode) : cancelEdit()}
                 >
                     {readmode ? "Edit" : "Cancel"}
