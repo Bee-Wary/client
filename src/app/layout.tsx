@@ -34,7 +34,7 @@ export default function RootLayout(
   {
     children,
   }: // Parameters types.
-  { children: ReactNode }
+    { children: ReactNode }
 ) {
   return (
     <html lang="en" className="light">
@@ -42,7 +42,7 @@ export default function RootLayout(
         {/* Providers include UI component library provider. */}
         <Providers>
           {/* TODO: Use a context provider to pass a fitting header text per page. */}
-          <Header text="Welcome user" />
+          <Header />
           {/* Children is the current route active page.tsx.  */}
           <div className="mainWrapper">{children}</div>
           <BottomNavigationBar />
