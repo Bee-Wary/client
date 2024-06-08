@@ -56,8 +56,8 @@ export default function Header() {
     <Navbar className='bg-tiki-torch-grey text-petal-white-bright' isMenuOpen={menuOpen}>
       <NavbarContent>
         {/* TODO: Make sure back button is hidden on index */}
-        <li>
-          <ArrowUUpLeft weight='fill' size={32} onClick={() => router.back()} />
+        <li className='min-w-[56px]'>
+          <ArrowUUpLeft className='cursor-pointer' weight='fill' size={32} onClick={() => router.back()} />
         </li>
         <li>
           <Link href={'/'}>
