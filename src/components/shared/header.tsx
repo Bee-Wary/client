@@ -2,7 +2,7 @@
 import { ArrowUUpLeft, Bell, BellRinging, Broadcast, CaretRight, ChartBar, Cube, DotsThreeOutline, Gear, PencilSimpleLine, UserCircle, X } from '@phosphor-icons/react/dist/ssr';
 import { Navbar, NavbarContent, NavbarBrand, NavbarItem, NavbarMenuToggle, NavbarMenu } from '@nextui-org/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import NavMenuItem from '../sidebar/NavMenuItem';
 import NavMenuContainer from '../sidebar/NavMenuContainer';
@@ -51,13 +51,17 @@ const technicalMenuItems = [{
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <Navbar className='bg-tiki-torch-grey text-petal-white-bright' isMenuOpen={menuOpen}>
       <NavbarContent>
-        {/* TODO: Make sure back button is hidden on index */}
-        <li className='min-w-[56px]'>
-          <ArrowUUpLeft className='cursor-pointer' weight='fill' size={32} onClick={() => router.back()} />
+        <li className='min-w-[40px]'>
+          {/* Hide back button at root path (home). */}
+          {pathname == "/"
+            ? null
+            : <ArrowUUpLeft className='cursor-pointer' weight='fill' size={32} onClick={() => router.back()} />
+          }
         </li>
         <li>
           <Link href={'/'}>
