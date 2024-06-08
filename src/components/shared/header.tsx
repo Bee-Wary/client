@@ -17,10 +17,12 @@ export default function Header() {
           <ArrowUUpLeft weight='fill' size={32} onClick={() => router.back()} />
         </li>
         <li>
-          <NavbarBrand>
-            <Image src="/mascotte.png" alt="BeeWary" width={50} height={50} />
-            <p className="font-bold text-inherit">BeeWary</p>
-          </NavbarBrand>
+          <Link href={'/'}>
+            <NavbarBrand>
+              <Image src="/mascotte.png" alt="BeeWary" width={50} height={50} />
+              <p className="font-bold text-inherit">BeeWary</p>
+            </NavbarBrand>
+          </Link>
         </li>
       </NavbarContent>
       <NavbarContent justify="end">
