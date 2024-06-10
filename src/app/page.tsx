@@ -55,12 +55,12 @@ export default async function Beehivespage() {
             <CaretRight weight='regular' />
           </div>
           {inspections.map(doc =>
-            <a href={`inspections/manage/${doc._id}`} key={doc._id}>
+            <Link href={`inspections/manage/${doc._id}`} key={doc._id}>
               <span>{doc.title}</span>
               <span>{new Date(doc.last_updated).toLocaleDateString()}</span>
               <span>{doc.draft ? "Draft" : "Finished"}</span>
               <CaretRight weight='regular' />
-            </a>)}
+            </Link>)}
         </div>
       </section>
     </main>

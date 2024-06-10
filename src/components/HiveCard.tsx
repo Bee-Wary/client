@@ -25,7 +25,7 @@ export default function HiveCard({ img, name, illness, sensor, location, lastIns
                         {sensor && <b className={styles.positiveIndicator}><Plugs weight='fill' /></b>}
                     </div>
                     {lastInspection && <p><CalendarBlank weight='fill' /> <span className={styles.label}>Last checkup:</span> {lastInspection.toLocaleDateString()} | {lastInspection.toLocaleTimeString()}</p>}
-                    <p><MapPin weight='fill' /><span className={styles.label}>Location:</span> {location.map(c => <span key={c}>{c} </span>)}</p>
+                    <p><MapPin weight='fill' /><span className={styles.label}>Location:</span> {location.map((c, i) => <span key={i}>{c} </span>)}</p>
                 </div>
             </article>
         </Link>
