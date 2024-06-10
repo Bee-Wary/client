@@ -2,7 +2,6 @@ import { getAllFullyDetailedInspections, getAllDetailedInspectionsByBeehiveRefID
 import { getSummerizedBeehiveByID } from '@/services/server/beehives/queries';
 import { InspectionCard } from '@/components/inspection/InspectionCard';
 import HiveCard from '@/components/HiveCard';
-import { Button } from "@nextui-org/react";
 import { PlusCircle } from "@phosphor-icons/react/dist/ssr";
 import Link from 'next/link';
 import style from '@/styles/inspections/inspectionsPage.module.scss';
@@ -25,17 +24,17 @@ const InspectionsPage = async (
   return (
     <>
 
-      {currentBeehive ? 
+      {currentBeehive ?
         <section className={style.ListingContainer}>
-            <HiveCard
-              href={`beehives/manage/${currentBeehive._id}`}
-              img="https://placehold.co/400x400/png"
-              name={currentBeehive.name}
-              lastInspection={currentBeehive.last_inspection ? new Date(currentBeehive.last_inspection.last_updated) : undefined}
-              illness={(currentBeehive.last_inspection && currentBeehive.last_inspection.illness) ? true : false}
-              location={currentBeehive.location.coordinates}
-              sensor={currentBeehive.last_sensor_entry ? true : false}
-            />
+          <HiveCard
+            href={`beehives/manage/${currentBeehive._id}`}
+            img="https://placehold.co/400x400/png"
+            name={currentBeehive.name}
+            lastInspection={currentBeehive.last_inspection ? new Date(currentBeehive.last_inspection.last_updated) : undefined}
+            illness={(currentBeehive.last_inspection && currentBeehive.last_inspection.illness) ? true : false}
+            location={currentBeehive.location.coordinates}
+            sensor={currentBeehive.last_sensor_entry ? true : false}
+          />
         </section>
         : null
       }
@@ -50,8 +49,8 @@ const InspectionsPage = async (
             pathname: '/inspections/create/',
             query: searchParams ? { beehiveRefID: searchParams.beehiveRefID } : null
           }}
-          icon={<PlusCircle weight='fill' size={64}/>}>
-            Create <br/> note
+          icon={<PlusCircle weight='fill' size={64} />}>
+          Create <br /> note
         </HeaderButton>
       </section>
 

@@ -1,0 +1,14 @@
+@use "@/styles/partials/variables" as var;
+
+.ListingContainer{
+    display: flex;
+    flex-flow: column nowrap;
+    gap: var.$card-spacing;
+    margin-left: var.$page-side-spacing;
+    margin-right: var.$page-side-spacing;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.ListingContainer:not(:last-child){
+    margin-bottom: 3rem;
+}

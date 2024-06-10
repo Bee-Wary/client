@@ -18,28 +18,28 @@ export default async function Beehivespage() {
         <div className={inputStyles.searchField}>
           {/* Keep field for default flex spacing. */}
         </div>
-        <HeaderButton 
-          href="/beehives/create" 
-          icon={<PlusCircle weight='fill' size={64}/>}>
-            Create <br/> note
+        <HeaderButton
+          href="/beehives/create"
+          icon={<PlusCircle weight='fill' size={64} />}>
+          Create <br /> beehive
         </HeaderButton>
       </section>
       <section className={styles.itemList}>
         <div className={styles.sectionTitle}>
           <h2>Beehives</h2>
-          <Link href="/beehives">View all</Link>
+          <Link href="#">View all</Link>
         </div>
-        {beehives.map(doc =>
+        {beehives.map(beehive =>
           <HiveCard
-            key={doc._id}
-            href={`beehives/manage/${doc._id}`}
+            key={beehive._id}
+            href={`beehives/manage/${beehive._id}`}
             img="https://placehold.co/400x400/png"
-            name={doc.name}
-            lastInspection={doc.last_inspection ? new Date(doc.last_inspection.last_updated) : undefined}
-            illness={(doc.last_inspection && doc.last_inspection.illness) ? true : false}
-            location={doc.location.coordinates}
-            sensor={doc.last_sensor_entry ? true : false}
-            />
+            name={beehive.name}
+            lastInspection={beehive.last_inspection ? new Date(beehive.last_inspection.last_updated) : undefined}
+            illness={(beehive.last_inspection && beehive.last_inspection.illness) ? true : false}
+            location={beehive.location.coordinates}
+            sensor={beehive.last_sensor_entry ? true : false}
+          />
         )}
       </section>
       <section className={styles.itemList}>

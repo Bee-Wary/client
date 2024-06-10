@@ -3,16 +3,23 @@
  */
 
 /**
- * The beehive data model found in the MongoDB Database
+ * The beehive data model found in the MongoDB Database without _id.
  */
-interface Beehive {
-    _id: string,
+type BaseBeehive = {
     name: string,
     location: GeoPoint,
     material: string,
     frames: Frame[]
-    queen: Queen
-    creation_date: string
+    queen: Queen,
+    creation_date: string,
+    sensor_ref?: string
+}
+
+/**
+ * The beehive data model found in the MongoDB Database with _id.
+ */
+type Beehive = BaseBeehive & {
+    _id: string,
 }
 
 /**
