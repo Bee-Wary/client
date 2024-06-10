@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Select, SelectItem, Input, Button, DatePicker, Slider } from "@nextui-org/react";
 import { parseAbsoluteToLocal, ZonedDateTime } from "@internationalized/date";
-import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight, Crown } from '@phosphor-icons/react/dist/ssr';
+import { Pencil, CheckCircle, CaretLeft, CaretRight, Crown, X } from '@phosphor-icons/react/dist/ssr';
 import { fetchCreateNewInspection, fetchUpdateInspection, fetchDeleteInspection } from "@/services/client/inspections/routeFetches";
 import { fetchBeehiveByID } from "@/services/client/beehives/routeFetches";
 import { useRouter } from 'next/navigation'
@@ -41,25 +41,14 @@ export const InspectionForm = (props: Props) => {
                 <div className={inputStyles.searchField}>
                     {/* Keep field for default flex spacing. */}
                 </div>
-                {readmode ? // Each button has different logic.
-                    <Button
-                        className={`${inputStyles.actionButton} p-3`}
-                        size="lg"
-                        endContent={<Pencil weight='fill' size={64} />}
-                        onPress={() => setReadmode(false)}
-                    >
-                        Edit
-                    </Button>
-                    :
-                    <Button
-                        className={`${inputStyles.actionButton} p-3`}
-                        size="lg"
-                        endContent={<PencilSlash weight='fill' size={64} />}
-                        onPress={() => cancelEdit()}
-                    >
-                        Cancel
-                    </Button>
-                }
+                <Button
+                    className={`${inputStyles.actionButton} p-3`}
+                    size="lg"
+                    endContent={readmode ? <Pencil weight='fill' size={64} /> : <X weight='fill' size={64} />}
+                    onClick={() => readmode ? setReadmode(false) : cancelEdit()}
+                >
+                    {readmode ? "Edit" : "Cancel"}
+                </Button>
             </section>
 
             {props.beehiveNames ?
