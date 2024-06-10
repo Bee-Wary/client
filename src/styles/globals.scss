@@ -41,6 +41,7 @@
 
 html,
 body {
+  height: 100%;
   max-width: 100vw;
   overflow-x: hidden;
 }
@@ -49,8 +50,6 @@ html {
   color-scheme: light;
 }
 body {
-  height: 100vh;
-  height: 100dvh;
   display: flex;
   flex-flow: column nowrap;
   background-color: var.$petal-white;
