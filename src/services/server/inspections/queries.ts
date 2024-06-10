@@ -1,4 +1,5 @@
 import { generateDataApiUrl, generateDataSource, generateRequestHeaders } from "@/utils/dataApi";
+import { revalidatePath } from 'next/cache';
 
 /**
  * Fetches all inspections from the database in full detail with the frames content.
@@ -239,6 +240,7 @@ export async function createNewInspection(
         }
       })
     })
+    revalidatePath("/inspections")
     return await response.json();
     
   } catch ( error ) {  
@@ -299,6 +301,8 @@ export async function UpdateInspectionByInspectionID(
         upsert: false
       })
     })
+    revalidatePath("/inspections")
+    revalidatePath(`/inspections/manage/${inspectionID}`)
     return await response.json();
     
   } catch ( error ) {
@@ -326,6 +330,7 @@ export async function DeleteInspectionByInspectionID(
         }
       })
     })
+    revalidatePath("/inspections")
     return await response.json();
     
   } catch ( error ) {

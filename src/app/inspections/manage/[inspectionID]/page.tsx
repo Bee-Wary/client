@@ -1,7 +1,6 @@
 import { getAllBeehiveNamesAndIDs, getBeehiveByID } from '@/services/server/beehives/queries';
 import { getInspectionWithBeehiveFrameDataByInspectionID } from "@/services/server/inspections/queries";
 import { InspectionForm } from '@/components/inspection/inspectionForm';
-import styles from '@/styles/inspections/inspectionsPage.module.scss';
 
 
 const manageInspectionPage = async (

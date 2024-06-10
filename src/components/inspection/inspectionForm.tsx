@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Select, SelectItem, Input, Button, DatePicker, Slider } from "@nextui-org/react";
 import { parseAbsoluteToLocal, ZonedDateTime } from "@internationalized/date";
 import { Pencil, PencilSlash, CheckCircle, CaretLeft, CaretRight, Crown } from '@phosphor-icons/react/dist/ssr';
-import { DateToStringDateYYMMDD, MakeMinimumTwoDigit } from '@/utils/helpers/dateTimeToString';
 import { fetchCreateNewInspection, fetchUpdateInspection, fetchDeleteInspection } from "@/services/client/inspections/routeFetches";
 import { fetchBeehiveByID } from "@/services/client/beehives/routeFetches";
 import { useRouter } from 'next/navigation'
@@ -20,7 +19,6 @@ type Props = {
     readmode?: boolean,
 }
 
-// * the create, wil only need a beehive as ref,
 export const InspectionForm = (props: Props) => {
     const router = useRouter();
     const { showChoiceModal, ModalComponent } = useChoiceModal();
@@ -293,7 +291,6 @@ export const InspectionForm = (props: Props) => {
                     type="submit"
                     className={inputStyles.saveButton}
                     startContent={<CheckCircle weight='fill' size={72} />}
-                // onPress={() => HandeleSumbmitAndSave()}
                 >
                     <h3>Save</h3>
                 </Button>
@@ -395,10 +392,12 @@ export const InspectionForm = (props: Props) => {
             if (props.currentinspection) {
                 await fetchUpdateInspection(props.currentinspection._id, _inspectionSave).then(() => {
                     router.back();
+                    router.refresh()
                 });
             } else {
                 await fetchCreateNewInspection(_inspectionSave).then(() => {
                     router.back();
+                    router.refresh();
                 });
             }
         }
@@ -412,6 +411,7 @@ export const InspectionForm = (props: Props) => {
         ) {
             await fetchDeleteInspection(props.currentinspection!._id).then(() => {
                 router.back();
+                router.refresh();
             });
         }
     }
