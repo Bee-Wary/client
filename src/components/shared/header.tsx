@@ -34,7 +34,7 @@ const technicalMenuItems = [{
 {
   text: 'My sensors',
   icon: <Broadcast size={32} weight='fill' />,
-  href: '/Sensors'
+  href: '/sensors'
 },
 {
   text: 'My inspections',
