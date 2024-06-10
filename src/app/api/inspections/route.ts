@@ -19,9 +19,9 @@ export async function POST(request: Request): Promise<Response> {
 }
 
 /**
- * Post a new BaseFullInspection to the database.
+ * update a  BaseFullInspection in the database.
  * @param request A JSON stringified Objecct of a BaseFullInspection
- * @returns The the created Fullinspection with _id.
+ * @returns The the updated Fullinspection with _id.
  */
 export async function PATCH(request: Request): Promise<Response> {
     const _InspectionContent = await request.json();
@@ -29,9 +29,9 @@ export async function PATCH(request: Request): Promise<Response> {
     const _InspectionBody: BaseFullInspection = _InspectionContent.createInspection;  
     
     
-    const insertedID = (await UpdateInspectionByInspectionID(_InspectionID, _InspectionBody));
+    const updatedID = (await UpdateInspectionByInspectionID(_InspectionID, _InspectionBody));
     
-    return Response.json(insertedID)
+    return Response.json(updatedID)
 }
 
 /**

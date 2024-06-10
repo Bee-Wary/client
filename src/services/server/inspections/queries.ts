@@ -317,9 +317,7 @@ export async function UpdateInspectionByInspectionID(
 export async function DeleteInspectionByInspectionID(
   inspectionID : String, 
 ): Promise<{ document: string }> {
-  try {
-    console.log('[debug] delete: ', inspectionID);
-    
+  try {    
     const response = await fetch(generateDataApiUrl("deleteOne"), {
       method: "POST",
       headers: generateRequestHeaders(),

@@ -3,6 +3,7 @@
 .searchAndCrud{
     display: flex;
     flex-flow: row nowrap;
+    justify-content: space-between;
     margin-left: var.$page-side-spacing;
     margin-right: var.$page-side-spacing;
     margin-top: 1rem;
