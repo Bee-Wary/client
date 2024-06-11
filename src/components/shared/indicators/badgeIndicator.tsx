@@ -11,7 +11,7 @@ interface Props {
 
 }
 
-const BadgeIndicator = (
+export const BadgeIndicator = (
     { isNegative, route, children }: Props
 ) => {
 

@@ -1,5 +1,5 @@
 "use client";
-import { ArrowUUpLeft, Bell, BellRinging, Broadcast, CaretRight, ChartBar, Cube, DotsThreeOutline, Gear, PencilSimpleLine, UserCircle, X } from '@phosphor-icons/react/dist/ssr';
+import { ArrowUUpLeft, Bell, BellRinging, Broadcast, ChartBar, Cube, DotsThreeOutline, Gear, PencilSimpleLine, UserCircle, X, ShoppingCartSimple } from '@phosphor-icons/react/dist/ssr';
 import { Navbar, NavbarContent, NavbarBrand, NavbarItem, NavbarMenuToggle, NavbarMenu } from '@nextui-org/react';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
@@ -45,6 +45,11 @@ const technicalMenuItems = [{
   text: 'Statistics',
   icon: <ChartBar size={32} weight='fill' />,
   href: '/statistics'
+},
+{
+  text: 'Order sensors',
+  icon: <ShoppingCartSimple size={32} weight='fill' />,
+  href: '/sensors/buy'
 }
 ];
 
