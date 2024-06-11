@@ -67,7 +67,7 @@ const InspectionsPage = async (
                 }}>
                   <InspectionCard
                     inspectionID={inspection._id}
-                    img=""
+                    img={inspection.img}
                     title={inspection.title}
                     description={inspection.description ? inspection.description : "-no data-"}
                     illness={inspection.illness}
@@ -97,7 +97,7 @@ const InspectionsPage = async (
             >
               <InspectionCard
                 inspectionID={inspection._id}
-                img=""
+                img={inspection.img}
                 title={inspection.title}
                 description={inspection.description}
                 illness={inspection.illness}

@@ -18,6 +18,12 @@ const nextConfig = withPWA({
       hostname: "picsum.photos",
       port: '',
       pathname: '/**',
+    },
+    {
+      protocol: 'https',
+      hostname: "fastly.picsum.photos",
+      port: '',
+      pathname: '/**',
     }]
   }
 });

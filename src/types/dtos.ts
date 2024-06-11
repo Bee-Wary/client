@@ -73,6 +73,7 @@ interface SummerizedInspection {
   ref_beehive: string;
   last_updated: string;
   draft: boolean;
+  img: string;
 }
 
 /**
@@ -92,4 +93,5 @@ type BaseFullInspection = {
 
 type FullInspection = BaseFullInspection & {
   _id: string;
+  img: string;
 };
