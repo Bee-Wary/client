@@ -68,7 +68,7 @@ export const SensorBuyCard = (props: Props) => {
             {/* Detail/important to mention texts (if applicable). */}
             {props.importantTexts?.length ?? 0 > 0
                 ? <div className={sensorBuyStyles.infoBlock}>
-                    <h3>Belangrijk:</h3>
+                    <h3>Important:</h3>
                     {props.importantTexts!.map(
                         (infoText, index) =>
                             <p key={index} className={sensorBuyStyles.importantText}>

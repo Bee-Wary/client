@@ -9,7 +9,7 @@
     margin-right: var.$page-side-spacing;
     max-width: 1200px;
 
-    h3, p {
+    h1, h2, h3, p {
         width: 100%;
     }
     @media screen and (min-width: 1200px) {
@@ -26,13 +26,18 @@
     position: relative;
     border-radius: var.$rounding-small var.$rounding-small var.$rounding-big var.$rounding-small;
     overflow: hidden;
+    margin-bottom: 1rem;
 
+    &:first-of-type {
+        margin-top: 1rem;
+    }
+    
     .infoBlock {
         display: flex;
         flex-flow: column nowrap;
         padding: 0.5rem;
-        
     }
+   
 
     .topContent {
         display: flex;
