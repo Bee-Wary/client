@@ -89,9 +89,9 @@ type BaseFullInspection = {
   creation_date: string;
   last_updated: string;
   draft: boolean;
-  img: string;
 };
 
 type FullInspection = BaseFullInspection & {
   _id: string;
+  img: string;
 };
