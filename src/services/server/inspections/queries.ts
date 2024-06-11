@@ -26,7 +26,8 @@ export async function getAllFullyDetailedInspections(): Promise<{ documents: Ful
           "ref_beehive": 1,
           "creation_date": 1,
           "last_updated": 1,
-          "draft": 1
+          "draft": 1,
+          "img": 1
         },
       })
     })
@@ -66,7 +67,8 @@ export async function getAllDetailedInspectionsByBeehiveRefIDWithFrameCount(beeh
           "ref_beehive": 1,
           "creation_date": 1,
           "last_updated": 1,
-          "draft": 1
+          "draft": 1,
+          "img": 1
         },
       })
     })
