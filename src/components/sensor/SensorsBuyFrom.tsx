@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 'use client';
 
 import { useState } from 'react';
@@ -183,7 +184,7 @@ export const SensorsBuyForm = (props: Props) => {
                                 {
                                     icon: <ChartLine size={24} />,
                                     title: 'Measurement type',
-                                    description: 'Temperature'
+                                    description: 'Temperature / Humidity'
                                 },
                                 {
                                     icon: <CurrencyEur size={24} />,
@@ -193,10 +194,12 @@ export const SensorsBuyForm = (props: Props) => {
                             ]
                         }
                         infoTexts={[
-                            "A temperature sensor can be used to measure the temperature inside a beehive.Multiple temperature sensors in one beehive are possible and can increase the accuracy of the measurements."
+                            "A temperature sensor can be used to measure the temperature inside a beehive.Multiple temperature sensors in one beehive are possible and can increase the accuracy of the measurements.",
+                            "The sensor can also measure the humidity in the beehive."
                         ]}
                         importantTexts={[
                             "Heat goes up; be aware of which location you place the sensor.",
+                            "The readings of humidity and temperature of one single sensor can differ per desired location."
                         ]}
                     >
                         <Input
@@ -309,12 +312,16 @@ export const SensorsBuyForm = (props: Props) => {
             weightSensorAmount > 0
         ) {
             // Show confirmation modal if no minicomputers selected.
-            if (lowRangeAmount == 0 && highRangeAmount == 0)
+            if (lowRangeAmount == 0 && highRangeAmount == 0) {
                 await showChoiceModal({
                     titleContent: <h2>Don&apos;t buy any minicomputers?</h2>,
                     cancelText: "oops",
                     continueText: "thas's right",
                 }) ? sendMail() : null
+            } else {
+                // Just open the mail if everything is okay.
+                sendMail();
+            }
 
         } else {
             // Show modal if no items are selected.
