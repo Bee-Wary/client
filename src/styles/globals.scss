@@ -55,13 +55,11 @@ body {
   background-color: var.$petal-white;
   color: var.$off-black;
 }
+
 body .mainWrapper {
   flex-grow: 1;
   overflow: auto;
-}
-
-main {
-  position: relative;
+  margin-bottom: calc(var.$BottomNavigationBar-height + 1rem);
 }
 
 h1 {
