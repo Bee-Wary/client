@@ -132,13 +132,13 @@ export const SensorsBuyForm = (props: Props) => {
                 >
                     <SensorBuyCard
                         badgeContent={<Lightning size={32} weight="fill" />}
-                        image='SolarPanel'
+                        image='solarPanel'
                         title='Solar panel'
                         infoContent={
                             [
                                 {
                                     icon: <Lightning size={24} />,
-                                    title: 'watts',
+                                    title: 'Watts',
                                     description: '10w - 12W'
                                 },
                                 {
