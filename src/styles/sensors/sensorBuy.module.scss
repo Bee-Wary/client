@@ -1,0 +1,139 @@
+@use "@/styles/partials/variables" as var;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.5rem;
+    margin-left: var.$page-side-spacing;
+    margin-right: var.$page-side-spacing;
+    max-width: 1200px;
+
+    h1, h2, h3, p {
+        width: 100%;
+    }
+    @media screen and (min-width: 1200px) {
+        margin: 0 auto;
+    }
+}
+
+.sensorBuyCard {
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    flex-flow: column nowrap;
+    background-color: var.$petal-white-shade;
+    position: relative;
+    border-radius: var.$rounding-small var.$rounding-small var.$rounding-big var.$rounding-small;
+    overflow: hidden;
+    margin-bottom: 1rem;
+
+    &:first-of-type {
+        margin-top: 1rem;
+    }
+    .infoBlock {
+        display: flex;
+        flex-flow: column nowrap;
+        padding: 0.5rem;
+        ul, li {
+            list-style: circle;
+            margin-left: 0.5em;
+        }
+    }
+   
+
+    .topContent {
+        display: flex;
+        flex-flow: row nowrap;
+    
+        > div:nth-child(1) {
+            display: flex;
+            flex-direction: column;
+
+            > img {
+                min-width: 100px;
+                width: 100px;
+                aspect-ratio: 1 / 1;
+                border-radius: var.$rounding-small var.$rounding-small var.$rounding-big var.$rounding-small;
+                padding: 0.5rem;
+
+            }
+        }
+
+        > div:not(:first-child) {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            padding: 0 0.5rem 0.5rem;
+            gap: var.$card-spacing;
+
+
+            .infoRow {
+                display: grid;
+                grid-template-columns: 1.5rem 1fr 1fr;
+                grid-template-rows: 1;
+                border-bottom: 2px solid var.$petal-white;
+                overflow: hidden;
+                gap: var.$card-spacing;
+                align-items: center;
+
+                svg {
+                    min-width: 1.5rem;
+
+                }
+                h4 {
+                    font-weight: 600;
+                }
+
+                p {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+            }
+
+            .headingContainer {
+                display: flex;
+                flex-flow: row nowrap;
+                width: auto;
+                gap: var.$card-spacing;
+                align-items: flex-start;
+
+                h3 {
+                    width: auto;
+                    flex-flow: row nowrap;
+                    overflow: hidden;
+                    max-height: 2rem;
+                    font-size: 1.25rem;
+                    font-weight: 700;
+                    flex-grow: 1;
+                }
+            }
+            @media screen and (max-width: 360px) {
+                .infoRow {
+                    grid-template-columns: 1fr 1fr;
+                    svg {
+                        display: none;
+                    }
+                }
+            }
+            @media screen and (max-width: 640px) {
+                .headingContainer {
+                    display: flex;
+                    flex-flow: column wrap;
+                    gap: 0;
+
+                    h3 {
+                        flex-grow: 2;
+                        order: 2;
+                    }
+                    > div {
+                        order: 1;
+                        flex-grow: 0;
+                        align-self: end;
+                    }
+                }
+            }
+        }
+    }
+}

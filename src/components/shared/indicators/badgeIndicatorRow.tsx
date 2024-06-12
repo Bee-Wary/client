@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import style from '@/styles/indicators/badgeIndicatorRow.module.scss';
 
-const BadgeIndicatorRow = ( 
+export const BadgeIndicatorRow = ( 
     {children} : 
     {children: ReactNode} 
 ) => {
