@@ -84,7 +84,7 @@ export default function Header() {
           </Link>
         </li>
         <li>
-          <NavbarMenuToggle className="sm:hidden" icon={(menuOpen) ? <X size={32} weight="fill" /> : <DotsThreeOutline size={32} weight="fill" />} onChange={(state) => setMenuOpen(state)} />
+          <NavbarMenuToggle icon={(menuOpen) ? <X size={32} weight="fill" /> : <DotsThreeOutline size={32} weight="fill" />} onChange={(state) => setMenuOpen(state)} />
         </li>
       </NavbarContent>
       <NavbarMenu className='bg-tiki-torch-grey text-petal-white-bright'>
