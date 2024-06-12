@@ -69,12 +69,14 @@ export const SensorBuyCard = (props: Props) => {
             {props.importantTexts?.length ?? 0 > 0
                 ? <div className={sensorBuyStyles.infoBlock}>
                     <h3>Important:</h3>
-                    {props.importantTexts!.map(
-                        (infoText, index) =>
-                            <p key={index} className={sensorBuyStyles.importantText}>
-                                -{infoText}
-                            </p>
-                    )}
+                    <ul>
+                        {props.importantTexts!.map(
+                            (infoText, index) =>
+                                <li key={index}>
+                                    {infoText}
+                                </li>
+                        )}
+                    </ul>
                 </div>
                 : null
             }

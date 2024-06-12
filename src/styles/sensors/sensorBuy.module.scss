@@ -36,6 +36,10 @@
         display: flex;
         flex-flow: column nowrap;
         padding: 0.5rem;
+        ul, li {
+            list-style: circle;
+            margin-left: 0.5em;
+        }
     }
    
 
