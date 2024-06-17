@@ -1,0 +1,113 @@
+.SensorsPageTitle {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  font-weight: 900;
+  padding-top: 24px;
+  padding-left: 16px;
+}
+
+.SensorsListCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: #e7e9e2;
+}
+
+.SensorsListCardTitle {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  font-weight: 900;
+  padding-bottom: 10px;
+}
+
+.SensorsListCardUndertitle {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-bottom: 10px;
+}
+
+.SensorListCardItems {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-top: 10px;
+  gap: 5px;
+}
+
+.SensorsListCardItem {
+  background-color: #5a604a;
+  padding-top: 8px;
+  padding-left: 11px;
+  padding-right: 11px;
+  padding-bottom: 8px;
+  border-radius: 13px;
+}
+
+.SensorsListCardItemTitle {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: #fff;
+  text-transform: capitalize;
+  padding-bottom: 5px;
+}
+
+.SensorsListCardItemIcon {
+  font-size: 20px;
+  color: #fff;
+}
+
+.SensorListCardItemGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.SensorsListCardItemText {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: white;
+}
+
+.SensorsListCardItemNotActive {
+  background-color: #2d3025;
+  padding-top: 8px;
+  padding-left: 11px;
+  padding-right: 11px;
+  padding-bottom: 8px;
+  border-radius: 13px;
+}
+
+.SensorsListCardButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding-top: 30px;
+  justify-content: flex-end;
+}
+
+.SensorsListCardButton {
+  background-color: #86792e;
+  color: #fbd100;
+  padding: 10px;
+  border-radius: 13px;
+  font-size: 12px;
+  font-weight: bold;
+}
