@@ -9,6 +9,7 @@ import { SensorBuyCard } from '@/components/sensor/SensorBuyCard';
 import { SensorBuyContainer } from '@/components/sensor/SensorBuyContainer';
 import { useChoiceModal } from '@/utils/hooks/useChoiceModal';
 import inputStyles from '@/styles/inputs/inputs.module.scss'
+import { Check, X } from '@phosphor-icons/react';
 
 type Props = {
 
@@ -328,6 +329,8 @@ export const SensorsBuyForm = (props: Props) => {
             await showChoiceModal({
                 titleContent: <h2>Select at least 1 item.</h2>,
                 cancelText: "okay",
+                cancelIcon: <Check size={24} />,
+                confirmIcon: <X size={24} />,
                 continueText: "No",
                 isCancelButtonWarning: true
             }) ? router.back() : null
